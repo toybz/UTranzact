@@ -1,42 +1,50 @@
-import {Route, Redirect, Switch, useRouteMatch} from "react-router-dom";
-import Operations from "./Operations";
-import VirtualCards from "./VirtualCards";
-import TransactionsHistory from "./TransactionsHistory";
-import Dashboard from "./Dashboard";
+import React, {Suspense} from "react"
+import {Route, Redirect, Switch, useRouteMatch, NavLink} from "react-router-dom";
+import FullPageLoader from "../components/FullPageLoader";
+import {DASHBOARD_LINK, HISTORY_LINK, OPERATIONS_LINK, VIRTUAL_CARDS_LINK} from "../helpers/links";
+
+
+const Dashboard = React.lazy(() => import("./Dashboard"))
+const VirtualCards = React.lazy(() => import("./VirtualCards"))
+const TransactionsHistory = React.lazy(() => import("./TransactionsHistory"))
+const Operations = React.lazy(() => import("./Operations"))
+
 
 export default function Tabs() {
     let {path, url} = useRouteMatch();
 
     return (
         <>
-            <Switch>
-                <Route path={`${path}/dashboard`}>
-                    <Dashboard/>
-                </Route>
+            <Suspense fallback={<><FullPageLoader showLoader={true}/></>}>
+                <Switch>
+                    <Route path={`${path}/dashboard`}>
+                        <Dashboard/>
+                    </Route>
 
-                <Route path={`${path}/operations`}>
-                    <Operations/>
-                </Route>
+                    <Route path={`${path}/operations`}>
+                        <Operations/>
+                    </Route>
 
-                <Route path={`${path}/virtual-cards`}>
-                    <VirtualCards/>
-                </Route>
+                    <Route path={`${path}/virtual-cards`}>
+                        <VirtualCards/>
+                    </Route>
 
 
-                <Route path={`${path}/transaction-history`}>
-                    <TransactionsHistory/>
+                    <Route path={`${path}/transaction-history`}>
+                        <TransactionsHistory/>
 
-                </Route>
-                <Route path={path} exact>
-                    <Redirect to={`${path}/dashboard`}/>
-                </Route>
+                    </Route>
+                    <Route path={path} exact>
+                        <Redirect to={`${path}/dashboard`}/>
+                    </Route>
 
-            </Switch>
+                </Switch>
 
-            <footer className="em_main_footer ouline_footer with__text">
+            </Suspense>
+            <footer className="em_main_footer ouline_footer with__text" style={{'zIndex': '9999'}}>
                 <div className="em_body_navigation -active-links">
                     <div className="item_link">
-                        <a href="app-pages.html" className="btn btn_navLink">
+                        <NavLink to={DASHBOARD_LINK} className="btn btn_navLink">
                             <div className="icon_current">
                                 <svg id="Iconly_Curved_Document" data-name="Iconly/Curved/Document"
                                      xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -61,11 +69,12 @@ export default function Tabs() {
                                     </g>
                                 </svg>
                             </div>
-                            <div className="txt__tile">Pages</div>
-                        </a>
+
+                            <div className="txt__tile">Dashboard</div>
+                        </NavLink>
                     </div>
                     <div className="item_link">
-                        <a href="app-components.html" className="btn btn_navLink">
+                        <NavLink to={VIRTUAL_CARDS_LINK} className="btn btn_navLink">
                             <div className="icon_current">
                                 <svg id="Iconly_Curved_More_Circle" data-name="Iconly/Curved/More Circle"
                                      xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -91,11 +100,11 @@ export default function Tabs() {
                                 </svg>
                             </div>
 
-                            <div className="txt__tile">Elements</div>
-                        </a>
+                            <div className="txt__tile">Cards</div>
+                        </NavLink>
                     </div>
                     <div className="item_link">
-                        <a href="index.html" className="btn btn_navLink without_active">
+                        <NavLink to={OPERATIONS_LINK} className="btn btn_navLink without_active">
                             <button type="button" className="btn btnCircle_default rounded-10">
                                 <svg id="Iconly_Curved_Home" data-name="Iconly/Curved/Home"
                                      xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
@@ -112,10 +121,10 @@ export default function Tabs() {
                                 </svg>
 
                             </button>
-                        </a>
+                        </NavLink>
                     </div>
                     <div className="item_link">
-                        <a href="page-products-fullwidth.html" className="btn btn_navLink">
+                        <NavLink to={HISTORY_LINK} className="btn btn_navLink">
                             <div className="icon_current">
                                 <svg id="Iconly_Curved_Bag" data-name="Iconly/Curved/Bag"
                                      xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -141,11 +150,11 @@ export default function Tabs() {
                                 </svg>
                             </div>
                             <div className="items_basket_circle">2</div>
-                            <div className="txt__tile">Shop</div>
-                        </a>
+                            <div className="txt__tile">History</div>
+                        </NavLink>
                     </div>
                     <div className="item_link">
-                        <a href="page-profile.html" className="btn btn_navLink">
+                        <a href="/" className="btn btn_navLink">
                             <div className="icon_current">
                                 <svg id="Iconly_Curved_Setting" data-name="Iconly/Curved/Setting"
                                      xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

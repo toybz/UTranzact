@@ -1,14 +1,13 @@
 import Header from "../components/Header";
-import FullPageLoader from "../components/FullPageLoader";
 import {useEffect, useState} from "react";
 import {page} from "./pageHelper";
 
-function Dashboard({showFullPageLoader, hideFullPageLoader}) {
+function Dashboard() {
 
     useEffect(() => {
-        showFullPageLoader()
+
         setTimeout(() => {
-            hideFullPageLoader()
+
             const owl = document.jQuery(".owl-carousel")
             console.log(owl)
             owl.owlCarousel();
@@ -22,7 +21,7 @@ function Dashboard({showFullPageLoader, hideFullPageLoader}) {
         <>
             <div id="wrapper">
                 <div id="content">
-                    <Header pageTitle={pageTitle}/>
+                    <Header pageTitle={pageTitle} sticky={false}/>
                     <section className="banner__wallet">
                         <div className="emhead d-flex align-items-center justify-content-between">
                             <div className="item__total">
@@ -386,4 +385,4 @@ function Dashboard({showFullPageLoader, hideFullPageLoader}) {
     )
 }
 
-export default page(Dashboard)
+export default Dashboard

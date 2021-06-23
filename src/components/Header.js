@@ -1,6 +1,7 @@
-export default function Header({pageTitle}) {
+export default function Header({pageTitle, sticky = true}) {
+    const colorClass = sticky ? '-sticky' : 'header-white'
     return (
-        <header className="main_haeder header-sticky multi_item header-white">
+        <header className={`main_haeder header-sticky multi_item  ${colorClass} `}>
             <div className="em_menu_sidebar">
                 <button type="button" className="btn btn_menuSidebar item-show" data-toggle="modal"
                         data-target="#mdllSidebarMenu-background">

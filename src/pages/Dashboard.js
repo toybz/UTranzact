@@ -1,19 +1,11 @@
 import Header from "../components/Header";
 import {useEffect, useState} from "react";
 import {page} from "./pageHelper";
+import useCarousel from "../hooks/useCarousel";
 
 function Dashboard() {
+    useCarousel(".owl-carousel ")
 
-    useEffect(() => {
-
-        setTimeout(() => {
-
-            const owl = document.jQuery(".owl-carousel")
-            console.log(owl)
-            owl.owlCarousel();
-        }, 1000)
-
-    }, [])
 
     const pageTitle = "Dashboard"
 
@@ -21,7 +13,18 @@ function Dashboard() {
         <>
             <div id="wrapper">
                 <div id="content">
-                    <Header pageTitle={pageTitle} sticky={false}/>
+
+         <Header pageTitle={pageTitle} sticky={false}   />
+
+
+
+
+
+
+
+
+
+
                     <section className="banner__wallet">
                         <div className="emhead d-flex align-items-center justify-content-between">
                             <div className="item__total">

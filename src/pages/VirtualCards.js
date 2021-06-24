@@ -1,4 +1,6 @@
 import Header from "../components/Header";
+import {Link} from "react-router-dom";
+import {ADD_VIRTUAL_CARDS_LINK} from "../helpers/links";
 
 export default function VirtualCards() {
 
@@ -8,7 +10,18 @@ export default function VirtualCards() {
 
             <div id="wrapper">
                 <div id="content">
-                    <Header pageTitle={'Virtual Cards'}/>
+
+      <Header pageTitle={'Virtual Cards'}
+              rightItem={()=> (
+                  <div className="em_side_right">
+       <Link to={ADD_VIRTUAL_CARDS_LINK} className="size-14 white-onScroll color-primary hover:color-blue">
+           + Add
+       </Link>
+
+                  </div>
+              )}
+
+      />
 
                     <section className="padding-t-80 padding-l-20 padding-r-20 emPage__myCards padding-b-30">
 

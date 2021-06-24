@@ -6,6 +6,7 @@ import {DASHBOARD_LINK, HISTORY_LINK, OPERATIONS_LINK, VIRTUAL_CARDS_LINK} from 
 
 const Dashboard = React.lazy(() => import("./Dashboard"))
 const VirtualCards = React.lazy(() => import("./VirtualCards"))
+const AddVirtualCard = React.lazy(() => import("./AddVirtualCard"))
 const TransactionsHistory = React.lazy(() => import("./TransactionsHistory"))
 const Operations = React.lazy(() => import("./Operations"))
 
@@ -25,15 +26,24 @@ export default function Tabs() {
                         <Operations/>
                     </Route>
 
-                    <Route path={`${path}/virtual-cards`}>
+                    <Route path={`${path}/virtual-cards`} exact>
                         <VirtualCards/>
                     </Route>
-
+                    <Route path={`${path}/virtual-cards/new`} exact>
+                        <AddVirtualCard/>
+                    </Route>
 
                     <Route path={`${path}/transaction-history`}>
                         <TransactionsHistory/>
 
                     </Route>
+
+
+
+
+
+
+
                     <Route path={path} exact>
                         <Redirect to={`${path}/dashboard`}/>
                     </Route>

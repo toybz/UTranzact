@@ -1,19 +1,30 @@
-export default function Header({pageTitle, sticky = true}) {
+export default function Header({
+   pageTitle, leftItem, titleItem, rightItem, hideSideBar = true, sticky = true
+                               }) {
     const colorClass = sticky ? '-sticky' : 'header-white'
+
     return (
+
         <header className={`main_haeder header-sticky multi_item  ${colorClass} `}>
+
+            {hideSideBar && !leftItem &&
             <div className="em_menu_sidebar">
                 <button type="button" className="btn btn_menuSidebar item-show" data-toggle="modal"
                         data-target="#mdllSidebarMenu-background">
                     <i className="ri-menu-fill"></i>
                 </button>
-            </div>
-            <div className="title_page">
+            </div>}
+
+            {leftItem && leftItem()}
+
+            {titleItem ? leftItem() : <div className="title_page">
                 <h1 className="page_name">
                     {pageTitle}
                 </h1>
             </div>
-            <div className="em_side_right">
+            }
+
+            {rightItem ? rightItem() : <div className="em_side_right">
                 <a href="page-wishlist.html" className="btn justify-content-center relative">
                     <svg id="Iconly_Two-tone_Notification" data-name="Iconly/Two-tone/Notification"
                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -31,7 +42,9 @@ export default function Header({pageTitle, sticky = true}) {
                     </svg>
                     <span className="flashCircle"></span>
                 </a>
-            </div>
+            </div>}
+
+
         </header>
     )
 

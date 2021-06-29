@@ -26807,6 +26807,11 @@ layout
   justify-content: space-between;
   flex-direction: row;
   margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.menu_item{
+  flex: 1 0 20%;
+  margin-bottom: 12px !important;
 }
 
 .em__bkOperationsWallet.__page .em__actions .item {

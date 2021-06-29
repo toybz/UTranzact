@@ -2,6 +2,7 @@ import Header from "../components/Header";
 import {useEffect, useState} from "react";
 import {page} from "./pageHelper";
 import useCarousel from "../hooks/useCarousel";
+import Page from "./Page";
 
 function Dashboard() {
     useCarousel(".owl-carousel ")
@@ -11,17 +12,11 @@ function Dashboard() {
 
     return (
         <>
-            <div id="wrapper">
-                <div id="content">
+
+       <Page className={'bg-snow'}>
+
 
          <Header pageTitle={pageTitle} sticky={false}   />
-
-
-
-
-
-
-
 
 
 
@@ -241,14 +236,21 @@ function Dashboard() {
 
                         {/* Start emWallet__stats */}
                         <section className="emWallet__stats padding-l-20 padding-r-20 padding-t-30">
+
+                            <div className="title d-flex justify-content-between align-items-center padding-b-30">
+                                <h3 className="size-18 weight-500 color-secondary m-0">Quick Actions</h3>
+                                <a href="page-transactions-wallet.html"
+                                   className="d-block color-blue size-14 m-0 hover:color-blue">View all</a>
+                            </div>
+
                             <div className="item_boxes">
                                 <div className="row">
                                     <div className="col-6 pr-2">
                                         <div className="item">
                                             <div className="bk_head">
-                                                <p>Income</p>
+                                                <p>Airtel  Airtime 09043200</p>
                                             </div>
-                                            <div className="price">3,980.04 <span>USD</span></div>
+                                            <div className="price">500 <span>USD</span></div>
                                         </div>
                                     </div>
                                     <div className="col-6 pl-2">
@@ -380,9 +382,8 @@ function Dashboard() {
 
                     </main>
 
-                </div>
-            </div>
 
+       </Page>
         </>
 
     )

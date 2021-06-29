@@ -1,20 +1,27 @@
 import Header from "../components/Header";
 import BackButton from "../components/BackButton";
+import Page from "./Page";
+import {useState} from "react";
 
 
 export default function AddVirtualCard(props){
 
+    const [flipCreditCard, setFlipCreditCard] = useState(false)
+
+    const toggleCard = ()=>{
+        setFlipCreditCard((prev)=> !prev)
+    }
+
     return(
         <>
-            <div id="wrapper">
-                <div id="content">
 
+           <Page>
                     <Header pageTitle={'Add Card'} leftItem={()=>(<BackButton/>)}  rightItem={()=> (<></>)}   />
                     <section className="emSection__payment pageCredit__Card">
                         <div className="margin-b-30">
-                            <div className="emBlockCreaditCard preload">
+                            <div className={`emBlockCreaditCard preload ${flipCreditCard && 'flipped'}`}>
                                 <div className="contentCredit">
-                                    <div className="creaditCard__front">
+                                    <div className="creaditCard__front" onClick={toggleCard}>
                                         <div className="emhead_card">
                                             <img className="img_slice" src="/assets/img/icon/slice.svg" alt="" />
                                                 <div className="type__card" id="ccSingle"></div>
@@ -33,7 +40,8 @@ export default function AddVirtualCard(props){
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="creaditCard__back">
+
+                                     <div className="creaditCard__back" onClick={toggleCard}>
                                         <div className="header__cardBack">
                                             <div className="form-group m-0">
                                                 <label>Security Code (CVV)</label>
@@ -105,15 +113,8 @@ export default function AddVirtualCard(props){
                             </div>
                         </div>
                     </section>
-                    
-                    
-                    
 
-                </div>
-
-            </div>
-
-
+           </Page>
         </>
     )
 

@@ -1,15 +1,22 @@
-import React, {Suspense} from "react"
+import React, {Suspense, useEffect} from "react"
 import './App.css';
 import {Switch, Route, Redirect} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import FullPageLoader from "./components/FullPageLoader";
+import UseRedirectToHomePage from "./hooks/useRedirectToHomePage";
 
 
 const Tabs = React.lazy(() => import("./pages/Tabs"))
 
 
 function App() {
+
+
+    // Todo: Remove this after fixing the Jquery issue
+    UseRedirectToHomePage()
+
+
     return (
 
         <>

@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import {Link} from "react-router-dom";
 import {ADD_VIRTUAL_CARDS_LINK} from "../helpers/links";
+import Page from "./Page";
 
 export default function VirtualCards() {
 
@@ -8,8 +9,7 @@ export default function VirtualCards() {
 
         <>
 
-            <div id="wrapper">
-                <div id="content">
+        <Page className={'bg-snow'}>
 
       <Header pageTitle={'Virtual Cards'}
               rightItem={()=> (
@@ -179,9 +179,7 @@ export default function VirtualCards() {
                     </section>
 
 
-                </div>
-
-            </div>
+        </Page>
         </>
 
     )

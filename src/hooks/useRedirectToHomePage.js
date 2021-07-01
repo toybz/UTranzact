@@ -1,15 +1,14 @@
-import { useHistory, useLocation } from "react-router-dom";
-import React, { useEffect} from "react"
+import {useLocation} from "react-router-dom";
+import {useEffect} from "react"
 
 
-
-export default function UseRedirectToHomePage(){
+export default function UseRedirectToHomePage() {
     const location = useLocation();
 
-    useEffect(()=>{
+    useEffect(() => {
 
         console.log("Inside the redirect hook")
-        if(location.pathname !== '/' ){
+        if (location.pathname !== '/') {
             console.log("Redirecting")
 
             window.location.href = "/"

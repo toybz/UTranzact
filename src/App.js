@@ -1,4 +1,4 @@
-import React, {Suspense, useEffect} from "react"
+import React, {Suspense} from "react"
 import './App.css';
 import {Switch, Route, Redirect} from "react-router-dom";
 import Register from "./pages/Register";

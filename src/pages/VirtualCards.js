@@ -63,10 +63,10 @@ export default function VirtualCards() {
                                                     </button>
                                                     <div className="dropdown-menu rounded-8"
                                                          aria-labelledby="dropdownMenuButton">
-                                                        <a className="dropdown-item" href="#">Edit</a>
-                                                        <a className="dropdown-item" href="#">Update</a>
+                                                        <span className="dropdown-item">Edit</span>
+                                                        <span className="dropdown-item">Update</span>
                                                         <div className="dropdown-divider"></div>
-                                                        <a className="dropdown-item color-red" href="#">Remove</a>
+                                                        <span className="dropdown-item color-red">Remove</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -112,10 +112,10 @@ export default function VirtualCards() {
                                                     </button>
                                                     <div className="dropdown-menu rounded-8"
                                                          aria-labelledby="dropdownMenuButton">
-                                                        <a className="dropdown-item" href="#">Edit</a>
-                                                        <a className="dropdown-item" href="#">Update</a>
+                                                        <span className="dropdown-item">Edit</span>
+                                                        <span className="dropdown-item">Update</span>
                                                         <div className="dropdown-divider"></div>
-                                                        <a className="dropdown-item color-red" href="#">Remove</a>
+                                                        <span className="dropdown-item color-red">Remove</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -161,10 +161,10 @@ export default function VirtualCards() {
                                                     </button>
                                                     <div className="dropdown-menu rounded-8"
                                                          aria-labelledby="dropdownMenuButton">
-                                                        <a className="dropdown-item" href="#">Edit</a>
-                                                        <a className="dropdown-item" href="#">Update</a>
+                                                        <span className="dropdown-item">Edit</span>
+                                                        <span className="dropdown-item">Update</span>
                                                         <div className="dropdown-divider"></div>
-                                                        <a className="dropdown-item color-red" href="#">Remove</a>
+                                                        <span className="dropdown-item color-red">Remove</span>
                                                     </div>
                                                 </div>
                                             </div>

@@ -1,4 +1,4 @@
-export  default function BuyCard(){
+export default function FundCard() {
 
     return (
         <div className="modal transition-bottom screenFull defaultModal mdlladd__rate fade" id="fund-modal"

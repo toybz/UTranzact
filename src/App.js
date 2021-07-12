@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import FullPageLoader from "./components/FullPageLoader";
 import UseRedirectToHomePage from "./hooks/useRedirectToHomePage";
+import TransactionDetail from "./components/TransactionDetails";
 
 
 const Tabs = React.lazy(() => import("./pages/Tabs"))
@@ -20,7 +21,7 @@ function App() {
     return (
 
         <>
-            <Suspense fallback={<><FullPageLoader showLoader={true}/></>}>
+            <Suspense fallback={<><FullPageLoader/></>}>
                 <Switch>
 
                     <Route path="/~">

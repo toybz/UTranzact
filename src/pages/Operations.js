@@ -1,8 +1,14 @@
 import Header from "../components/Header";
-import {useEffect, useMemo} from "react";
+import {useMemo} from "react";
 import useCarousel from "../hooks/useCarousel";
 import Page from "./Page";
-import {TransferIcon} from "../components/operationsMenuIcons";
+import {
+    AirtimeMenuItem, CableMenuItem, CoPayMenuItem,
+    DataMenuItem,
+    FundCardMenuItem, PowerMenuItem,
+    QrPayMenuItem, RequestMenuItem,
+    TransferMenuItem
+} from "../components/operationsMenuIcons";
 import OperationItem from "../components/OperationItem";
 import BuyAirtime from "../components/Ops_BuyAirtime";
 import Transfer from "../components/Ops_Transfer";
@@ -21,21 +27,21 @@ export default function Operations() {
             title: "Transfer",
             modalId: "transfer-modal",
             bgClass: "bg-primary",
-            icon: TransferIcon,
+            icon: TransferMenuItem,
 
         },
         {
             title: "Qr Pay",
             modalId: "qr-modal",
             bgClass: "bg-orange",
-            icon: TransferIcon,
+            icon: QrPayMenuItem,
 
         },
         {
             title: "Fund Card",
             modalId: "fund-modal",
             bgClass: "bg-green",
-            icon: TransferIcon,
+            icon: FundCardMenuItem,
 
 
         },
@@ -43,14 +49,14 @@ export default function Operations() {
             title: "Airtime",
             modalId: "airtime-modal",
             bgClass: "bg-purple",
-            icon: TransferIcon,
+            icon: AirtimeMenuItem,
 
         },
         {
             title: "Data",
             modalId: "data-modal",
             bgClass: "bg-pink",
-            icon: TransferIcon,
+            icon: DataMenuItem,
 
 
         },
@@ -58,7 +64,7 @@ export default function Operations() {
             title: "Cable",
             modalId: "cable-modal",
             bgClass: "bg-red",
-            icon: TransferIcon,
+            icon: CableMenuItem,
 
 
         },
@@ -66,7 +72,7 @@ export default function Operations() {
             title: "Power",
             modalId: "power-modal",
             bgClass: "bg-red",
-            icon: TransferIcon,
+            icon: PowerMenuItem,
 
 
         },
@@ -74,7 +80,7 @@ export default function Operations() {
             title: "Co-Pay",
             modalId: "copay-modal",
             bgClass: "bg-yellow",
-            icon: TransferIcon,
+            icon: CoPayMenuItem,
 
 
         },
@@ -82,7 +88,7 @@ export default function Operations() {
             title: "Request",
             modalId: "request-modal",
             bgClass: "bg-yellow",
-            icon: TransferIcon,
+            icon: RequestMenuItem,
 
 
         }
@@ -208,7 +214,8 @@ export default function Operations() {
                         <div className="group">
 
                             {operationsList.map((item, index) => (
-                                <OperationItem key={index} {...item}/>
+                                /*    <OperationItem key={index} {...item} containerClass={'menu_item'}/>*/
+                                <item.icon key={index} containerClass={'menu_item'}/>
                             ))}
 
 

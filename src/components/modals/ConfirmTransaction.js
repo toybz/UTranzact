@@ -1,116 +1,30 @@
-export default function Transfer() {
+import {useState} from "react";
+import {useSelector} from "react-redux";
+import {AIRTIME, DATA, ELECTRICITY, PAY_TV, TRANSFER} from "../../helpers/transactionCategories";
+
+export const MODAL_ID = "confirm_saved_payment_transaction_modal";
+
+export const openConfirmTransactionModal = () => {
+    document.jQuery(`#${MODAL_ID}`).modal({})
+}
+
+export function ConfirmTransaction() {
+
+    const {
+        title,
+        description,
+        id,
+        receiver,
+        amount,
+        wallet,
+        category
+    } = useSelector(state => state.confirmTransactionModal)
+
     return (
         <>
             <div
-                className="modal transition-bottom screenFull defaultModal mdlladd__rate fade"
-                id="transfer-modal"
-                tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-            >
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header padding-l-20 padding-r-20 justify-content-center">
-                            <div className="itemProduct_sm">
-                                <h1 className="size-18 weight-600 color-secondary m-0">
-                                    Transfer
-                                </h1>
-                            </div>
-                            {/*here is close button */}
-                            <div className="absolute right-0 padding-r-20">
-                                <button
-                                    type="button"
-                                    className="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                >
-                                    <i className="tio-clear"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div className="modal-body">
-                            <div className="padding-t-20">
-                                <form action="#">
-                                    <div className="form-group input-lined">
-                                        <select className="form-control custom-select">
-                                            <option value="Bills Account (**** 1942)">
-                                                Bills Account (**** 1942)
-                                            </option>
-                                            <option value="Default Account (**** 6540)">
-                                                Default Account (**** 6540)
-                                            </option>
-                                            <option value="Saving Account (**** 0051)">
-                                                Saving Account (**** 0051)
-                                            </option>
-                                            <option value="Business Account (****2297)">
-                                                Business Account (****2297)
-                                            </option>
-                                        </select>
-                                        <label>Choose Debit Card</label>
-                                    </div>
-
-                                    <div className="form-group input-lined">
-                                        <select className="form-control custom-select">
-                                            <option value="Bills Account (**** 1942)">GTB</option>
-                                            <option value="Default Account (**** 6540)">
-                                                Default Account (**** 6540)
-                                            </option>
-                                            <option value="Saving Account (**** 0051)">
-                                                Saving Account (**** 0051)
-                                            </option>
-                                            <option value="Business Account (****2297)">
-                                                Business Account (****2297)
-                                            </option>
-                                        </select>
-                                        <label>Choose Bank</label>
-                                    </div>
-
-                                    <div className="form-group input-lined">
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="000923100"
-                                            required=""
-                                        />
-                                        <label>Account Number</label>
-                                    </div>
-
-                                    <div className="form-group input-lined relative">
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            value=""
-                                            min="0"
-                                            placeholder="0000"
-                                            required=""
-                                        />
-                                        <label>Enter Amount</label>
-                                        <span className="absolute right-0 top-0 mt-3 color-snow size-16">
-                      NGN
-                    </span>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                data-dismiss="modal"
-                                data-toggle="modal"
-                                data-target="#confirm-transfer-modal"
-                                className="btn w-100 bg-primary m-0 color-white h-52 d-flex align-items-center rounded-8 justify-content-center"
-                            >
-                                Send
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/*Modal confirm__transfer */}
-            <div
                 className="modal transition-bottom screenFull defaultModal confirm__transfer mdlladd__rate fade"
-                id="confirm-transfer-modal"
+                id={MODAL_ID}
                 tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
@@ -120,7 +34,7 @@ export default function Transfer() {
                         <div className="modal-header padding-l-20 padding-r-20 justify-content-center">
                             <div className="itemProduct_sm">
                                 <h1 className="size-18 weight-600 color-secondary m-0">
-                                    Confirm Transfer
+                                    Confirm Transaction
                                 </h1>
                             </div>
                             <div className="absolute right-0 padding-r-20">
@@ -138,7 +52,7 @@ export default function Transfer() {
                             <div className="padding-t-20 padding-b-30">
                                 <div className="trans__number margin-t-20 padding-b-30">
                                     <h3>
-                                        150.00 <span>USD</span>
+                                        {amount} <span>NGN</span>
                                     </h3>
                                     <p>Amount</p>
                                 </div>
@@ -149,8 +63,8 @@ export default function Transfer() {
                                                 <p className="color-white">k</p>
                                             </div>
                                             <div className="media-body my-auto">
-                                                <h4>Kisha Vanhorn</h4>
-                                                <p>Sender</p>
+                                                <h4>{wallet.name}</h4>
+                                                <p>Debit Wallet</p>
                                             </div>
                                         </div>
                                         <div className="sideRight">
@@ -210,15 +124,34 @@ export default function Transfer() {
                                             </div>
                                         </div>
                                     </div>
+
                                     <div className="item_trans">
                                         <div className="media sideLeft">
                                             <div className="icon_img">
-                                                <img src="assets/img/persons/01.png" alt=""/>
+                                                <img src={receiver.image} alt=""/>
                                             </div>
-                                            <div className="media-body my-auto">
-                                                <h4>Adam J. Staley</h4>
-                                                <p>Recipient</p>
-                                            </div>
+
+                                            {category !== TRANSFER && (
+                                                <div className="media-body my-auto">
+                                                    <h4>{receiver.destinationId}</h4>
+
+                                                    <p>Receiver
+                                                    </p>
+
+
+                                                </div>
+                                            )}
+
+                                            {category === TRANSFER && (<div className="media-body my-auto">
+                                                <h4>{receiver.name}</h4>
+                                                <p>{receiver.accountProvider.name}</p>
+                                                <p>{receiver.destinationId}</p>
+                                                <p>Receiver
+                                                </p>
+
+
+                                            </div>)}
+
                                         </div>
                                         <div className="sideRight">
                                             <div className="icon recipient">
@@ -278,12 +211,51 @@ export default function Transfer() {
                                         </div>
                                     </div>
                                 </div>
-                                <p className="color-text size-13 text-center mb-0">
+
+                                {category === AIRTIME && (<p className="color-text size-13 text-center mb-0">
+                                    You are buying {" "}
+                                    <span className="color-secondary">{amount} NGN</span> Airtime
+                                    to
+                                    <span className="color-secondary">
+                                        {' ' + receiver.destinationId}  </span>
+                                </p>)}
+
+                                {category === DATA && (<p className="color-text size-13 text-center mb-0">
+                                    You are buying {" "}
+                                    <span className="color-secondary">{amount} NGN</span> Data
+                                    to
+                                    <span className="color-secondary">
+                                        {receiver.destinationId}  </span>
+                                </p>)}
+
+                                {category === ELECTRICITY && (<p className="color-text size-13 text-center mb-0">
+                                    You are buying {" "}
+                                    <span className="color-secondary">{amount} NGN</span> Electricity Units
+                                    to
+                                    <span className="color-secondary">
+                                        {receiver.destinationId}  </span>
+                                </p>)}
+
+                                {category === PAY_TV && (<p className="color-text size-13 text-center mb-0">
+                                    You are buying {" "}
+                                    <span className="color-secondary">{amount} NGN</span> Subscription
+                                    to <span className="color-secondary">
+                                        {receiver.destinationId}  </span>
+                                </p>)}
+
+
+                                {category === TRANSFER && (<p className="color-text size-13 text-center mb-0">
                                     You are sending{" "}
-                                    <span className="color-secondary">150.00 USD</span> to Adam.
-                                </p>
+                                    <span className="color-secondary">{amount} NGN</span> to
+                                    <span className="color-secondary">
+
+                                        {' ' + receiver.name} </span>
+                                </p>)}
+
+
                             </div>
                         </div>
+
                         <div className="modal-footer">
                             <button
                                 type="button"
@@ -297,7 +269,9 @@ export default function Transfer() {
                 </div>
             </div>
 
-            {/*Modal confirm__transfer */}
         </>
-    );
+    )
+
+
 }
+

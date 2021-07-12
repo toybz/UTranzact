@@ -2838,7 +2838,7 @@ padding, margin Top All Screens
 }
 
 .padding-t-30 {
-  padding-top: 30px;
+  /*padding-top: 30px;*/
 }
 
 .padding-t-40 {
@@ -26703,10 +26703,10 @@ layout
  * ----------------------------------------
  */
 .main_Wallet_index {
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  margin-top: -30px;
-  background-color: var(--bg-white);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    margin-top: -30px;
+    background-color: var(--bg-snow);
 }
 
 /**
@@ -30313,8 +30313,8 @@ layout
 }
 
 .em_main_footer .em_body_navigation .item_link .btn_navLink i {
-  font-size: 24px;
-  color: var(--color-secondary);
+    font-size: 16px;
+    color: var(--color-secondary);
 }
 
 .em_main_footer .em_body_navigation .item_link .btn_navLink .img_profile {

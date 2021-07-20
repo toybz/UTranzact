@@ -1,9 +1,16 @@
-  export  default function BuyPower( ){
+const MODAL_ID = "power_modal";
+
+export const openBuyPowerModal = () => {
+    document.jQuery(`#${MODAL_ID}`).modal({})
+}
+
+
+export  default function BuyPower( ){
 
     return (
         <>
-            <div className="modal transition-bottom screenFull defaultModal mdlladd__rate fade" id="power-modal"
-                 tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal transition-bottom screenFull defaultModal mdlladd__rate fade" id={MODAL_ID}
+                 tabIndex="-1" >
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header padding-l-20 padding-r-20 justify-content-center">

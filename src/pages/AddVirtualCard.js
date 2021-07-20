@@ -12,6 +12,26 @@ export default function AddVirtualCard(props){
         setFlipCreditCard((prev)=> !prev)
     }
 
+
+    const [cardNumber, setCardNumber] = useState('')
+    const [cardHolderName, setCardHolderName] = useState('')
+    const [expiryDate, setExpiryDate] = useState('')
+    const [cvv, setCvv] = useState('')
+
+   const addSpace =  (string) => {
+
+        const strArray =string.split("")
+
+     return  strArray.map((char, index)=>{
+         if (index % 4 === 0){
+             return ` ${char}`
+         }
+         return char
+     })
+
+
+    };
+
     return(
         <>
 
@@ -27,16 +47,17 @@ export default function AddVirtualCard(props){
                                                 <div className="type__card" id="ccSingle"></div>
                                         </div>
                                         <div className="embody_card">
-                                            <p className="number__card" id="numberOn_card">4200 3215 224 9870</p>
+                                            <p className="number__card" id="numberOn_card"> { addSpace(cardNumber)}</p>
                                         </div>
                                         <div className="emfooter_card">
                                             <div className="txt">
                                                 <span>Card Holder</span>
-                                                <p id="nameOn_card">John Doe</p>
+                                                <p id="nameOn_card">{cardHolderName
+                                                }</p>
                                             </div>
                                             <div className="txt">
                                                 <span>Expires</span>
-                                                <p id="date_card">mm/yy</p>
+                                                <p id="date_card">{expiryDate}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -45,7 +66,7 @@ export default function AddVirtualCard(props){
                                         <div className="header__cardBack">
                                             <div className="form-group m-0">
                                                 <label>Security Code (CVV)</label>
-                                                <input type="password" className="form-control" value="" id="securityOn_card"
+                                                <input type="password" className="form-control" value={cvv} id="securityOn_card"
                                                        disabled />
                                             </div>
                                         </div>
@@ -64,7 +85,7 @@ export default function AddVirtualCard(props){
                                 <div className="col-12">
                                     <div className="form-group input-lined relative">
                                         <input type="text" className="form-control" placeholder="1234 1324 1234 1234"
-                                               id="cardNumber"  pattern="[0-9]*" inputMode="numeric" required />
+                                               id="cardNumber"  pattern="[0-9]*" inputMode="numeric" required  onChange={(event)=>{setCardNumber(event.target.value)}}   />
                                             <label htmlFor="cardNumber">Card Number</label>
                                             <div className="absolute right-0 top-0 pt-3">
                                                 <svg id="ccicon" className="ccicon h-16 w-35" width="750" height="471"
@@ -78,14 +99,14 @@ export default function AddVirtualCard(props){
                                 <div className="col-12">
                                     <div className="form-group input-lined">
                                         <input type="text" className="form-control" maxLength="20" id="nameCard"
-                                               placeholder="John Doe" required />
+                                               placeholder="John Doe" required onChange={(event)=>{setCardHolderName(event.target.value)}} />
                                             <label htmlFor="nameCard">Card Holder</label>
                                     </div>
                                 </div>
                                 <div className="col-6">
                                     <div className="form-group input-lined">
                                         <input type="text" className="form-control" placeholder="-- / --" id="expirationdate"
-                                               pattern="[0-9]*" inputMode="numeric" required />
+                                               pattern="[0-9]*" inputMode="numeric" required onChange={(event)=>{setExpiryDate(event.target.value)}} />
                                             <label htmlFor="expirationdate">Expiry Date</label>
 
                                     </div>
@@ -93,7 +114,7 @@ export default function AddVirtualCard(props){
                                 <div className="col-6">
                                     <div className="form-group input-lined">
                                         <input type="text" className="form-control" placeholder="1234" id="securitycode"
-                                               pattern="[0-9]*" inputMode="numeric" required />
+                                               pattern="[0-9]*" inputMode="numeric" required onChange={(event)=>{setCvv(event.target.value)}} />
                                             <label htmlFor="securitycode">Security Code (CVV)</label>
 
                                     </div>
@@ -108,7 +129,7 @@ export default function AddVirtualCard(props){
                             <div className="env-pb w-100">
                                 <a href="page-my-cards-wallet.html"
                                    className="btn btn__icon btn_default_lg bg-primary color-white text-left justify-content-center">
-                                    + Add Card
+                                    + Make Payment
                                 </a>
                             </div>
                         </div>

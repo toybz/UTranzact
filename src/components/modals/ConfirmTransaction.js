@@ -2,7 +2,7 @@ import {useState} from "react";
 import {useSelector} from "react-redux";
 import {AIRTIME, DATA, ELECTRICITY, PAY_TV, TRANSFER} from "../../helpers/transactionCategories";
 
-export const MODAL_ID = "confirm_saved_payment_transaction_modal";
+ const MODAL_ID = "confirm_saved_payment_transaction_modal";
 
 export const openConfirmTransactionModal = () => {
     document.jQuery(`#${MODAL_ID}`).modal({})
@@ -11,14 +11,17 @@ export const openConfirmTransactionModal = () => {
 export function ConfirmTransaction() {
 
     const {
-        title,
-        description,
         id,
-        receiver,
+        status,
+        category,
+        subCategory,
         amount,
-        wallet,
-        category
-    } = useSelector(state => state.confirmTransactionModal)
+        dateTime,
+        description,
+        benefactor,
+        debitWallet,
+        meta,
+    } = useSelector((store)=>store.transactionDetails)
 
     return (
         <>
@@ -60,10 +63,10 @@ export function ConfirmTransaction() {
                                     <div className="item_trans">
                                         <div className="media sideLeft">
                                             <div className="icon_img bg-pink">
-                                                <p className="color-white">k</p>
+                                                <p className="color-white">{debitWallet.name.slice(0,2)}</p>
                                             </div>
                                             <div className="media-body my-auto">
-                                                <h4>{wallet.name}</h4>
+                                                <h4>{debitWallet.name}</h4>
                                                 <p>Debit Wallet</p>
                                             </div>
                                         </div>
@@ -127,15 +130,16 @@ export function ConfirmTransaction() {
 
                                     <div className="item_trans">
                                         <div className="media sideLeft">
-                                            <div className="icon_img">
-                                                <img src={receiver.image} alt=""/>
+                                            <div className="icon_img bg-pink">
+
+                                                {benefactor.accountProvider.image ?  <img src={benefactor.accountProvider.image} alt=""/>  : <span className="color-white">{ benefactor.accountProvider.name.slice(0,2) }</span> }
                                             </div>
 
                                             {category !== TRANSFER && (
                                                 <div className="media-body my-auto">
-                                                    <h4>{receiver.destinationId}</h4>
+                                                    <h4>{benefactor.destinationId}</h4>
 
-                                                    <p>Receiver
+                                                    <p>Account ID
                                                     </p>
 
 
@@ -143,9 +147,9 @@ export function ConfirmTransaction() {
                                             )}
 
                                             {category === TRANSFER && (<div className="media-body my-auto">
-                                                <h4>{receiver.name}</h4>
-                                                <p>{receiver.accountProvider.name}</p>
-                                                <p>{receiver.destinationId}</p>
+                                                <h4>{benefactor.name}</h4>
+                                                <p>{benefactor.accountProvider.name}</p>
+                                                <p>{benefactor.destinationId}</p>
                                                 <p>Receiver
                                                 </p>
 
@@ -212,35 +216,35 @@ export function ConfirmTransaction() {
                                     </div>
                                 </div>
 
-                                {category === AIRTIME && (<p className="color-text size-13 text-center mb-0">
+                                {subCategory === AIRTIME && (<p className="color-text size-13 text-center mb-0">
                                     You are buying {" "}
                                     <span className="color-secondary">{amount} NGN</span> Airtime
                                     to
                                     <span className="color-secondary">
-                                        {' ' + receiver.destinationId}  </span>
+                                        {' ' + benefactor.destinationId}  </span>
                                 </p>)}
 
-                                {category === DATA && (<p className="color-text size-13 text-center mb-0">
+                                {subCategory === DATA && (<p className="color-text size-13 text-center mb-0">
                                     You are buying {" "}
-                                    <span className="color-secondary">{amount} NGN</span> Data
+                                    <span className="color-secondary">{meta.paymentItemName} </span> Data
                                     to
                                     <span className="color-secondary">
-                                        {receiver.destinationId}  </span>
+                                        {benefactor.destinationId}  </span>
                                 </p>)}
 
-                                {category === ELECTRICITY && (<p className="color-text size-13 text-center mb-0">
+                                {subCategory === ELECTRICITY && (<p className="color-text size-13 text-center mb-0">
                                     You are buying {" "}
                                     <span className="color-secondary">{amount} NGN</span> Electricity Units
                                     to
                                     <span className="color-secondary">
-                                        {receiver.destinationId}  </span>
+                                        {benefactor.destinationId}   </span>
                                 </p>)}
 
-                                {category === PAY_TV && (<p className="color-text size-13 text-center mb-0">
+                                {subCategory === PAY_TV && (<p className="color-text size-13 text-center mb-0">
                                     You are buying {" "}
-                                    <span className="color-secondary">{amount} NGN</span> Subscription
+                                    <span className="color-secondary">{meta.paymentItemName} </span> Subscription
                                     to <span className="color-secondary">
-                                        {receiver.destinationId}  </span>
+                                        {benefactor.destinationId}  </span>
                                 </p>)}
 
 
@@ -249,7 +253,7 @@ export function ConfirmTransaction() {
                                     <span className="color-secondary">{amount} NGN</span> to
                                     <span className="color-secondary">
 
-                                        {' ' + receiver.name} </span>
+                                        {' ' + benefactor.name} </span>
                                 </p>)}
 
 

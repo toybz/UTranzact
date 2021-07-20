@@ -1,9 +1,16 @@
+const MODAL_ID = "data_modal";
+
+export const openBuyDataModal = () => {
+    document.jQuery(`#${MODAL_ID}`).modal({})
+}
+
+
 export default function BuyData(){
 
     return (
         <>
-            <div className="modal transition-bottom screenFull defaultModal mdlladd__rate fade" id="data-modal"
-                 tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal transition-bottom screenFull defaultModal mdlladd__rate fade" id={MODAL_ID}
+                 tabIndex="-1" >
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header padding-l-20 padding-r-20 justify-content-center">

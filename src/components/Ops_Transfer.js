@@ -1,12 +1,17 @@
+
+const MODAL_ID = "transfer_modal";
+
+export const openTransferModal = () => {
+    document.jQuery(`#${MODAL_ID}`).modal({})
+}
+
 export default function Transfer() {
     return (
         <>
             <div
                 className="modal transition-bottom screenFull defaultModal mdlladd__rate fade"
-                id="transfer-modal"
+                id={MODAL_ID}
                 tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
             >
                 <div className="modal-dialog">
                     <div className="modal-content">

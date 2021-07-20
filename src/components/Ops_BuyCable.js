@@ -1,12 +1,19 @@
+
+const MODAL_ID = "cable_modal";
+
+export const openBuyPayTvModal = () => {
+    document.jQuery(`#${MODAL_ID}`).modal({})
+}
+
+
 export default function BuyCable() {
     return (
         <>
             <div
                 className="modal transition-bottom screenFull defaultModal mdlladd__rate fade"
-                id="cable-modal"
+                id={MODAL_ID}
                 tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
+
             >
                 <div className="modal-dialog">
                     <div className="modal-content">

@@ -6,10 +6,12 @@ import Login from "./pages/Login";
 import FullPageLoader from "./components/FullPageLoader";
 import UseRedirectToHomePage from "./hooks/useRedirectToHomePage";
 import TransactionDetail from "./components/TransactionDetails";
+import {QueryClient, QueryClientProvider} from "react-query";
 
 
 const Tabs = React.lazy(() => import("./pages/Tabs"))
 
+const queryClient = new QueryClient()
 
 function App() {
 
@@ -21,6 +23,7 @@ function App() {
     return (
 
         <>
+            <QueryClientProvider client={queryClient}>
             <Suspense fallback={<><FullPageLoader/></>}>
                 <Switch>
 
@@ -44,7 +47,7 @@ function App() {
 
             </Suspense>
 
-
+            </QueryClientProvider>
         </>
 
     );

@@ -214,7 +214,7 @@ export default function Operations() {
                         <div className="group">
 
                             {operationsList.map((item, index) => (
-                                /*    <OperationItem key={index} {...item} containerClass={'menu_item'}/>*/
+
                                 <item.icon key={index} containerClass={'menu_item'}/>
                             ))}
 

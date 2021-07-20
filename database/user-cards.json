@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Savings Account",
+    "user": "1",
+    "balance": "100",
+    "cardDetails": {
+      "name": "Toyeebabdulrahmon",
+      "number": "000000",
+      "expirationDate": "09/20",
+      "cvv": "992"
+    }
+  },
+  {
+    "name": "Default",
+    "user": "1",
+    "balance": "100",
+    "cardDetails": {
+      "name": "Toyeebabdulrahmon",
+      "number": "000000",
+      "expirationDate": "09/20",
+      "cvv": "992"
+    }
+  }
+  ,
+  {
+    "name": "Default",
+    "user": "1",
+    "balance": "100",
+    "cardDetails": {
+      "name": "Toyeebabdulrahmon",
+      "number": "000000",
+      "expirationDate": "09/20",
+      "cvv": "992"
+    }
+  }
+
+]

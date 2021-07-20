@@ -1,8 +1,15 @@
+const MODAL_ID = "request_modal";
+
+export const openRequestFundModal = () => {
+    document.jQuery(`#${MODAL_ID}`).modal({})
+}
+
+
 export default function RequestFunds (){
     return (
-        <div className="modal transition-bottom screenFull defaultModal mdlladd__rate fade" id="request-modal"
+        <div className="modal transition-bottom screenFull defaultModal mdlladd__rate fade" id={MODAL_ID}
              tabIndex="-1"
-             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            >
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header padding-l-20 padding-r-20 justify-content-center">

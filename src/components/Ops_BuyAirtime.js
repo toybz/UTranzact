@@ -1,12 +1,18 @@
+const MODAL_ID = "airtime_modal";
+
+export const openBuyAirtimeModal = () => {
+    document.jQuery(`#${MODAL_ID}`).modal({})
+}
+
+
 export default function BuyAirtime() {
     return (
         <>
             <div
                 className="modal transition-bottom screenFull defaultModal mdlladd__rate fade"
-                id="airtime-modal"
+                id={MODAL_ID}
                 tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
+
             >
                 <div className="modal-dialog">
                     <div className="modal-content">

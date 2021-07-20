@@ -14,6 +14,12 @@ import {
   VIRTUAL_CARDS_LINK,
 } from "../helpers/links";
 import {ConfirmTransaction} from "../components/modals/ConfirmTransaction";
+import FundCard from "../components/Ops_FundCard";
+import Page from "./Page";
+import Transfer from "../components/Ops_Transfer";
+import QrPay from "../components/Ops_QrPay";
+import BuyAirtime from "../components/Ops_BuyAirtime";
+import TransactionDetail from "../components/TransactionDetails";
 
 const Dashboard = React.lazy(() => import("./Dashboard"));
 const VirtualCards = React.lazy(() => import("./VirtualCards"));
@@ -116,7 +122,12 @@ export default function Tabs() {
           </div>
         </footer>
 
+        <FundCard/>
+        <Transfer/>
+        <QrPay/>
         <ConfirmTransaction/>
+        <BuyAirtime/>
+        <TransactionDetail />
       </>
   );
 }

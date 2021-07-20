@@ -1,113 +1,255 @@
+
+const transactionType = {
+    id: "003",
+    amount: "6000",
+    category: "Payment",
+    subCategory: "PayTv",
+    dateTime: "",
+    status: "",
+    description: "Compact sub for 00196545672",
+    benefactor: {
+        name: "",
+        destinationId: "11245665",
+        accountProvider: {
+            name: "DSTV",
+            id: "",
+            image: "/assets/img/persons/envato-logo-blue-black.png",
+
+        }
+    },
+    meta: {
+        paymentItemName: ""
+    },
+    debitWallet: {
+        name: "Default",
+        id: "001",
+    }
+}
+
+
+
 export default {
     totalBalance: 1000.04,
     savedTransactions: [
         {
             id: "001",
-            title: "Airtel Airtime",
-            description: "Airtime topup for 09108756532",
-            transactionId: "",
-            amount: "1000",
-            category: "Airtime",
-            receiver: {
-                name: "Airtel",
-                destinationId: "09108756532",
-                accountProvider: {
-                    name: "Airtel",
-                    id: ""
+            title: "DSTV Compact",
+            transaction: {
+                id: "003",
+                amount: "6000",
+                category: "Payment",
+                subCategory: "PayTv",
+                dateTime: "",
+                status: "Successful",
+                description: "Compact sub for 00196545672",
+                benefactor: {
+                    name: "",
+                    destinationId: "11245665",
+                    accountProvider: {
+                        name: "DSTV",
+                        id: "",
+                        image: "/assets/img/persons/envato-logo-blue-black.png",
+
+                    }
                 },
-                image: "/assets/img/persons/envato-logo-blue-black.png",
-                id: "",
-            },
-            wallet: {
-                name: "Default",
-                id: "001",
+                meta: {
+                    paymentItemName: "Compact"
+                },
+                debitWallet: {
+                    name: "Default",
+                    id: "001",
+                }
+            }
+
+        },
+        {
+            id: "001",
+            title: "Quick Airtime",
+            transaction: {
+                id: "002",
+                amount: "1000",
+                category: "Payment",
+                subCategory: "Airtime",
+                dateTime: "",
+                status: "Successful",
+                description: "",
+                benefactor: {
+                    name: "",
+                    destinationId: "0909876634555",
+                    accountProvider: {
+                        name: "Airtel",
+                        id: "",
+                        image: "/assets/img/persons/envato-logo-blue-black.png",
+
+                    }
+                },
+                meta: {
+                    paymentItemName: "Airtime"
+                },
+                debitWallet: {
+                    name: "Default",
+                    id: "001",
+                }
             }
         },
         {
             id: "002",
-            title: "Transfer",
-            description: "5000 Transfer to Yusuf",
-            amount: 4000,
+            title: "Sisters Pocket Money",
+            transaction:
+        {
+            id: "003",
+            amount: "10000",
             category: "Transfer",
-            image: "/assets/img/persons/envato-logo-blue-black.png",
-            receiver: {
-                name: "Yusuf Rahmon",
-                destinationId: "2201119876",
-                image: "/assets/img/persons/envato-logo-blue-black.png",
+            subCategory: "BankTransfer",
+            dateTime: "",
+            status: "Successful",
+            description: "",
+            benefactor: {
+                name: "Opeyemi Rahmon",
+                destinationId: "0909876634555",
                 accountProvider: {
-                    name: "GT Bank",
-                    id: ""
-                },
+                    name: "Gt Bank",
+                    id: "1",
+                    image: "",
 
-                id: "",
+                }
             },
-            wallet: {
+            debitWallet: {
+                name: "Default",
+                id: "001",
+            }
+        }},
+        {
+            id: "004",
+            title: "Fund Default",
+            transaction: {
+                id: "003",
+                amount: "10000",
+                category: "Funding",
+                subCategory: "",
+                dateTime: "",
+                status: "Successful",
+                description: "",
+                benefactor: {
+                    name: "Default Wallet",
+                    destinationId: "001",
+                    accountProvider: {
+                        name: "",
+                        id: "",
+                        image: "/assets/img/persons/envato-logo-blue-black.png",
+
+                    }
+                },
+                meta: {
+                    paymentItemName: ""
+                },
+                debitWallet: {
+                    name: "Master Card",
+                    id: "001",
+                }
+            }
+        }
+    ],
+    recentTransactions: [
+        {
+            id: "001",
+            amount: "6000",
+            category: "Payment",
+            subCategory: "PayTv",
+            dateTime: "",
+            status: "Successful",
+            description: "Compact sub for 00196545672",
+            benefactor: {
+                name: "",
+                destinationId: "11245665",
+                accountProvider: {
+                    name: "DSTV",
+                    id: "",
+                    image: "/assets/img/persons/envato-logo-blue-black.png",
+
+                }
+            }, meta: {
+                paymentItemName: "Compact"
+            },
+            debitWallet: {
+                name: "Default",
+                id: "001",
+            }
+        } ,
+        {
+            id: "002",
+            amount: "1000",
+            category: "Payment",
+            subCategory: "Airtime",
+            dateTime: "",
+            status: "Successful",
+            description: "",
+            benefactor: {
+                name: "",
+                destinationId: "0909876634555",
+                accountProvider: {
+                    name: "Airtel",
+                    id: "",
+                    image: "/assets/img/persons/envato-logo-blue-black.png",
+
+                }
+            },
+            meta: {
+                paymentItemName: "Airtime"
+            },
+            debitWallet: {
                 name: "Default",
                 id: "001",
             }
         },
         {
             id: "003",
-            title: "Dstv Subscription",
-            description: "Compact sub for 00196545672",
-            transactionId: "",
-            amount: "6000",
-            category: "PayTv",
-            receiver: {
-                name: "Dstv",
-                destinationId: "11245665",
+            amount: "10000",
+            category: "Transfer",
+            subCategory: "BankTransfer",
+            dateTime: "",
+            status: "Successful",
+            description: "",
+            benefactor: {
+                name: "Opeyemi Rahmon",
+                destinationId: "0909876634555",
                 accountProvider: {
-                    name: "DSTV",
-                    id: ""
-                },
-                image: "/assets/img/persons/envato-logo-blue-black.png",
-                id: "",
+                    name: "Gt Bank",
+                    id: "1",
+                    image: "",
+
+                }
             },
-            wallet: {
+            debitWallet: {
                 name: "Default",
                 id: "001",
             }
         },
-    ],
-    recentTransactions: [
         {
-            id: "0",
-            status: "success",
-            category: "Transfer",
-            amount: 4000,
-            description: "Description",
-            receiver: {
-                name: "Ife Bashan",
-                accountNumber: "2201119876",
-                image: "",
-                id: "",
+            id: "003",
+            amount: "10000",
+            category: "Funding",
+            subCategory: "",
+            dateTime: "",
+            status: "Successful",
+            description: "",
+            benefactor: {
+                name: "Default Wallet",
+                destinationId: "001",
+                accountProvider: {
+                    name: "",
+                    id: "",
+                    image: "/assets/img/persons/envato-logo-blue-black.png",
+
+                }
             },
-        },
-        {
-            id: "1",
-            status: "success",
-            category: "Airtime Purchase",
-            description: "Description",
-            amount: 1000,
-            receiver: {
-                name: "MTN",
-                accountNumber: "",
-                image: "",
-                id: "",
+            meta: {
+                paymentItemName: ""
             },
-        },
-        {
-            id: "2",
-            status: "success",
-            description: "Description",
-            category: "Topup",
-            amount: 15000,
-            receiver: {
-                name: "Default Card",
-                accountNumber: "2201119876",
-                image: "",
-                id: "",
-            },
-        },
+            debitWallet: {
+                name: "Master Card",
+                id: "001",
+            }
+        }
     ],
 };

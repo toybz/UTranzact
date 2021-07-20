@@ -1,40 +1,81 @@
 import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    BANK_TRANSFER,
+    FUNDING,
+    PAYMENT,
+    STATUS_FAILED,
+    STATUS_PENDING,
+    STATUS_SUCCESSFUL,
+    TRANSFER
+} from "../helpers/transactionCategories";
+import {updateTransactionDetails} from "../store/modals/transactionDetails";
 
-const MODAL_ID = 'transaction_detail_modal'
 
-export function useTransactionDetailsModal() {
+const MODAL_ID = "transaction_detail_modal";
 
-    const [transactionDetails, setTransactionDetails] = useState(null)
-
-    const openTransactionDetailModal = (details) => {
-
-        setTransactionDetails((oldValue) => {
-            return {...oldValue, ...details}
-        })
-        document.jQuery(`#${MODAL_ID}`).modal({})
-
-    }
-
-    return {
-
-        transactionDetails, openTransactionDetailModal
-    }
+export const openTransactionDetailModal = () => {
+    document.jQuery(`#${MODAL_ID}`).modal({})
 }
 
 
-export default function TransactionDetail({status, receiver, category, date, description, amount}) {
+export default function TransactionDetail() {
+
+   const {
+       id,
+       status,
+       category,
+       subCategory,
+       amount,
+       dateTime,
+       description,
+        benefactor,
+       debitWallet,
+       meta,
+   } = useSelector((store)=>store.transactionDetails)
+
+   // console.log({TransactionDetail})
 
     return (
-
         <>
-
             <div className="modal transition-bottom screenFull defaultModal details__transaction mdlladd__rate fade"
                  id={MODAL_ID} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header border-0 padding-l-20 padding-r-20 justify-content-center">
                             <div className="itemProduct_sm">
-                                <h1 className="size-18 weight-600 color-secondary m-0">Payment Sent</h1>
+
+   { category === PAYMENT && status === STATUS_SUCCESSFUL &&  <h1 className="size-18 weight-600 color-secondary m-0">Payment Successful</h1>
+       }
+                                { category === PAYMENT && status === STATUS_PENDING &&  <h1 className="size-18 weight-600 color-secondary m-0">Payment Pending</h1>
+                                }
+                                { category === PAYMENT && status === STATUS_FAILED &&  <h1 className="size-18 weight-600 color-secondary m-0">Payment Failed</h1>
+                                }
+
+
+
+                                { category === TRANSFER && status === STATUS_SUCCESSFUL &&  <h1 className="size-18 weight-600 color-secondary m-0">Transfer Successful</h1>
+                                }
+
+                                { category === TRANSFER && status === STATUS_PENDING &&  <h1 className="size-18 weight-600 color-secondary m-0">Transfer is Processing</h1>
+                                }
+                                { category === TRANSFER && status === STATUS_FAILED &&  <h1 className="size-18 weight-600 color-secondary m-0">Transfer Failed</h1>
+                                }
+
+
+                                { category === FUNDING && status === STATUS_SUCCESSFUL &&  <h1 className="size-18 weight-600 color-secondary m-0">Funding Successful</h1>
+                                }
+
+                                { category === FUNDING && status === STATUS_PENDING &&  <h1 className="size-18 weight-600 color-secondary m-0">Funding Processing</h1>
+                                }
+                                { category === FUNDING && status === STATUS_FAILED &&  <h1 className="size-18 weight-600 color-secondary m-0">Funding Failed</h1>
+                                }
+
+
+
+
+
+
                             </div>
                             <div className="absolute right-0 padding-r-20">
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -43,25 +84,7 @@ export default function TransactionDetail({status, receiver, category, date, des
                             </div>
                             <div className="icon absolute left-0 padding-l-20">
                                 <button type="button" className="btn p-0">
-                                    <svg id="Iconly_Two-tone_Delete" data-name="Iconly/Two-tone/Delete"
-                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                        <g id="Delete" transform="translate(3 2)">
-                                            <path id="Stroke_1" data-name="Stroke 1"
-                                                  d="M14.191,0s-.543,6.735-.858,9.572a2.238,2.238,0,0,1-2.358,2.174c-2.609.047-5.221.05-7.829-.005A2.214,2.214,0,0,1,.857,9.579C.54,6.717,0,0,0,0"
-                                                  transform="translate(2.134 7.468)" fill="none" stroke="#ff3f3f"
-                                                  stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
-                                                  stroke-width="1.5" opacity="0.4"/>
-                                            <path id="Stroke_3" data-name="Stroke 3" d="M16.958.5H0"
-                                                  transform="translate(0.75 3.74)" fill="none" stroke="#ff3f3f"
-                                                  stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
-                                                  stroke-width="1.5"/>
-                                            <path id="Stroke_5" data-name="Stroke 5"
-                                                  d="M10.423,3.489A1.648,1.648,0,0,1,8.808,2.165L8.565.949A1.28,1.28,0,0,0,7.328,0H3.1A1.28,1.28,0,0,0,1.858.949L1.615,2.165A1.648,1.648,0,0,1,0,3.489"
-                                                  transform="translate(4.018 0.751)" fill="none" stroke="#ff3f3f"
-                                                  stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
-                                                  stroke-width="1.5"/>
-                                        </g>
-                                    </svg>
+                                    Share
 
                                 </button>
                             </div>
@@ -96,44 +119,71 @@ export default function TransactionDetail({status, receiver, category, date, des
                                     <td><span>Status</span></td>
                                     <td><span className="success">{status}</span></td>
                                 </tr>
-                                <tr>
-                                    <td><span>To</span></td>
-                                    <td><span>{receiver?.name}</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span>Bank Name</span></td>
-                                    <td><span>{receiver?.accountNumber}</span></td>
-                                </tr>
-
-                                <tr>
-                                    <td><span>Account Number</span></td>
-                                    <td><span>{receiver?.accountNumber}</span></td>
-                                </tr>
 
 
+
+                                    <tr>
+                                        <td><span>Amount</span></td>
+                                        <td><span className="weight-500 size-15">{amount} </span><span
+                                            className="size-12">NGN</span>
+                                        </td>
+                                    </tr>
                                 <tr>
-                                    <td><span>Transaction Category</span></td>
+                                    <td><span>Category</span></td>
                                     <td><span>{category}</span></td>
+
                                 </tr>
-                                {/* <tr>
-                                    <td><span>Receipt</span></td>
-                                    <td><span>Yes</span></td>
-                                </tr>*/}
+                                {category === PAYMENT && meta?.paymentItemName && (
+                                    <tr>
+                                        <td><span>Package name</span></td>
+                                        <td><span>{meta.paymentItemName}</span></td>
+                                    </tr>
+                                )}
+                                <tr>
+
+
+                                    <td><span>Benefactor</span></td>
+                                    <td><span>{benefactor.name || benefactor.destinationId}</span></td>
+                                </tr>
+
+  {  subCategory === BANK_TRANSFER && (
+     <>
+         <tr>
+             <td><span> Bank </span></td>
+             <td><span>{benefactor.accountProvider.name}</span></td>
+         </tr>
+         <tr>
+             <td><span> Account No. </span></td>
+             <td><span>{benefactor.destinationId}</span></td>
+         </tr>
+     </>
+
+
+
+
+  ) }
+
+
+
+
+
+
+
+                                <tr>
+
+
+                                    <td><span>Debit Wallet</span></td>
+                                    <td><span>{debitWallet?.name}</span></td>
+                                </tr>
+
+
                                 <tr>
                                     <td><span>Date</span></td>
-                                    <td><span>{date}</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span>Amount</span></td>
-                                    <td><span className="weight-500 size-15">{amount} </span><span
-                                        className="size-12">NGN</span>
-                                    </td>
+                                    <td><span>{dateTime}</span></td>
                                 </tr>
 
-                                <tr>
-                                    <td><span>Description</span></td>
-                                    <td><span>{description}</span></td>
-                                </tr>
+
+
 
 
                                 </tbody>

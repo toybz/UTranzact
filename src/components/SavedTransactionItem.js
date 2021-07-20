@@ -1,16 +1,22 @@
 import {openConfirmTransactionModal} from "./modals/ConfirmTransaction";
 import {useDispatch} from "react-redux";
-import {update} from "../store/modals/savedTransaction";
+
+import {FUNDING, PAYMENT, TRANSFER} from "../helpers/transactionCategories";
+import {updateTransactionDetails} from "../store/modals/transactionDetails";
 
 
 export default function SavedTransactionItem(props) {
 
-    const {transactionId, receiver, title, description, amount} = props
+  const {transaction,title, id} = props
+
+    const {amount, category, subCategory, description, benefactor, meta, debitWallet } = transaction
+
+
     const dispatch = useDispatch()
 
-    const showConfirmModal = (transactionDetails) => {
+    const showConfirmModal = () => {
 
-        dispatch(update(transactionDetails))
+        dispatch(updateTransactionDetails(transaction))
 
         openConfirmTransactionModal()
 
@@ -23,16 +29,31 @@ export default function SavedTransactionItem(props) {
                 <div className="emhead_w">
                     <div className="icon_img">
                         <img
-                            src={receiver?.image || "/assets/img/persons/envato-logo-blue-black.png"}
+                            src={benefactor?.image || "/assets/img/persons/envato-logo-blue-black.png"}
                             alt=""/>
                     </div>
-                    <button className="btn btn_default bg-primary" onClick={() => showConfirmModal(props)}>Pay Now
+                    <button className="btn btn_default bg-primary" onClick={() => showConfirmModal(transaction)}>Pay Now
                     </button>
                 </div>
                 <div className="embody_w">
                     <div className="details_w">
-                        <h3>{title}</h3>
-                        <span>{description}</span>
+                        <p className="padding-0 margin-0">{title}</p>
+
+                        <span> {
+                            transaction.category === TRANSFER  && `Transfer to ${transaction.benefactor.accountProvider.name}`
+                        }
+
+                            {
+                                transaction.category === PAYMENT  && `Payment for ${transaction.benefactor.accountProvider.name} - ${transaction.meta.paymentItemName}`
+                            }
+
+                            {
+                                transaction.category === FUNDING  && `Wallet Funding`
+                            }
+
+                        </span>
+
+                        <span>{transaction.benefactor.name || transaction.benefactor.destinationId }</span>
                     </div>
                     <div className="price">
                         <p> {amount} <span>NGN</span></p>

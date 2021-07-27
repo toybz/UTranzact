@@ -7,6 +7,8 @@ import FullPageLoader from "./components/FullPageLoader";
 import UseRedirectToHomePage from "./hooks/useRedirectToHomePage";
 import TransactionDetail from "./components/TransactionDetails";
 import {QueryClient, QueryClientProvider} from "react-query";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Tabs = React.lazy(() => import("./pages/Tabs"))
@@ -48,6 +50,7 @@ function App() {
             </Suspense>
 
             </QueryClientProvider>
+            <ToastContainer />
         </>
 
     );

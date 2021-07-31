@@ -37,7 +37,6 @@ import {
   useFetchUserBalance,
   useFetchUserWallets,
 } from "../hooks/useRequests";
-import useDeepCompareEffect from "use-deep-compare-effect";
 
 function Dashboard() {
   useCarousel(".owl-carousel ");

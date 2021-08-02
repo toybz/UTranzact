@@ -1,11 +1,7 @@
-import { useRef, useState } from "react";
-import { useQuery } from "react-query";
-import axios from "axios";
-import { useFetchUserWallets, useUpdateWallet } from "../hooks/useRequests";
+import {useRef, useState} from "react";
+import {useFetchUserWallets, useUpdateWallet} from "../hooks/useRequests";
 import OpsSubmitButton from "./OpsSubmitButton";
-import SelectPaymentMethod, {
-  openSelectPaymentMethodModal,
-} from "./SelectPaymentMethod";
+import SelectPaymentMethod from "./SelectPaymentMethod";
 
 export const MODAL_ID = "fund_card_modal";
 

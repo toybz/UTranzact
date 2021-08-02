@@ -1,21 +1,10 @@
 import React, {Suspense} from "react";
-import {
-  NavLink,
-  Redirect,
-  Route,
-  Switch,
-  useRouteMatch,
-} from "react-router-dom";
+import {NavLink, Redirect, Route, Switch, useRouteMatch,} from "react-router-dom";
 import FullPageLoader from "../components/FullPageLoader";
-import {
-  DASHBOARD_LINK,
-  HISTORY_LINK,
-  OPERATIONS_LINK,
-  VIRTUAL_CARDS_LINK,
-} from "../helpers/links";
+import {DASHBOARD_LINK, HISTORY_LINK, OPERATIONS_LINK, VIRTUAL_CARDS_LINK,} from "../helpers/links";
 import {ConfirmTransaction} from "../components/modals/ConfirmTransaction";
 import FundCard from "../components/Ops_FundCard";
-import Page from "./Page";
+
 import Transfer from "../components/Ops_Transfer";
 import QrPay from "../components/Ops_QrPay";
 import BuyAirtime from "../components/Ops_BuyAirtime";
@@ -73,7 +62,7 @@ export default function Tabs() {
             <div className="item_link">
               <NavLink to={DASHBOARD_LINK} className="btn btn_navLink">
                 <div className="icon_current icon">
-                  <i className="ri-home-2-line "></i>
+                  <i className="ri-home-2-line "/>
                 </div>
 
                 <div className="txt__tile">Dashboard</div>
@@ -82,7 +71,7 @@ export default function Tabs() {
             <div className="item_link">
               <NavLink to={VIRTUAL_CARDS_LINK} className="btn btn_navLink">
                 <div className="icon_current">
-                  <i class="ri-bank-card-line"></i>
+                  <i className="ri-bank-card-line"/>
                 </div>
 
                 <div className="txt__tile">Cards</div>
@@ -97,14 +86,14 @@ export default function Tabs() {
                     type="button"
                     className="btn btnCircle_default rounded-10"
                 >
-                  <i class="ri-dashboard-line"></i>
+                  <i className="ri-dashboard-line"/>
                 </button>
               </NavLink>
             </div>
             <div className="item_link">
               <NavLink to={HISTORY_LINK} className="btn btn_navLink">
                 <div className="icon_current">
-                  <i class="ri-history-line"></i>
+                  <i className="ri-history-line"/>
                 </div>
                 <div className="items_basket_circle">2</div>
                 <div className="txt__tile">History</div>
@@ -113,7 +102,7 @@ export default function Tabs() {
             <div className="item_link">
               <a href="/" className="btn btn_navLink">
                 <div className="icon_current">
-                  <i class="ri-settings-line"></i>
+                  <i className="ri-settings-line"/>
                 </div>
 
                 <div className="txt__tile">Settings</div>

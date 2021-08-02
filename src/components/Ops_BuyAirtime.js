@@ -30,7 +30,7 @@ export default function BuyAirtime() {
                                     data-dismiss="modal"
                                     aria-label="Close"
                                 >
-                                    <i className="tio-clear"></i>
+                                    <i className="tio-clear"/>
                                 </button>
                             </div>
                         </div>
@@ -59,7 +59,7 @@ export default function BuyAirtime() {
                                         <input
                                             type="tel"
                                             className="form-control"
-                                            value=""
+
                                             placeholder="080********"
                                             required=""
                                         />
@@ -70,7 +70,7 @@ export default function BuyAirtime() {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            value=""
+
                                             min="0"
                                             placeholder="000"
                                             required=""

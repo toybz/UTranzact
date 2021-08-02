@@ -29,7 +29,7 @@ export default function Transfer() {
                                     data-dismiss="modal"
                                     aria-label="Close"
                                 >
-                                    <i className="tio-clear"></i>
+                                    <i className="tio-clear"/>
                                 </button>
                             </div>
                         </div>
@@ -75,7 +75,7 @@ export default function Transfer() {
                                             type="text"
                                             className="form-control"
                                             placeholder="000923100"
-                                            required=""
+                    required=""
                                         />
                                         <label>Account Number</label>
                                     </div>
@@ -84,7 +84,7 @@ export default function Transfer() {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            value=""
+                                            defaultValue=""
                                             min="0"
                                             placeholder="0000"
                                             required=""

@@ -3,13 +3,16 @@ import {useMemo} from "react";
 import useCarousel from "../hooks/useCarousel";
 import Page from "./Page";
 import {
-    AirtimeMenuItem, CableMenuItem, CoPayMenuItem,
+    AirtimeMenuItem,
+    CableMenuItem,
+    CoPayMenuItem,
     DataMenuItem,
-    FundCardMenuItem, PowerMenuItem,
-    QrPayMenuItem, RequestMenuItem,
+    FundCardMenuItem,
+    PowerMenuItem,
+    QrPayMenuItem,
+    RequestMenuItem,
     TransferMenuItem
 } from "../components/operationsMenuIcons";
-import OperationItem from "../components/OperationItem";
 import BuyAirtime from "../components/Ops_BuyAirtime";
 import Transfer from "../components/Ops_Transfer";
 import BuyCard from "../components/Ops_FundCard";

@@ -51,7 +51,7 @@ export default function QrPay(){
                                 </div>
 
                                 <div className="form-group input-lined relative">
-                                    <input type="text" className="form-control" value="150" min="0"
+                                    <input type="text" className="form-control" defaultValue="150" min="0"
                                            placeholder="John Smith"
                                            required=""/>
                                     <label>Enter Amount</label>

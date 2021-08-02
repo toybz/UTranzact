@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import {useQuery} from "react-query";
 import axios from "axios";
 
 export const BASE_URL = "https://fintech-53fe8-default-rtdb.firebaseio.com/";

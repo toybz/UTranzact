@@ -1,8 +1,7 @@
-import {useState} from "react";
 import {useSelector} from "react-redux";
 import {AIRTIME, DATA, ELECTRICITY, PAY_TV, TRANSFER} from "../../helpers/transactionCategories";
 
- const MODAL_ID = "confirm_saved_payment_transaction_modal";
+const MODAL_ID = "confirm_saved_payment_transaction_modal";
 
 export const openConfirmTransactionModal = () => {
     document.jQuery(`#${MODAL_ID}`).modal({})
@@ -21,7 +20,7 @@ export function ConfirmTransaction() {
         benefactor,
         debitWallet,
         meta,
-    } = useSelector((store)=>store.transactionDetails)
+    } = useSelector((store) => store.transactionDetails)
 
     return (
         <>
@@ -63,7 +62,7 @@ export function ConfirmTransaction() {
                                     <div className="item_trans">
                                         <div className="media sideLeft">
                                             <div className="icon_img bg-pink">
-                                                <p className="color-white">{debitWallet.name.slice(0,2)}</p>
+                                                <p className="color-white">{debitWallet.name.slice(0, 2)}</p>
                                             </div>
                                             <div className="media-body my-auto">
                                                 <h4>{debitWallet.name}</h4>
@@ -132,7 +131,9 @@ export function ConfirmTransaction() {
                                         <div className="media sideLeft">
                                             <div className="icon_img bg-pink">
 
-                                                {benefactor.accountProvider.image ?  <img src={benefactor.accountProvider.image} alt=""/>  : <span className="color-white">{ benefactor.accountProvider.name.slice(0,2) }</span> }
+                                                {benefactor.accountProvider.image ?
+                                                    <img src={benefactor.accountProvider.image} alt=""/> : <span
+                                                        className="color-white">{benefactor.accountProvider.name.slice(0, 2)}</span>}
                                             </div>
 
                                             {category !== TRANSFER && (

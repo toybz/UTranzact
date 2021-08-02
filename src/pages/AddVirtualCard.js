@@ -2,9 +2,7 @@ import Header from "../components/Header";
 import BackButton from "../components/BackButton";
 import Page from "./Page";
 import {useState} from "react";
-import {openSelectPaymentMethodModal} from "../components/SelectPaymentMethod";
 import OpsSubmitButton from "../components/OpsSubmitButton";
-import {toast} from "react-toastify";
 import {showToast} from "../helpers/Utils";
 import {useHistory} from "react-router-dom";
 

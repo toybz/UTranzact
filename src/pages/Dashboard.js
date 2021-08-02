@@ -1,42 +1,18 @@
 import Header from "../components/Header";
 import useCarousel from "../hooks/useCarousel";
 import Page from "./Page";
-import { useEffect, useMemo, useState } from "react";
-import FundCard, { openFundCardModal } from "../components/Ops_FundCard";
-import { Link } from "react-router-dom";
-import { HISTORY_LINK, SAVED_TRANSACTIONS } from "../helpers/links";
-import TransactionDetail, {
-  openTransactionDetailModal,
-  setTransactionDetailData,
-  useTransactionDetailsModal,
-} from "../components/TransactionDetails";
-import OperationItem from "../components/OperationItem";
-import {
-  AirtimeMenuItem,
-  DataMenuItem,
-  FundCardMenuItem,
-  QrPayMenuItem,
-  TransferMenuItem,
-} from "../components/operationsMenuIcons";
-import Transfer from "../components/Ops_Transfer";
-import BuyAirtime from "../components/Ops_BuyAirtime";
-import QrPay from "../components/Ops_QrPay";
+import {useEffect, useState} from "react";
+import {openFundCardModal} from "../components/Ops_FundCard";
+import {Link} from "react-router-dom";
+import {HISTORY_LINK, SAVED_TRANSACTIONS} from "../helpers/links";
+import {AirtimeMenuItem, DataMenuItem, FundCardMenuItem, TransferMenuItem,} from "../components/operationsMenuIcons";
 import SavedTransactionItem from "../components/SavedTransactionItem";
-import { useSavedTransactionModal } from "../hooks/useModals";
+import {useDispatch} from "react-redux";
 
-import demoData from "../dummy_data";
-import { useDispatch } from "react-redux";
-import { updateTransactionDetails } from "../store/modals/transactionDetails";
-import { FUNDING, PAYMENT, TRANSFER } from "../helpers/transactionCategories";
-
-import { BarLoader, BeatLoader, PulseLoader } from "react-spinners";
+import {BeatLoader} from "react-spinners";
 import LoadingCard from "../components/LoadingCard";
-import {
-  useFetchRecentTransactions,
-  useFetchSavedTransactions,
-  useFetchUserBalance,
-  useFetchUserWallets,
-} from "../hooks/useRequests";
+import {useFetchRecentTransactions, useFetchSavedTransactions, useFetchUserWallets,} from "../hooks/useRequests";
+import HistoryItem from "../components/HistoryItem";
 
 function Dashboard() {
   useCarousel(".owl-carousel ");
@@ -61,14 +37,17 @@ function Dashboard() {
     setTotalBalance(balance);
   }, [JSON.stringify(userWallets)]);
 
-  const operationsList = useMemo(
+/*  const operationsList = useMemo(
     () => [TransferMenuItem, DataMenuItem, AirtimeMenuItem, FundCardMenuItem],
     []
-  );
-
+  );*/
+  const operationsList = [TransferMenuItem, DataMenuItem, AirtimeMenuItem, FundCardMenuItem]
   return (
     <>
       <Page className={"bg-snow"}>
+
+
+
         <Header pageTitle={pageTitle} sticky={false} />
 
         <section className="banner__wallet">
@@ -104,15 +83,15 @@ function Dashboard() {
         <main className="main_Wallet_index">
           <section className="em__bkOperationsWallet">
             <div className="em__actions">
-              {operationsList.map((Operation) => (
-                <Operation />
+              {operationsList.map((Operation, index) => (
+      <Operation key={index} />
               ))}
             </div>
           </section>
 
           {/* Start dividar */}
           <section className="padding-20 py-0">
-            <div className="dividar"></div>
+            <div className="dividar"/>
           </section>
           {/* End. dividar */}
 
@@ -134,7 +113,7 @@ function Dashboard() {
               <div className="emBk__bills">
                 {savedTransactions ? (
                   savedTransactions.map((transaction) => (
-                    <SavedTransactionItem {...transaction} />
+                    <SavedTransactionItem {...transaction} key={transaction.id} />
                   ))
                 ) : (
                   <LoadingCard />
@@ -161,54 +140,7 @@ function Dashboard() {
             <div className="emBK__transactions">
               {recentTransactions ? (
                 recentTransactions.map((transaction) => (
-                  <div
-                    key={transaction.id}
-                    className="item_trans"
-                    /*  data-toggle="modal"
-                                                    data-target="#transaction_detail_modal"*/
-                    onClick={() => {
-                      dispatch(updateTransactionDetails(transaction));
-                      openTransactionDetailModal(transaction);
-                    }}
-                  >
-                    <div className="media sideLeft">
-                      <div className="icon_img bg-pink">
-                        {transaction.benefactor.accountProvider.image ? (
-                          <img
-                            src={transaction.benefactor.accountProvider.image}
-                            alt="Provider image"
-                          />
-                        ) : (
-                          <p className="color-white">
-                            {transaction.benefactor.accountProvider.name.slice(
-                              0,
-                              2
-                            )}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="media-body my-auto">
-                        <h4>
-                          {transaction.benefactor.name ||
-                            transaction.benefactor.destinationId}
-                        </h4>
-                        <p>
-                          {" "}
-                          {transaction.category === TRANSFER &&
-                            `Transfer to ${transaction.benefactor.accountProvider.name}`}
-                          {transaction.category === PAYMENT &&
-                            `Payment for ${transaction.benefactor.accountProvider.name} - ${transaction.meta.paymentItemName}`}
-                          {transaction.category === FUNDING && `Wallet Funding`}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="sideRight">
-                      <p>
-                        {transaction.amount} <span>NGN</span>
-                      </p>
-                    </div>
-                  </div>
+                <HistoryItem transaction={transaction} key={transaction.id} />
                 ))
               ) : (
                 <LoadingCard />
@@ -217,6 +149,8 @@ function Dashboard() {
           </section>
           {/* End. emTransactions__page */}
         </main>
+
+
       </Page>
     </>
   );

@@ -3,9 +3,9 @@ export default function OperationItem({title, icon, modalId: id, bgColor, contai
     return (
         <button type="button" className={`btn ${containerClass}`}
  onClick={onClick}       >
-            <div style={{"background-color": bgColor}} className={`icon bg-opacity-10`}>
+            <div style={{"backgroundColor": bgColor}} className={`icon bg-opacity-10`}>
 
-                <i className={icon} style={iconStyle}></i>
+                <i className={icon} style={iconStyle}/>
 
             </div>
             <span>{title}</span>

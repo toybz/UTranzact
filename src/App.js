@@ -5,7 +5,6 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import FullPageLoader from "./components/FullPageLoader";
 import UseRedirectToHomePage from "./hooks/useRedirectToHomePage";
-import TransactionDetail from "./components/TransactionDetails";
 import {QueryClient, QueryClientProvider} from "react-query";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';

@@ -1,5 +1,5 @@
 import OpsSubmitButton from "./OpsSubmitButton";
-import { useRef, useState } from "react";
+import {  useState } from "react";
 import { Link } from "react-router-dom";
 
 import { MODAL_ID as FundAccountModalId } from "./Ops_FundCard";
@@ -54,11 +54,13 @@ export default function SelectPaymentMethod() {
   };
 
   const [isProcessing, setIsProcessing] = useState(false);
-  const { submit: s2 } = useSubmitOperation();
-  const submit = async (event) => {
+  const { submit } = useSubmitOperation();
+  const submitHandler = async (event) => {
     event.preventDefault();
     setIsProcessing(true);
-    let a = await s2();
+    const paymentResponse = await submit();
+
+    console.log(paymentResponse)
 
     showToast("Account Top up Successful", "success");
     //  history.push("/~/dashboard");
@@ -102,7 +104,7 @@ export default function SelectPaymentMethod() {
                       <button
                         type="button"
                         className={`btn item item_credit ${
-                          card.id == selectedCardId && "selected"
+                          card.id === selectedCardId && "selected"
                         }`}
                         onClick={() => setSelectedCardId(card.id)}
                         key={card.id}
@@ -158,7 +160,7 @@ export default function SelectPaymentMethod() {
 
             <div className="modal-footer">
               <OpsSubmitButton
-                onClick={submit}
+                onClick={submitHandler}
                 text="Fund"
                 isProcessing={isProcessing}
               />

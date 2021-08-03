@@ -23,7 +23,7 @@ export default function HistoryItem({transaction}) {
                         {transaction.benefactor.accountProvider.image ? (
                             <img
                                 src={transaction.benefactor.accountProvider.image}
-                                alt="Provider image"
+                                alt="Provider icon"
                             />
                         ) : (
                             <p className="color-white">

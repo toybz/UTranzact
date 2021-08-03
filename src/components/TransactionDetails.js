@@ -1,5 +1,4 @@
-import {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector} from "react-redux";
 import {
     BANK_TRANSFER,
     FUNDING,
@@ -9,8 +8,6 @@ import {
     STATUS_SUCCESSFUL,
     TRANSFER
 } from "../helpers/transactionCategories";
-import {updateTransactionDetails} from "../store/modals/transactionDetails";
-
 
 const MODAL_ID = "transaction_detail_modal";
 
@@ -22,13 +19,12 @@ export const openTransactionDetailModal = () => {
 export default function TransactionDetail() {
 
    const {
-       id,
+
        status,
        category,
        subCategory,
        amount,
        dateTime,
-       description,
         benefactor,
        debitWallet,
        meta,

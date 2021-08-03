@@ -10,13 +10,10 @@ export const openConfirmTransactionModal = () => {
 export function ConfirmTransaction() {
 
     const {
-        id,
-        status,
+
         category,
         subCategory,
         amount,
-        dateTime,
-        description,
         benefactor,
         debitWallet,
         meta,

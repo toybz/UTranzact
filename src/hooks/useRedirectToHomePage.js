@@ -10,9 +10,9 @@ export default function UseRedirectToHomePage() {
         console.log("Inside the redirect hook")
         if (location.pathname !== '/') {
             console.log("Redirecting")
-
             window.location.href = "/"
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 }

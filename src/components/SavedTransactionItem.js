@@ -7,9 +7,9 @@ import {updateTransactionDetails} from "../store/modals/transactionDetails";
 
 export default function SavedTransactionItem(props) {
 
-  const {transaction,title, id} = props
+  const {transaction,title} = props
 
-    const {amount, category, subCategory, description, benefactor, meta, debitWallet } = transaction
+    const {amount, benefactor } = transaction
 
 
     const dispatch = useDispatch()

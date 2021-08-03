@@ -1,4 +1,4 @@
-import {useRef, useState} from "react";
+import {useRef} from "react";
 import {useFetchUserWallets, useUpdateWallet} from "../hooks/useRequests";
 import OpsSubmitButton from "./OpsSubmitButton";
 import SelectPaymentMethod from "./SelectPaymentMethod";
@@ -10,16 +10,14 @@ export const openFundCardModal = () => {
 };
 
 export default function FundCard() {
-  const [accounts, setAccounts] = useState([]);
+
 
   const amountInput = useRef("0");
   const selectedWallet = useRef("");
 
   const {
-    status,
     data: userWallets,
-    error,
-    isFetching,
+    isFetching: isFetchingUserWallets,
     refetch: reFetchWallets,
   } = useFetchUserWallets();
 
@@ -79,9 +77,11 @@ export default function FundCard() {
                       className="form-control custom-select"
                       ref={selectedWallet}
                     >
+                      {
+                        isFetchingUserWallets  && (<option disabled>Please wait....</option>) }
                       {userWallets &&
                         userWallets.map((wallet) => (
-                          <option value={wallet.id} key={wallet.id}>
+                        <option value={wallet.id} key={wallet.id}>
                             {`${wallet.name} - (${wallet.balance} NGN)`}
                           </option>
                         ))}

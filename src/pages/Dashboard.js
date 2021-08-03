@@ -7,7 +7,6 @@ import {Link} from "react-router-dom";
 import {HISTORY_LINK, SAVED_TRANSACTIONS} from "../helpers/links";
 import {AirtimeMenuItem, DataMenuItem, FundCardMenuItem, TransferMenuItem,} from "../components/operationsMenuIcons";
 import SavedTransactionItem from "../components/SavedTransactionItem";
-import {useDispatch} from "react-redux";
 
 import {BeatLoader} from "react-spinners";
 import LoadingCard from "../components/LoadingCard";
@@ -18,7 +17,7 @@ function Dashboard() {
   useCarousel(".owl-carousel ");
 
   const pageTitle = "Dashboard";
-  const dispatch = useDispatch();
+
 
   const [totalBalance, setTotalBalance] = useState(0);
 
@@ -29,18 +28,16 @@ function Dashboard() {
   useEffect(() => {
     let balance = 0;
     if (!isFetchingWallets && userWallets && userWallets[0].balance) {
-      userWallets.map((wallet) => {
+            userWallets.map((wallet) => {
         balance += parseInt(wallet.balance);
+        return balance
       });
     }
     console.log({ balance });
     setTotalBalance(balance);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(userWallets)]);
 
-/*  const operationsList = useMemo(
-    () => [TransferMenuItem, DataMenuItem, AirtimeMenuItem, FundCardMenuItem],
-    []
-  );*/
   const operationsList = [TransferMenuItem, DataMenuItem, AirtimeMenuItem, FundCardMenuItem]
   return (
     <>

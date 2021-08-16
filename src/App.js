@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Tabs = React.lazy(() => import("./pages/Tabs"))
 
 const queryClient = new QueryClient()
-
+//testimng 123
 function App() {
 
 

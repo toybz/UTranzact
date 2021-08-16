@@ -1,7 +1,11 @@
-import {useRef} from "react";
-import {useFetchUserWallets, useUpdateWallet} from "../hooks/useRequests";
+import { useState } from "react";
+import { useFetchUserWallets } from "../hooks/useRequests";
 import OpsSubmitButton from "./OpsSubmitButton";
-import SelectPaymentMethod from "./SelectPaymentMethod";
+import SelectPaymentMethod, {
+  openSelectPaymentMethodModal,
+} from "./SelectPaymentMethod";
+import { useDispatch, useSelector } from "react-redux";
+import { setFundCard } from "../store/fundCard";
 
 export const MODAL_ID = "fund_card_modal";
 
@@ -10,36 +14,27 @@ export const openFundCardModal = () => {
 };
 
 export default function FundCard() {
+  const dispatch = useDispatch();
+  const { amount, selectedWalletId } = useSelector((store) => store.fundCard);
 
-
-  const amountInput = useRef("0");
-  const selectedWallet = useRef("");
-
-  const {
-    data: userWallets,
-    isFetching: isFetchingUserWallets,
-    refetch: reFetchWallets,
-  } = useFetchUserWallets();
-
-  const { updateWallet } = useUpdateWallet();
-  const submit = () => {
-    // openSelectPaymentMethodModal();
-    const amount = parseInt(amountInput.current.value);
-    const selectedWalletId = selectedWallet.current.value;
-
-    const selectedWalletIndex = userWallets.findIndex(
-      (wallet) => wallet.id === selectedWalletId
+  const updateFundCardData = (key, value) => {
+    dispatch(
+      setFundCard({
+        amount,
+        selectedWalletId,
+        [key]: value,
+      })
     );
-
-    let newWallets = [...userWallets];
-    newWallets[selectedWalletIndex].balance =
-      parseInt(newWallets[selectedWalletIndex].balance) + amount;
-
-    updateWallet(newWallets).then(() => {
-      reFetchWallets();
-    });
   };
+  const { data: userWallets, isFetching: isFetchingUserWallets } =
+    useFetchUserWallets();
 
+  const submit = () => {
+    if (!amount || !selectedWalletId) {
+      //  showToast("Account Top up Successful", "success");
+    }
+    openSelectPaymentMethodModal();
+  };
   return (
     <>
       <div
@@ -75,28 +70,40 @@ export default function FundCard() {
                   <div className="form-group input-lined">
                     <select
                       className="form-control custom-select"
-                      ref={selectedWallet}
+                      value={selectedWalletId}
+                      onChange={(e) =>
+                        updateFundCardData("selectedWalletId", e.target.value)
+                      }
                     >
-                      {
-                        isFetchingUserWallets  && (<option disabled>Please wait....</option>) }
-                      {userWallets &&
-                        userWallets.map((wallet) => (
-                        <option value={wallet.id} key={wallet.id}>
-                            {`${wallet.name} - (${wallet.balance} NGN)`}
-                          </option>
-                        ))}
+                      {isFetchingUserWallets && (
+                        <option disabled>Please wait....</option>
+                      )}
+                      {userWallets && (
+                        <>
+                          <option value={""}>Select</option>
+
+                          {userWallets.map((wallet) => (
+                            <option value={wallet.id} key={wallet.id}>
+                              {`${wallet.name} - (${wallet.balance} NGN)`}
+                            </option>
+                          ))}
+                        </>
+                      )}
                     </select>
                     <label>Choose The Card</label>
                   </div>
 
                   <div className="form-group input-lined relative">
                     <input
-                      type="text"
-                      ref={amountInput}
+                      type="number"
+                      value={amount}
+                      onChange={(e) =>
+                        updateFundCardData("amount", e.target.value)
+                      }
                       className="form-control"
                       min="0"
                       placeholder="000"
-                      required=""
+                      required
                     />
                     <label>Enter Amount</label>
                     <span className="absolute right-0 top-0 mt-3 color-snow size-16">

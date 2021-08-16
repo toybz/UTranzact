@@ -19,7 +19,6 @@ export const openTransactionDetailModal = () => {
 export default function TransactionDetail() {
 
    const {
-
        status,
        category,
        subCategory,

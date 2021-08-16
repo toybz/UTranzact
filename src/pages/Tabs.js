@@ -12,7 +12,7 @@ import TransactionDetail from "../components/TransactionDetails";
 
 const Dashboard = React.lazy(() => import("./Dashboard"));
 const VirtualCards = React.lazy(() => import("./VirtualCards"));
-const AddVirtualCard = React.lazy(() => import("./AddVirtualCard"));
+const PayWithCreditCard = React.lazy(() => import("./PayWithCreditCard"));
 const TransactionsHistory = React.lazy(() => import("./TransactionsHistory"));
 const Operations = React.lazy(() => import("./Operations"));
 
@@ -41,7 +41,7 @@ export default function Tabs() {
               <VirtualCards/>
             </Route>
             <Route path={`${path}/virtual-cards/new`} exact>
-              <AddVirtualCard/>
+              <PayWithCreditCard/>
             </Route>
 
             <Route path={`${path}/transaction-history`}>

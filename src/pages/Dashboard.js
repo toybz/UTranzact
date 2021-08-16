@@ -1,16 +1,25 @@
 import Header from "../components/Header";
 import useCarousel from "../hooks/useCarousel";
 import Page from "./Page";
-import {useEffect, useState} from "react";
-import {openFundCardModal} from "../components/Ops_FundCard";
-import {Link} from "react-router-dom";
-import {HISTORY_LINK, SAVED_TRANSACTIONS} from "../helpers/links";
-import {AirtimeMenuItem, DataMenuItem, FundCardMenuItem, TransferMenuItem,} from "../components/operationsMenuIcons";
+import { useEffect, useState } from "react";
+import { openFundCardModal } from "../components/Ops_FundCard";
+import { Link } from "react-router-dom";
+import { HISTORY_LINK, SAVED_TRANSACTIONS } from "../helpers/links";
+import {
+  AirtimeMenuItem,
+  DataMenuItem,
+  FundCardMenuItem,
+  TransferMenuItem,
+} from "../components/operationsMenuIcons";
 import SavedTransactionItem from "../components/SavedTransactionItem";
 
-import {BeatLoader} from "react-spinners";
+import { BeatLoader } from "react-spinners";
 import LoadingCard from "../components/LoadingCard";
-import {useFetchRecentTransactions, useFetchSavedTransactions, useFetchUserWallets,} from "../hooks/useRequests";
+import {
+  useFetchRecentTransactions,
+  useFetchSavedTransactions,
+  useFetchUserWallets,
+} from "../hooks/useRequests";
 import HistoryItem from "../components/HistoryItem";
 
 function Dashboard() {
@@ -18,19 +27,19 @@ function Dashboard() {
 
   const pageTitle = "Dashboard";
 
-
   const [totalBalance, setTotalBalance] = useState(0);
 
   const { data: userWallets, isFetchingWallets } = useFetchUserWallets();
+
   const { data: savedTransactions } = useFetchSavedTransactions();
   const { data: recentTransactions } = useFetchRecentTransactions();
 
   useEffect(() => {
     let balance = 0;
     if (!isFetchingWallets && userWallets && userWallets[0].balance) {
-            userWallets.map((wallet) => {
+      userWallets.map((wallet) => {
         balance += parseInt(wallet.balance);
-        return balance
+        return balance;
       });
     }
     console.log({ balance });
@@ -38,13 +47,15 @@ function Dashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(userWallets)]);
 
-  const operationsList = [TransferMenuItem, DataMenuItem, AirtimeMenuItem, FundCardMenuItem]
+  const operationsList = [
+    TransferMenuItem,
+    DataMenuItem,
+    AirtimeMenuItem,
+    FundCardMenuItem,
+  ];
   return (
     <>
       <Page className={"bg-snow"}>
-
-
-
         <Header pageTitle={pageTitle} sticky={false} />
 
         <section className="banner__wallet">
@@ -81,14 +92,14 @@ function Dashboard() {
           <section className="em__bkOperationsWallet">
             <div className="em__actions">
               {operationsList.map((Operation, index) => (
-      <Operation key={index} />
+                <Operation key={index} />
               ))}
             </div>
           </section>
 
           {/* Start dividar */}
           <section className="padding-20 py-0">
-            <div className="dividar"/>
+            <div className="dividar" />
           </section>
           {/* End. dividar */}
 
@@ -110,7 +121,10 @@ function Dashboard() {
               <div className="emBk__bills">
                 {savedTransactions ? (
                   savedTransactions.map((transaction) => (
-                    <SavedTransactionItem {...transaction} key={transaction.id} />
+                    <SavedTransactionItem
+                      {...transaction}
+                      key={transaction.id}
+                    />
                   ))
                 ) : (
                   <LoadingCard />
@@ -137,7 +151,7 @@ function Dashboard() {
             <div className="emBK__transactions">
               {recentTransactions ? (
                 recentTransactions.map((transaction) => (
-                <HistoryItem transaction={transaction} key={transaction.id} />
+                  <HistoryItem transaction={transaction} key={transaction.id} />
                 ))
               ) : (
                 <LoadingCard />
@@ -146,8 +160,6 @@ function Dashboard() {
           </section>
           {/* End. emTransactions__page */}
         </main>
-
-
       </Page>
     </>
   );

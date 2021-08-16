@@ -16,6 +16,17 @@ export function useFetchUserWallets() {
   });
 }
 
+export function useUpdateWallet() {
+  const updateWallet = async (wallets) => {
+    const { data } = await axios.put(USER_WALLETS, wallets);
+    return data;
+  };
+  return {
+    updateWallet,
+  };
+}
+
+
 const SAVED_TRANSACTIONS = `${BASE_URL}/saved-transactions.json`;
 export function useFetchSavedTransactions() {
   return useQuery("savedTransactions", () => fetch(SAVED_TRANSACTIONS));
@@ -37,12 +48,3 @@ export function useSubmitOperation() {
   };
 }
 
-export function useUpdateWallet() {
-  const updateWallet = async (wallets) => {
-    const { data } = await axios.put(USER_WALLETS, wallets);
-    return data;
-  };
-  return {
-    updateWallet,
-  };
-}

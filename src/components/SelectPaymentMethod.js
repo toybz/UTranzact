@@ -1,11 +1,17 @@
 import OpsSubmitButton from "./OpsSubmitButton";
-import {  useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { MODAL_ID as FundAccountModalId } from "./Ops_FundCard";
 import { useFlutterwave } from "flutterwave-react-v3";
 import { showToast } from "../helpers/Utils";
-import { useSubmitOperation } from "../hooks/useRequests";
+import {
+  useFetchUserWallets,
+  useSubmitOperation,
+  useUpdateWallet,
+} from "../hooks/useRequests";
+import { useDispatch, useSelector } from "react-redux";
+import { setFundCard } from "../store/fundCard";
 
 const MODAL_ID = "select_payment_method_modal";
 
@@ -26,27 +32,67 @@ export default function SelectPaymentMethod() {
       id: "02",
     },
   ];
-
   const [selectedCardId, setSelectedCardId] = useState(cards[0].id);
 
-  const config = {
+  const { data: userWallets, refetch: reFetchWallets } = useFetchUserWallets();
+
+  const { updateWallet } = useUpdateWallet();
+
+  const { amount, selectedWalletId } = useSelector((store) => store.fundCard);
+
+  const dispatch = useDispatch();
+
+  const updateWalletBalance = async () => {
+    console.log("Global Fund Card Value", { amount, selectedWalletId });
+    setIsProcessing(true);
+
+    const selectedWalletIndex = userWallets.findIndex(
+      (wallet) => wallet.id === selectedWalletId
+    );
+
+    let newWallets = [...userWallets];
+    newWallets[selectedWalletIndex].balance =
+      (parseInt(newWallets[selectedWalletIndex].balance) || 0) +
+      parseInt(amount);
+
+    console.log(
+      "Updated Wallet Amount",
+      newWallets[selectedWalletIndex].balance
+    );
+
+    await updateWallet(newWallets);
+    reFetchWallets();
+
+    showToast("Account Top up Successful", "success");
+    //  history.push("/~/dashboard");
+    dispatch(setFundCard({ amount: "", selectedWalletId: "" }));
+    closeModals();
+    setIsProcessing(false);
+  };
+
+  //5531 8866 5214 2950
+  const flutterwavePaymentConfig = {
     public_key: "FLWPUBK_TEST-4550165677fdcf951548729e3ff6b950-X",
     tx_ref: Date.now(),
-    amount: 100,
+    amount: amount,
     currency: "NGN",
-    payment_options: "card,mobilemoney,ussd",
+    payment_options: "",
     customer: {
-      email: "user@gmail.com",
+      email: "test@gmail.com",
       phonenumber: "07064586146",
       name: "joel ugwumadu",
     },
     customizations: {
-      title: "my Payment Title",
-      description: "Payment for items in cart",
+      title: "UTransact",
+      description: "Payment UTransact Wallet Topup",
       logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
     },
   };
-  const handleFlutterPayment = useFlutterwave(config);
+  const handleFlutterPayment = useFlutterwave(flutterwavePaymentConfig);
+
+  const payWithFlutterwave = () => {
+    handleFlutterPayment({ callback: updateWalletBalance, onClose: () => {} });
+  };
 
   const closeModals = () => {
     document.jQuery(`#${MODAL_ID}`).modal("hide");
@@ -54,19 +100,6 @@ export default function SelectPaymentMethod() {
   };
 
   const [isProcessing, setIsProcessing] = useState(false);
-  const { submit } = useSubmitOperation();
-  const submitHandler = async (event) => {
-    event.preventDefault();
-    setIsProcessing(true);
-    const paymentResponse = await submit();
-
-    console.log(paymentResponse)
-
-    showToast("Account Top up Successful", "success");
-    //  history.push("/~/dashboard");
-    closeModals();
-    setIsProcessing(false);
-  };
 
   return (
     <>
@@ -145,10 +178,7 @@ export default function SelectPaymentMethod() {
                       <img src="assets/img/icon/master-card.svg" alt="" />
                     </div>
                   </Link>
-                  <button
-                    className="btn itemPay"
-                    onClick={handleFlutterPayment}
-                  >
+                  <button className="btn itemPay" onClick={payWithFlutterwave}>
                     <span>Flutterwave</span>
                     <div className="icon__payment">
                       <img src="assets/img/icon/paypal.svg" alt="" />
@@ -160,7 +190,7 @@ export default function SelectPaymentMethod() {
 
             <div className="modal-footer">
               <OpsSubmitButton
-                onClick={submitHandler}
+                onClick={updateWalletBalance}
                 text="Fund"
                 isProcessing={isProcessing}
               />

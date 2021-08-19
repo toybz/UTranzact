@@ -37,6 +37,16 @@ export function useFetchRecentTransactions() {
   return useQuery("recentTransactions", () => fetch(RECENT_TRANSACTIONS));
 }
 
+const GET_BANKS = `${BASE_URL}/banks.json`;
+export function useFetchBanks() {
+  return useQuery("fetchBanks", () => fetch(GET_BANKS));
+}
+
+
+
+
+
+
 const SUBMIT_OPERATION = `${BASE_URL}/recent-transactions.json`;
 export function useSubmitOperation() {
   const submit = async () => {

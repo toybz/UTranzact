@@ -1,3 +1,6 @@
+import {useFetchBanks, useFetchUserWallets} from "../hooks/useRequests";
+import {useDispatch} from "react-redux";
+import {useEffect, useState} from "react";
 
 const MODAL_ID = "transfer_modal";
 
@@ -6,6 +9,38 @@ export const openTransferModal = () => {
 }
 
 export default function Transfer() {
+
+    const dispatch = useDispatch();
+    const { data: userWallets, refetch: reFetchWallets } = useFetchUserWallets();
+    useEffect(() => {
+        if(userWallets && userWallets.length > 0){
+            setSelectedDebitWallet(userWallets[0].id);
+        }
+    }, [userWallets])
+
+    const { data: banks } = useFetchBanks();
+
+    const [selectedDebitWallet, setSelectedDebitWallet] = useState("")
+
+    const [selectedBank, setSelectedBank] = useState('')
+
+    const [accountNumber, setAccountNumber] = useState("")
+
+    const [amount, setAmount] = useState("")
+
+    const [recipient, setRecipient] = useState("Toyeeb")
+
+    const canSubmit = selectedDebitWallet && selectedBank && accountNumber && amount
+
+    const transfer = ()=>{
+        const payload = {
+            selectedBank,accountNumber,amount
+        }
+
+
+
+    }
+
     return (
         <>
             <div
@@ -35,37 +70,31 @@ export default function Transfer() {
                         </div>
                         <div className="modal-body">
                             <div className="padding-t-20">
-                                <form action="#">
+                                <form>
                                     <div className="form-group input-lined">
-                                        <select className="form-control custom-select">
-                                            <option value="Bills Account (**** 1942)">
-                                                Bills Account (**** 1942)
-                                            </option>
-                                            <option value="Default Account (**** 6540)">
-                                                Default Account (**** 6540)
-                                            </option>
-                                            <option value="Saving Account (**** 0051)">
-                                                Saving Account (**** 0051)
-                                            </option>
-                                            <option value="Business Account (****2297)">
-                                                Business Account (****2297)
-                                            </option>
-                                        </select>
+                                        <select className="form-control custom-select" value={selectedDebitWallet} onChange={(e)=>setSelectedDebitWallet(e.target.value)}>
+                                            {
+                                 userWallets &&    userWallets.map((wallet) => (   <option key={wallet.id} value={wallet.id} >
+                                         {wallet.name}
+                                     </option>))
+                                            }
+
+
+
+
+                                         </select>
                                         <label>Choose Debit Card</label>
                                     </div>
 
                                     <div className="form-group input-lined">
-                                        <select className="form-control custom-select">
-                                            <option value="Bills Account (**** 1942)">GTB</option>
-                                            <option value="Default Account (**** 6540)">
-                                                Default Account (**** 6540)
-                                            </option>
-                                            <option value="Saving Account (**** 0051)">
-                                                Saving Account (**** 0051)
-                                            </option>
-                                            <option value="Business Account (****2297)">
-                                                Business Account (****2297)
-                                            </option>
+                                        <select className="form-control custom-select" value={selectedBank} onChange={(e)=>setSelectedBank(e.target.value)}>
+
+                                            <option value="">Select</option>
+
+                                            {
+                                                banks && banks.map((bank) => ( <option key={bank.id} value={bank.id}>{bank.name}</option>))
+                                            }
+
                                         </select>
                                         <label>Choose Bank</label>
                                     </div>
@@ -76,6 +105,7 @@ export default function Transfer() {
                                             className="form-control"
                                             placeholder="000923100"
                     required=""
+                                            value={accountNumber} onChange={(e)=>setAccountNumber(e.target.value)}
                                         />
                                         <label>Account Number</label>
                                     </div>
@@ -87,7 +117,7 @@ export default function Transfer() {
                                             defaultValue=""
                                             min="0"
                                             placeholder="0000"
-                                            required=""
+                                            required="" value={amount} onChange={(e)=>setAmount(e.target.value)}
                                         />
                                         <label>Enter Amount</label>
                                         <span className="absolute right-0 top-0 mt-3 color-snow size-16">
@@ -100,10 +130,10 @@ export default function Transfer() {
                         <div className="modal-footer">
                             <button
                                 type="button"
-                                data-dismiss="modal"
                                 data-toggle="modal"
                                 data-target="#confirm-transfer-modal"
                                 className="btn w-100 bg-primary m-0 color-white h-52 d-flex align-items-center rounded-8 justify-content-center"
+                             disabled={!canSubmit}
                             >
                                 Send
                             </button>
@@ -143,7 +173,8 @@ export default function Transfer() {
                             <div className="padding-t-20 padding-b-30">
                                 <div className="trans__number margin-t-20 padding-b-30">
                                     <h3>
-                                        150.00 <span>USD</span>
+                                        {amount}
+                                        <span>NGN</span>
                                     </h3>
                                     <p>Amount</p>
                                 </div>
@@ -151,11 +182,11 @@ export default function Transfer() {
                                     <div className="item_trans">
                                         <div className="media sideLeft">
                                             <div className="icon_img bg-pink">
-                                                <p className="color-white">k</p>
+                                                <p className="color-white">D</p>
                                             </div>
                                             <div className="media-body my-auto">
-                                                <h4>Kisha Vanhorn</h4>
-                                                <p>Sender</p>
+                                                <h4>Default Wallet</h4>
+                                                <p>Debit Wallet</p>
                                             </div>
                                         </div>
                                         <div className="sideRight">
@@ -218,10 +249,10 @@ export default function Transfer() {
                                     <div className="item_trans">
                                         <div className="media sideLeft">
                                             <div className="icon_img">
-                                                <img src="assets/img/persons/01.png" alt=""/>
+                                                <img src="/assets/img/persons/01.png" alt=""/>
                                             </div>
                                             <div className="media-body my-auto">
-                                                <h4>Adam J. Staley</h4>
+                                                <h4>{recipient}</h4>
                                                 <p>Recipient</p>
                                             </div>
                                         </div>
@@ -285,7 +316,7 @@ export default function Transfer() {
                                 </div>
                                 <p className="color-text size-13 text-center mb-0">
                                     You are sending{" "}
-                                    <span className="color-secondary">150.00 USD</span> to Adam.
+                                    <span className="color-secondary">{amount} NGN</span> to {recipient}.
                                 </p>
                             </div>
                         </div>

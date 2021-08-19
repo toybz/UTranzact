@@ -1,17 +1,13 @@
 import OpsSubmitButton from "./OpsSubmitButton";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 import { MODAL_ID as FundAccountModalId } from "./Ops_FundCard";
-import { useFlutterwave } from "flutterwave-react-v3";
-import { showToast } from "../helpers/Utils";
-import {
-  useFetchUserWallets,
-  useSubmitOperation,
-  useUpdateWallet,
-} from "../hooks/useRequests";
-import { useDispatch, useSelector } from "react-redux";
-import { setFundCard } from "../store/fundCard";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+
+import useWallet from "../hooks/useWallet";
+import {useSelector} from "react-redux";
+
 
 const MODAL_ID = "select_payment_method_modal";
 
@@ -34,40 +30,19 @@ export default function SelectPaymentMethod() {
   ];
   const [selectedCardId, setSelectedCardId] = useState(cards[0].id);
 
-  const { data: userWallets, refetch: reFetchWallets } = useFetchUserWallets();
+  const {updateWalletBalance} = useWallet();
 
-  const { updateWallet } = useUpdateWallet();
-
+  let history = useHistory();
   const { amount, selectedWalletId } = useSelector((store) => store.fundCard);
 
-  const dispatch = useDispatch();
+  const makePayment = async () => {
 
-  const updateWalletBalance = async () => {
-    console.log("Global Fund Card Value", { amount, selectedWalletId });
     setIsProcessing(true);
 
-    const selectedWalletIndex = userWallets.findIndex(
-      (wallet) => wallet.id === selectedWalletId
-    );
-
-    let newWallets = [...userWallets];
-    newWallets[selectedWalletIndex].balance =
-      (parseInt(newWallets[selectedWalletIndex].balance) || 0) +
-      parseInt(amount);
-
-    console.log(
-      "Updated Wallet Amount",
-      newWallets[selectedWalletIndex].balance
-    );
-
-    await updateWallet(newWallets);
-    reFetchWallets();
-
-    showToast("Account Top up Successful", "success");
-    //  history.push("/~/dashboard");
-    dispatch(setFundCard({ amount: "", selectedWalletId: "" }));
-    closeModals();
+    await updateWalletBalance()
     setIsProcessing(false);
+    closeModals();
+    history.push("/~/dashboard");
   };
 
   //5531 8866 5214 2950
@@ -91,7 +66,10 @@ export default function SelectPaymentMethod() {
   const handleFlutterPayment = useFlutterwave(flutterwavePaymentConfig);
 
   const payWithFlutterwave = () => {
-    handleFlutterPayment({ callback: updateWalletBalance, onClose: () => {} });
+    handleFlutterPayment({ callback: ()=>{
+        closePaymentModal();
+        makePayment()
+      } , onClose: () => {} });
   };
 
   const closeModals = () => {
@@ -166,7 +144,7 @@ export default function SelectPaymentMethod() {
                   </div>
 
                   <Link
-                    to="/~/virtual-cards/new"
+                    to="/~/pay-with-new-credit-card"
                     className="btn itemPay"
                     onClick={closeModals}
                   >
@@ -190,7 +168,7 @@ export default function SelectPaymentMethod() {
 
             <div className="modal-footer">
               <OpsSubmitButton
-                onClick={updateWalletBalance}
+                onClick={makePayment}
                 text="Fund"
                 isProcessing={isProcessing}
               />

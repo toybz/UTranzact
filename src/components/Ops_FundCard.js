@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useFetchUserWallets } from "../hooks/useRequests";
 import OpsSubmitButton from "./OpsSubmitButton";
 import SelectPaymentMethod, {
@@ -6,6 +5,7 @@ import SelectPaymentMethod, {
 } from "./SelectPaymentMethod";
 import { useDispatch, useSelector } from "react-redux";
 import { setFundCard } from "../store/fundCard";
+import {showToast} from "../helpers/Utils";
 
 export const MODAL_ID = "fund_card_modal";
 
@@ -29,9 +29,13 @@ export default function FundCard() {
   const { data: userWallets, isFetching: isFetchingUserWallets } =
     useFetchUserWallets();
 
+  const disableSubmit =  (!parseInt(amount) || !selectedWalletId)
+
   const submit = () => {
-    if (!amount || !selectedWalletId) {
-      //  showToast("Account Top up Successful", "success");
+    if (disableSubmit) {
+       showToast("Please select target wallet and amount to fund", "warning");
+
+       return
     }
     openSelectPaymentMethodModal();
   };
@@ -114,7 +118,7 @@ export default function FundCard() {
               </div>
             </div>
             <div className="modal-footer">
-              <OpsSubmitButton onClick={submit} text="Fund" />
+              <OpsSubmitButton disable={disableSubmit} onClick={submit} text="Fund" />
             </div>
           </div>
         </div>

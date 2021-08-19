@@ -1,9 +1,9 @@
-export default function OpsSubmitButton({className, text, isProcessing, processingText, onClick}) {
+export default function OpsSubmitButton({className, text, isProcessing, processingText, onClick, disable}) {
 
     return (
         <button type="button" onClick={onClick}
          className={`btn btn- btn w-100 bg-primary m-0 color-white h-52 d-flex align-items-center rounded-8 justify-content-center ${className}`}
-                disabled={isProcessing}>
+                disabled={ isProcessing || disable }  >
             {
                 isProcessing ?  ( <span>
                                      <span className="spinner-border spinner-border-sm color-white" role="status"  aria-hidden="true"> </span>

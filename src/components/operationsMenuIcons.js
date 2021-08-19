@@ -53,8 +53,8 @@ export const PowerMenuItem = ({iconStyle, containerClass}) => (
 
 export const CoPayMenuItem = ({iconStyle, containerClass}) => (
     <OperationItem icon={'ri-qr-code-fill'} iconStyle={{
-      color: "#de4afd", "font-size": "20px",
-      "font-weight": "bold", ...iconStyle
+      color: "#de4afd", "fontSize": "20px",
+      "fontWeight": "bold", ...iconStyle
     }} bgColor={'rgba(222, 74, 253, 0.1)'} title={'Co-Pay'} modalId={'copay-modal'} containerClass={containerClass}/>
 )
 

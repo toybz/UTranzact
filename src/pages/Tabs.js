@@ -40,7 +40,7 @@ export default function Tabs() {
             <Route path={`${path}/virtual-cards`} exact>
               <VirtualCards/>
             </Route>
-            <Route path={`${path}/virtual-cards/new`} exact>
+            <Route path={`${path}/pay-with-new-credit-card`} exact>
               <PayWithCreditCard/>
             </Route>
 

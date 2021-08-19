@@ -20,25 +20,34 @@ export default function PayWithCreditCard(props) {
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
 
-  const formatCardNumber = (string) => {
-    const strArray = string.split("");
+  const formatInput = (value, _index, insertData) => {
+    const strArray = value.split("");
     return strArray.map((char, index) => {
-      if (index % 4 === 0) {
-        return ` ${char}`;
+      if (index % _index === 0) {
+        return `${insertData}${char}`;
       }
-      return char;
+      else{ return char;}
+
     });
   };
+
+
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   let history = useHistory();
   const {updateWalletBalance} = useWallet();
 
+  const disableSubmitButton = (!cardNumber || !cardHolderName || !expiryDate || !cvv)
+
+  const parseExpirationDate = function(){
+
+  }
+
   const submit = async (event) => {
+
     event.preventDefault();
     setIsSubmitting(true);
    await updateWalletBalance()
-    showToast("Account Top up Successful", "success");
     setIsSubmitting(false);
     history.push("/~/dashboard");
   };
@@ -71,7 +80,7 @@ export default function PayWithCreditCard(props) {
                   <div className="embody_card">
                     <p className="number__card" id="numberOn_card">
                       {" "}
-                      {formatCardNumber(cardNumber)}
+                      {formatInput(cardNumber, 4, " ")}
                     </p>
                   </div>
                   <div className="emfooter_card">
@@ -81,7 +90,7 @@ export default function PayWithCreditCard(props) {
                     </div>
                     <div className="txt">
                       <span>Expires</span>
-                      <p id="date_card">{expiryDate}</p>
+                      <p id="date_card"> {formatInput(expiryDate, 2, " ")}</p>
                     </div>
                   </div>
                 </div>
@@ -168,11 +177,11 @@ export default function PayWithCreditCard(props) {
                     pattern="[0-9]*"
                     inputMode="numeric"
                     required
-                    onChange={(event) => {
-                      setExpiryDate(event.target.value);
-                    }}
+                    value={expiryDate}
+                    onChange={(e)=>setExpiryDate(e.target.value)}
                   />
                   <label htmlFor="expirationdate">Expiry Date</label>
+
                 </div>
               </div>
               <div className="col-6">
@@ -185,6 +194,8 @@ export default function PayWithCreditCard(props) {
                     pattern="[0-9]*"
                     inputMode="numeric"
                     required
+                    onMouseEnter={()=>setFlipCreditCard(true)}
+                    onMouseLeave={()=>setFlipCreditCard(false)}
                     onChange={(event) => {
                       setCvv(event.target.value);
                     }}
@@ -205,6 +216,7 @@ export default function PayWithCreditCard(props) {
                             </a>*/}
 
               <OpsSubmitButton
+                disable={disableSubmitButton}
                 onClick={submit}
                 text="Make Payment"
                 isProcessing={isSubmitting}

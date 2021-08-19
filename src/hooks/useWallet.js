@@ -1,7 +1,7 @@
-import {showToast} from "../helpers/Utils";
 import {setFundCard} from "../store/fundCard";
 import {useFetchUserWallets, useUpdateWallet} from "./useRequests";
 import {useDispatch, useSelector} from "react-redux";
+import {showToast} from "../helpers/Utils";
 
 
 export default function useWallet (){
@@ -23,9 +23,9 @@ export default function useWallet (){
         newWallets[selectedWalletIndex].balance =
             (parseInt(newWallets[selectedWalletIndex].balance) || 0) +
             parseInt(amount);
-
         await updateWallet(newWallets);
         reFetchWallets();
+        showToast("Account Top up Successful", "success");
         dispatch(setFundCard({ amount: "", selectedWalletId: "" }));
 
     };

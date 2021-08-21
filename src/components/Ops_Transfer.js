@@ -1,17 +1,26 @@
 import {useFetchBanks, useFetchUserWallets} from "../hooks/useRequests";
-import {useDispatch} from "react-redux";
 import {useEffect, useState} from "react";
+import {BANK_TRANSFER, TRANSFER} from "../helpers/transactionCategories";
+import {useTransactions} from "../hooks/useTransactions";
+import {showToast} from "../helpers/Utils";
+
 
 const MODAL_ID = "transfer_modal";
+
+const CONFIRM_TRANSFER_MODAL_ID = "confirm-transfer-modal";
 
 export const openTransferModal = () => {
     document.jQuery(`#${MODAL_ID}`).modal({})
 }
 
+const closeModals = () => {
+    document.jQuery(`#${MODAL_ID}`).modal("hide");
+    document.jQuery(`#${CONFIRM_TRANSFER_MODAL_ID}`).modal("hide");
+};
+
 export default function Transfer() {
 
-    const dispatch = useDispatch();
-    const { data: userWallets, refetch: reFetchWallets } = useFetchUserWallets();
+    const { data: userWallets } = useFetchUserWallets();
     useEffect(() => {
         if(userWallets && userWallets.length > 0){
             setSelectedDebitWallet(userWallets[0].id);
@@ -31,14 +40,39 @@ export default function Transfer() {
     const [recipient, setRecipient] = useState("Toyeeb")
 
     const canSubmit = selectedDebitWallet && selectedBank && accountNumber && amount
+    let {newTransaction} = useTransactions();
 
     const transfer = ()=>{
-        const payload = {
-            selectedBank,accountNumber,amount
-        }
 
+        setRecipient("Toyeeb")
 
+     const data =  {
+         amount,
+         "benefactor" : {
+             "accountProvider" : {
+                 "id" : "1",
+                 "image" : "",
+                 "name" : "Gt Bank"
+             },
+             "destinationId" : accountNumber,
+             "name" : recipient
+         },
+         "category" : TRANSFER,
+         "dateTime" :  Date.now(),
+         "debitWallet" : {
+             "id" : selectedDebitWallet,
+             "name" : "Default"
+         },
+         "description" : "",
+         id: Math.random() * 100,
+         "status" : "Successful",
+         "subCategory" : BANK_TRANSFER
+     }
 
+        newTransaction(data, ()=>{
+            closeModals()
+            showToast("Transfer Sent Successfully", 'success');
+        } )
     }
 
     return (
@@ -114,7 +148,6 @@ export default function Transfer() {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            defaultValue=""
                                             min="0"
                                             placeholder="0000"
                                             required="" value={amount} onChange={(e)=>setAmount(e.target.value)}
@@ -145,7 +178,7 @@ export default function Transfer() {
             {/*Modal confirm__transfer */}
             <div
                 className="modal transition-bottom screenFull defaultModal confirm__transfer mdlladd__rate fade"
-                id="confirm-transfer-modal"
+                id={CONFIRM_TRANSFER_MODAL_ID}
                 tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
@@ -325,6 +358,7 @@ export default function Transfer() {
                                 type="button"
                                 data-dismiss="modal"
                                 className="btn w-100 bg-primary m-0 color-white h-52 d-flex align-items-center rounded-8 justify-content-center"
+                                onClick={transfer}
                             >
                                 Confirm
                             </button>

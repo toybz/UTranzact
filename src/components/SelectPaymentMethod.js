@@ -15,6 +15,11 @@ export const openSelectPaymentMethodModal = () => {
   document.jQuery(`#${MODAL_ID}`).modal({});
 };
 
+const closeModals = () => {
+  document.jQuery(`#${MODAL_ID}`).modal("hide");
+  document.jQuery(`#${FundAccountModalId}`).modal("hide");
+};
+
 export default function SelectPaymentMethod() {
   const cards = [
     {
@@ -33,7 +38,7 @@ export default function SelectPaymentMethod() {
   const {updateWalletBalance} = useWallet();
 
   let history = useHistory();
-  const { amount, selectedWalletId } = useSelector((store) => store.fundCard);
+  const { amount } = useSelector((store) => store.fundCard);
 
   const makePayment = async () => {
 
@@ -72,10 +77,7 @@ export default function SelectPaymentMethod() {
       } , onClose: () => {} });
   };
 
-  const closeModals = () => {
-    document.jQuery(`#${MODAL_ID}`).modal("hide");
-    document.jQuery(`#${FundAccountModalId}`).modal("hide");
-  };
+
 
   const [isProcessing, setIsProcessing] = useState(false);
 

@@ -3,7 +3,6 @@ import BackButton from "../components/BackButton";
 import Page from "./Page";
 import { useState } from "react";
 import OpsSubmitButton from "../components/OpsSubmitButton";
-import { showToast } from "../helpers/Utils";
 import { useHistory } from "react-router-dom";
 import useWallet from "../hooks/useWallet";
 
@@ -39,9 +38,9 @@ export default function PayWithCreditCard(props) {
 
   const disableSubmitButton = (!cardNumber || !cardHolderName || !expiryDate || !cvv)
 
-  const parseExpirationDate = function(){
+ /* const parseExpirationDate = function(){
 
-  }
+  }*/
 
   const submit = async (event) => {
 

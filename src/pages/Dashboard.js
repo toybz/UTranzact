@@ -16,11 +16,13 @@ import SavedTransactionItem from "../components/SavedTransactionItem";
 import { BeatLoader } from "react-spinners";
 import LoadingCard from "../components/LoadingCard";
 import {
-  useFetchRecentTransactions,
+
   useFetchSavedTransactions,
   useFetchUserWallets,
 } from "../hooks/useRequests";
 import HistoryItem from "../components/HistoryItem";
+
+import {useTransactions} from "../hooks/useTransactions";
 
 function Dashboard() {
   useCarousel(".owl-carousel ");
@@ -32,7 +34,8 @@ function Dashboard() {
   const { data: userWallets, isFetchingWallets } = useFetchUserWallets();
 
   const { data: savedTransactions } = useFetchSavedTransactions();
-  const { data: recentTransactions } = useFetchRecentTransactions();
+
+  let {recentTransactions} = useTransactions();
 
   useEffect(() => {
     let balance = 0;

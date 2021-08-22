@@ -1,31 +1,35 @@
 import firebase from "firebase/app";
-import 'firebase/database';
+import "firebase/database";
 
- const  firebaseConfig = {
-    apiKey: "AIzaSyApoR-eOXM8OXrQtMS-EHs0oLxyf7bcj_0",
-    authDomain: "fintech-53fe8.firebaseapp.com",
-    databaseURL: "https://fintech-53fe8-default-rtdb.firebaseio.com",
-    projectId: "fintech-53fe8",
-    storageBucket: "fintech-53fe8.appspot.com",
-    messagingSenderId: "811300166187",
-    appId: "1:811300166187:web:8fffe0644393f33b22286e",
-    measurementId: "G-MV90ZLYEDY"
+const firebaseConfig = {
+  apiKey: "AIzaSyApoR-eOXM8OXrQtMS-EHs0oLxyf7bcj_0",
+  authDomain: "fintech-53fe8.firebaseapp.com",
+  databaseURL: "https://fintech-53fe8-default-rtdb.firebaseio.com",
+  projectId: "fintech-53fe8",
+  storageBucket: "fintech-53fe8.appspot.com",
+  messagingSenderId: "811300166187",
+  appId: "1:811300166187:web:8fffe0644393f33b22286e",
+  measurementId: "G-MV90ZLYEDY",
 };
 
-  let app =  firebase.initializeApp(firebaseConfig);
-  export const database = app.database();
+let app = firebase.initializeApp(firebaseConfig);
+export const database = app.database();
 
-export const DbFetch = (node, callback )=>{
-    let res = database.ref(node);
-  return   res.on('value', (snapshot) => {
-        const data = snapshot.val();
-         callback(data)
-    });
-}
+export const DB_NODES = {
+  RECENT_TRANSACTIONS: "recent-transactions",
+};
 
-export const insertData = (node, data, callback )=>{
-    database.ref().child(node).push(data, callback);
-}
+export const DbFetch = (node, callback) => {
+  let res = database.ref(node);
+  return res.on("value", (snapshot) => {
+    const data = snapshot.val();
+    callback(data);
+  });
+};
+
+export const insertData = (node, data, callback) => {
+  database.ref().child(node).push(data, callback);
+};
 
 /*
 

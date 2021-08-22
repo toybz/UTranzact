@@ -1,4 +1,4 @@
-import {useQuery} from "react-query";
+import { useQuery } from "react-query";
 import axios from "axios";
 
 export const BASE_URL = "https://fintech-53fe8-default-rtdb.firebaseio.com/";
@@ -9,6 +9,7 @@ const fetch = async (url) => {
 };
 
 const USER_WALLETS = `${BASE_URL}/users-wallet.json`;
+
 export function useFetchUserWallets() {
   return useQuery("wallets", async () => {
     const { data } = await axios.get(USER_WALLETS);
@@ -26,28 +27,26 @@ export function useUpdateWallet() {
   };
 }
 
-
 const SAVED_TRANSACTIONS = `${BASE_URL}/saved-transactions.json`;
+
 export function useFetchSavedTransactions() {
   return useQuery("savedTransactions", () => fetch(SAVED_TRANSACTIONS));
 }
 
 const RECENT_TRANSACTIONS = `${BASE_URL}/recent-transactions.json`;
+
 export function useFetchRecentTransactions() {
   return useQuery("recentTransactions", () => fetch(RECENT_TRANSACTIONS));
 }
 
 const GET_BANKS = `${BASE_URL}/banks.json`;
+
 export function useFetchBanks() {
   return useQuery("fetchBanks", () => fetch(GET_BANKS));
 }
 
-
-
-
-
-
 const SUBMIT_OPERATION = `${BASE_URL}/recent-transactions.json`;
+
 export function useSubmitOperation() {
   const submit = async () => {
     return await fetch(SUBMIT_OPERATION);
@@ -57,4 +56,3 @@ export function useSubmitOperation() {
     submit,
   };
 }
-

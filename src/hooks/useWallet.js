@@ -5,20 +5,20 @@ import { useEffect, useState } from "react";
 export default function useWallet() {
   const [wallets, setWallets] = useState([]);
   const [totalBalance, setTotalBalance] = useState("");
+
   useEffect(() => {
+    const fetchWallets = () => {
+      let ref = database.ref(DB_NODES.WALLETS);
+      ref.on("value", (snapshot) => {
+        const data = Object.values(snapshot?.val() || {});
+        setWallets(data);
+        calculateTotalBalance(data);
+      });
+    };
     fetchWallets();
   }, []);
 
   const { amount, selectedWalletId } = useSelector((store) => store.fundCard);
-
-  const fetchWallets = () => {
-    let ref = database.ref(DB_NODES.WALLETS);
-    ref.on("value", (snapshot) => {
-      const data = Object.values(snapshot?.val() || {});
-      setWallets(data);
-      calculateTotalBalance(data);
-    });
-  };
 
   const fundWallet = async () => {
     const selectedWalletIndex = wallets.findIndex(

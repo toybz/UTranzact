@@ -45,11 +45,32 @@ export default function Transfer() {
     setSelectedBank({name: bank.name, id: bank.id});
   };
 
+
   const [accountNumber, setAccountNumber] = useState("");
+
+  const getAccountName = (accountNumber = "") => {
+    //using demo account names for now
+    const demoNames = [
+      "Toyeeb Abdulrahmon",
+      "Johnson Ugo",
+      "Opeyemi Morufat",
+      "Yusuf Olamilekan",
+      "IfeOluwa Dada",
+      "John Dow",
+      "Ugo C Ugo",
+      "James Alli",
+      "Martin Anderson",
+      "Sheriff Aji",
+    ];
+    const rand = Math.floor(Math.random() * 10);
+    return demoNames[rand]
+    
+    // return new Promise((resolve)=> resolve(demoNames[rand]) )
+  };
 
   const [amount, setAmount] = useState("");
 
-  const [recipient] = useState("Toyeeb Abdulrahmon");
+  const [recipient] = useState(getAccountName());
 
   const [description, setDescription] = useState("");
 
@@ -87,10 +108,10 @@ export default function Transfer() {
       setTimeout(() => {
         closeModals();
         setSelectedDebitWallet(userWallets[0]);
-        setSelectedBank({id: "", name: ""})
-        setAccountNumber("")
-        setAmount("")
-        setDescription("")
+        setSelectedBank({id: "", name: ""});
+        setAccountNumber("");
+        setAmount("");
+        setDescription("");
         setIsMakingTransfer(false);
         showToast("Transfer Sent Successfully", "success");
       }, 2000);

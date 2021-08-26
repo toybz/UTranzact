@@ -1,13 +1,14 @@
 import OpsSubmitButton from "./OpsSubmitButton";
 import { useState } from "react";
-import {Link, useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { MODAL_ID as FundAccountModalId } from "./Ops_FundCard";
-import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
 
 import useWallet from "../hooks/useWallet";
-import {useSelector} from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { showToast } from "../helpers/Utils";
+import { setFundCard } from "../store/fundCard";
 
 const MODAL_ID = "select_payment_method_modal";
 
@@ -35,17 +36,20 @@ export default function SelectPaymentMethod() {
   ];
   const [selectedCardId, setSelectedCardId] = useState(cards[0].id);
 
-  const {updateWalletBalance} = useWallet();
+  const dispatch = useDispatch();
+
+  const { fundWallet } = useWallet();
 
   let history = useHistory();
   const { amount } = useSelector((store) => store.fundCard);
 
   const makePayment = async () => {
-
     setIsProcessing(true);
 
-    await updateWalletBalance()
+    await fundWallet();
     setIsProcessing(false);
+    showToast("Account Top up Successful", "success");
+    dispatch(setFundCard({ amount: "", selectedWalletId: "" }));
     closeModals();
     history.push("/~/dashboard");
   };
@@ -71,13 +75,15 @@ export default function SelectPaymentMethod() {
   const handleFlutterPayment = useFlutterwave(flutterwavePaymentConfig);
 
   const payWithFlutterwave = () => {
-    handleFlutterPayment({ callback: ()=>{
-        closePaymentModal();
-        makePayment()
-      } , onClose: () => {} });
+    handleFlutterPayment({
+      callback: () => {
+        makePayment().then((r) => {
+          closePaymentModal();
+        });
+      },
+      onClose: () => {},
+    });
   };
-
-
 
   const [isProcessing, setIsProcessing] = useState(false);
 

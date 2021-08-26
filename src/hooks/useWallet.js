@@ -1,37 +1,69 @@
-import {setFundCard} from "../store/fundCard";
-import {useFetchUserWallets, useUpdateWallet} from "./useRequests";
-import {useDispatch, useSelector} from "react-redux";
-import {showToast} from "../helpers/Utils";
+import { useSelector } from "react-redux";
+import { database, DB_NODES } from "../firebase";
+import { useEffect, useState } from "react";
 
+export default function useWallet() {
+  const [wallets, setWallets] = useState([]);
+  const [totalBalance, setTotalBalance] = useState("");
+  useEffect(() => {
+    fetchWallets();
+  }, []);
 
-export default function useWallet (){
-    const dispatch = useDispatch();
+  const { amount, selectedWalletId } = useSelector((store) => store.fundCard);
 
-    const { data: userWallets, refetch: reFetchWallets } = useFetchUserWallets();
+  const fetchWallets = () => {
+    let ref = database.ref(DB_NODES.WALLETS);
+    ref.on("value", (snapshot) => {
+      const data = Object.values(snapshot?.val() || {});
+      setWallets(data);
+      calculateTotalBalance(data);
+    });
+  };
 
-    const { amount, selectedWalletId } = useSelector((store) => store.fundCard);
-    const { updateWallet } = useUpdateWallet();
+  const fundWallet = async () => {
+    const selectedWalletIndex = wallets.findIndex(
+      (wallet) => wallet.id === selectedWalletId
+    );
 
+    const newBalance =
+      (parseInt(wallets[selectedWalletIndex].balance) || 0) + parseInt(amount);
 
-    const updateWalletBalance = async () => {
+    return updateWalletBalance(selectedWalletId, newBalance);
+  };
 
-     const selectedWalletIndex = userWallets.findIndex(
-            (wallet) => wallet.id === selectedWalletId
-        );
+  const subtractFromWallet = async (walletId, amount) => {
+    walletId = parseInt(walletId);
+    const selectedWalletIndex = wallets.findIndex(
+      (wallet) => parseInt(wallet.id) === parseInt(walletId)
+    );
+    const newBalance =
+      (parseInt(wallets[selectedWalletIndex]?.balance) || 0) - parseInt(amount);
 
-        let newWallets = [...userWallets];
-        newWallets[selectedWalletIndex].balance =
-            (parseInt(newWallets[selectedWalletIndex].balance) || 0) +
-            parseInt(amount);
-        await updateWallet(newWallets);
-        reFetchWallets();
-        showToast("Account Top up Successful", "success");
-        dispatch(setFundCard({ amount: "", selectedWalletId: "" }));
+    return updateWalletBalance(walletId, newBalance);
+  };
 
-    };
+  const updateWalletBalance = (walletId, amount) => {
+    return database
+      .ref(DB_NODES.WALLETS)
+      .child(walletId)
+      .update({ balance: amount });
+  };
 
-    return {
-        updateWalletBalance
+  const calculateTotalBalance = (wallets) => {
+    let balance = 0;
+    if (wallets && wallets[0].balance) {
+      wallets.map((item) => {
+        balance += parseInt(item.balance);
+        return balance;
+      });
     }
+    setTotalBalance(balance);
+  };
 
+  return {
+    fundWallet,
+    subtractFromWallet,
+    wallets,
+    totalBalance,
+  };
 }

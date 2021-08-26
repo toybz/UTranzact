@@ -17,6 +17,7 @@ export const database = app.database();
 
 export const DB_NODES = {
   RECENT_TRANSACTIONS: "recent-transactions",
+  WALLETS: "users-wallet",
 };
 
 export const DbFetch = (node, callback) => {

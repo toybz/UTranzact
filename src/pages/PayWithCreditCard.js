@@ -5,6 +5,9 @@ import { useState } from "react";
 import OpsSubmitButton from "../components/OpsSubmitButton";
 import { useHistory } from "react-router-dom";
 import useWallet from "../hooks/useWallet";
+import { showToast } from "../helpers/Utils";
+import { setFundCard } from "../store/fundCard";
+import { useDispatch } from "react-redux";
 
 export default function PayWithCreditCard(props) {
   const [flipCreditCard, setFlipCreditCard] = useState(false);
@@ -12,7 +15,6 @@ export default function PayWithCreditCard(props) {
   const toggleCard = () => {
     setFlipCreditCard((prev) => !prev);
   };
-
 
   const [cardNumber, setCardNumber] = useState("");
   const [cardHolderName, setCardHolderName] = useState("");
@@ -24,29 +26,30 @@ export default function PayWithCreditCard(props) {
     return strArray.map((char, index) => {
       if (index % _index === 0) {
         return `${insertData}${char}`;
+      } else {
+        return char;
       }
-      else{ return char;}
-
     });
   };
 
-
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   let history = useHistory();
-  const {updateWalletBalance} = useWallet();
+  const { fundWallet } = useWallet();
 
-  const disableSubmitButton = (!cardNumber || !cardHolderName || !expiryDate || !cvv)
+  const disableSubmitButton =
+    !cardNumber || !cardHolderName || !expiryDate || !cvv;
 
- /* const parseExpirationDate = function(){
-
-  }*/
+  /* const parseExpirationDate = function(){
+   
+     }*/
+  const dispatch = useDispatch();
 
   const submit = async (event) => {
-
     event.preventDefault();
     setIsSubmitting(true);
-   await updateWalletBalance()
+    await fundWallet();
+    showToast("Account Top up Successful", "success");
+    dispatch(setFundCard({ amount: "", selectedWalletId: "" }));
     setIsSubmitting(false);
     history.push("/~/dashboard");
   };
@@ -177,10 +180,9 @@ export default function PayWithCreditCard(props) {
                     inputMode="numeric"
                     required
                     value={expiryDate}
-                    onChange={(e)=>setExpiryDate(e.target.value)}
+                    onChange={(e) => setExpiryDate(e.target.value)}
                   />
                   <label htmlFor="expirationdate">Expiry Date</label>
-
                 </div>
               </div>
               <div className="col-6">
@@ -193,8 +195,8 @@ export default function PayWithCreditCard(props) {
                     pattern="[0-9]*"
                     inputMode="numeric"
                     required
-                    onMouseEnter={()=>setFlipCreditCard(true)}
-                    onMouseLeave={()=>setFlipCreditCard(false)}
+                    onMouseEnter={() => setFlipCreditCard(true)}
+                    onMouseLeave={() => setFlipCreditCard(false)}
                     onChange={(event) => {
                       setCvv(event.target.value);
                     }}

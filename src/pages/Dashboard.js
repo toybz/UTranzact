@@ -1,7 +1,6 @@
 import Header from "../components/Header";
 import useCarousel from "../hooks/useCarousel";
 import Page from "./Page";
-import { useEffect, useState } from "react";
 import { openFundCardModal } from "../components/Ops_FundCard";
 import { Link } from "react-router-dom";
 import { HISTORY_LINK, SAVED_TRANSACTIONS } from "../helpers/links";
@@ -15,40 +14,22 @@ import SavedTransactionItem from "../components/SavedTransactionItem";
 
 import { BeatLoader } from "react-spinners";
 import LoadingCard from "../components/LoadingCard";
-import {
-
-  useFetchSavedTransactions,
-  useFetchUserWallets,
-} from "../hooks/useRequests";
+import { useFetchSavedTransactions } from "../hooks/useRequests";
 import HistoryItem from "../components/HistoryItem";
 
-import {useTransactions} from "../hooks/useTransactions";
+import { useTransactions } from "../hooks/useTransactions";
+import useWallet from "../hooks/useWallet";
 
 function Dashboard() {
   useCarousel(".owl-carousel ");
 
   const pageTitle = "Dashboard";
 
-  const [totalBalance, setTotalBalance] = useState(0);
-
-  const { data: userWallets, isFetchingWallets } = useFetchUserWallets();
+  const { totalBalance } = useWallet();
 
   const { data: savedTransactions } = useFetchSavedTransactions();
 
-  let {recentTransactions} = useTransactions();
-
-  useEffect(() => {
-    let balance = 0;
-    if (!isFetchingWallets && userWallets && userWallets[0].balance) {
-      userWallets.map((wallet) => {
-        balance += parseInt(wallet.balance);
-        return balance;
-      });
-    }
-    console.log({ balance });
-    setTotalBalance(balance);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(userWallets)]);
+  let { recentTransactions } = useTransactions();
 
   const operationsList = [
     TransferMenuItem,
@@ -65,9 +46,8 @@ function Dashboard() {
           <div className="emhead d-flex align-items-center justify-content-between">
             <div className="item__total">
               <span>Total Balance</span>
-              {userWallets ? (
+              {totalBalance !== "" ? (
                 <h2>
-                  {/*  {userWallets[0].balance}*/}
                   {totalBalance}
                   <span> NGN</span>
                 </h2>

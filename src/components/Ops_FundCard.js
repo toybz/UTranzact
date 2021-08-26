@@ -1,11 +1,11 @@
-import { useFetchUserWallets } from "../hooks/useRequests";
 import OpsSubmitButton from "./OpsSubmitButton";
 import SelectPaymentMethod, {
   openSelectPaymentMethodModal,
 } from "./SelectPaymentMethod";
 import { useDispatch, useSelector } from "react-redux";
 import { setFundCard } from "../store/fundCard";
-import {showToast} from "../helpers/Utils";
+import { showToast } from "../helpers/Utils";
+import useWallet from "../hooks/useWallet";
 
 export const MODAL_ID = "fund_card_modal";
 
@@ -26,16 +26,15 @@ export default function FundCard() {
       })
     );
   };
-  const { data: userWallets, isFetching: isFetchingUserWallets } =
-    useFetchUserWallets();
+  const { wallets } = useWallet();
 
-  const disableSubmit =  (!parseInt(amount) || !selectedWalletId)
+  const disableSubmit = !parseInt(amount) || !selectedWalletId;
 
   const submit = () => {
     if (disableSubmit) {
-       showToast("Please select target wallet and amount to fund", "warning");
+      showToast("Please select target wallet and amount to fund", "warning");
 
-       return
+      return;
     }
     openSelectPaymentMethodModal();
   };
@@ -79,14 +78,12 @@ export default function FundCard() {
                         updateFundCardData("selectedWalletId", e.target.value)
                       }
                     >
-                      {isFetchingUserWallets && (
-                        <option disabled>Please wait....</option>
-                      )}
-                      {userWallets && (
+                      {!wallets && <option disabled>Please wait....</option>}
+                      {wallets && (
                         <>
                           <option value={""}>Select</option>
 
-                          {userWallets.map((wallet) => (
+                          {wallets.map((wallet) => (
                             <option value={wallet.id} key={wallet.id}>
                               {`${wallet.name} - (${wallet.balance} NGN)`}
                             </option>
@@ -118,7 +115,11 @@ export default function FundCard() {
               </div>
             </div>
             <div className="modal-footer">
-              <OpsSubmitButton disable={disableSubmit} onClick={submit} text="Fund" />
+              <OpsSubmitButton
+                disable={disableSubmit}
+                onClick={submit}
+                text="Fund"
+              />
             </div>
           </div>
         </div>

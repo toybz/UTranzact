@@ -30,7 +30,7 @@ export default function BuyData() {
       packages: [
         {
           id: 5,
-          name: "m50MB",
+          name: "50MB",
           amount: 100,
         },
         {
@@ -61,7 +61,7 @@ export default function BuyData() {
       packages: [
         {
           id: 5,
-          name: "A50MB",
+          name: "50MB",
           amount: 100,
         },
         {
@@ -92,7 +92,7 @@ export default function BuyData() {
       packages: [
         {
           id: 5,
-          name: "G50MB",
+          name: "50MB",
           amount: 100,
         },
         {
@@ -123,7 +123,7 @@ export default function BuyData() {
       packages: [
         {
           id: 5,
-          name: "E50MB",
+          name: "50MB",
           amount: 100,
         },
         {
@@ -321,6 +321,8 @@ export default function BuyData() {
                       className="form-control custom-select"
                       onChange={updateSelectedNetwork}
                     >
+                      <option value="">Select</option>
+
                       {networksAndDataPackages.map((network) => (
                         <option key={network.id} value={network.id}>
                           {network.name}
@@ -335,6 +337,7 @@ export default function BuyData() {
                       className="form-control custom-select"
                       onChange={updateSelectedPackages}
                     >
+                      <option value="">Select</option>
                       {selectedMobileNetwork.packages.map((dataPackage) => (
                         <option key={dataPackage.id} value={dataPackage.id}>
                           {dataPackage.name} - &#x20A6;{dataPackage.amount}

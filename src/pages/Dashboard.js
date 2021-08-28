@@ -33,8 +33,8 @@ function Dashboard() {
 
   const operationsList = [
     TransferMenuItem,
-    DataMenuItem,
     AirtimeMenuItem,
+    DataMenuItem,
     FundCardMenuItem,
   ];
   return (
@@ -57,7 +57,6 @@ function Dashboard() {
                   color="white"
                 />
               )}
-              }
             </div>
             <div className="side__right">
               <button

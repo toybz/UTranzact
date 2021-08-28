@@ -41,7 +41,7 @@ export default function HistoryItem({ transaction }) {
               {transaction.category === TRANSFER &&
                 `Transfer to ${transaction.benefactor.accountProvider.name}`}
               {transaction.category === PAYMENT &&
-                `Payment for ${transaction.benefactor.accountProvider.name} - ${transaction.meta.paymentItemName}`}
+                `Payment for ${transaction.subCategory} `}
               {transaction.category === FUNDING && `Wallet Funding`}
             </p>
           </div>

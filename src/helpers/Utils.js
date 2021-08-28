@@ -22,6 +22,10 @@ export const showToast = (message, type, config = {}) => {
   });
 };
 
+export const closeModal = (modalId) => {
+  document.jQuery(`#${modalId}`).modal("hide");
+};
+
 export const getFirstChar = (text) => {
   return text.charAt(0);
 };

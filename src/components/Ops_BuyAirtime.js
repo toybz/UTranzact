@@ -1,97 +1,137 @@
+import { useTransactions } from "../hooks/useTransactions";
+import { useState } from "react";
+import OpsSubmitButton from "./OpsSubmitButton";
+import { AIRTIME, PAYMENT } from "../helpers/transactionCategories";
+import { closeModal, showToast } from "../helpers/Utils";
+
 const MODAL_ID = "airtime_modal";
 
 export const openBuyAirtimeModal = () => {
-    document.jQuery(`#${MODAL_ID}`).modal({})
-}
-
+  document.jQuery(`#${MODAL_ID}`).modal({});
+};
 
 export default function BuyAirtime() {
-    return (
-        <>
-            <div
-                className="modal transition-bottom screenFull defaultModal mdlladd__rate fade"
-                id={MODAL_ID}
-                tabIndex="-1"
+  const {
+    userWallets,
+    selectedDebitWallet,
+    selectWallet,
+    setSelectedDebitWallet,
+    newTransaction,
+    isProcessingTransaction,
+    setIsProcessingTransaction,
+  } = useTransactions();
 
-            >
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header padding-l-20 padding-r-20 justify-content-center">
-                            <div className="itemProduct_sm">
-                                <h1 className="size-18 weight-600 color-secondary m-0">
-                                    Buy Airtime
-                                </h1>
-                            </div>
-                            {/*here is close button */}
-                            <div className="absolute right-0 padding-r-20">
-                                <button
-                                    type="button"
-                                    className="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                >
-                                    <i className="tio-clear"/>
-                                </button>
-                            </div>
-                        </div>
-                        <div className="modal-body">
-                            <div className="padding-t-20">
-                                <form action="#">
-                                    <div className="form-group input-lined">
-                                        <select className="form-control custom-select">
-                                            <option value="Default Account (**** 6540)">
-                                                Default Account (**** 6540)
-                                            </option>
-                                            <option value="Saving Account (**** 0051)">
-                                                Saving Account (**** 0051)
-                                            </option>
-                                            <option value="Bills Account (**** 1942)">
-                                                Bills Account (**** 1942)
-                                            </option>
-                                            <option value="Business Account (****2297)">
-                                                Business Account (****2297)
-                                            </option>
-                                        </select>
-                                        <label>Choose The Card</label>
-                                    </div>
+  const [mobileNumber, setMobileNumber] = useState("");
 
-                                    <div className="form-group input-lined relative">
-                                        <input
-                                            type="tel"
-                                            className="form-control"
+  const [amount, setAmount] = useState("");
 
-                                            placeholder="080********"
-                                            required=""
-                                        />
-                                        <label>Enter Mobile Number</label>
-                                    </div>
+  const canSubmit = selectedDebitWallet && amount;
 
-                                    <div className="form-group input-lined relative">
-                                        <input
-                                            type="text"
-                                            className="form-control"
+  const buyAirtime = () => {
+    setIsProcessingTransaction(true);
+    const transactionData = {
+      amount,
+      benefactor: {
+        accountProvider: {
+          id: "",
+          image: "",
+          name: "",
+        },
+        destinationId: mobileNumber,
+        name: "",
+      },
+      category: PAYMENT,
+      subCategory: AIRTIME,
+      dateTime: Date.now(),
+      debitWallet: {
+        id: selectedDebitWallet.id,
+        name: selectedDebitWallet.name,
+      },
+      description: "",
+      status: "Successful",
+    };
 
-                                            min="0"
-                                            placeholder="000"
-                                            required=""
-                                        />
-                                        <label>Enter Amount</label>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                data-dismiss="modal"
-                                className="btn w-100 bg-primary m-0 color-white h-52 d-flex align-items-center rounded-8 justify-content-center"
-                            >
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                </div>
+    newTransaction(transactionData).then(() => {
+      setTimeout(() => {
+        closeModal(MODAL_ID);
+        setSelectedDebitWallet(userWallets[0]);
+        setAmount("");
+        setMobileNumber("");
+        setIsProcessingTransaction(false);
+        showToast("Airtime Purchased Successfully", "success");
+      }, 2000);
+    });
+  };
+
+  return (
+    <>
+      <div
+        className="modal transition-bottom screenFull defaultModal mdlladd__rate fade"
+        id={MODAL_ID}
+        tabIndex="-1"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header padding-l-20 padding-r-20 justify-content-center">
+              <div className="itemProduct_sm">
+                <h1 className="size-18 weight-600 color-secondary m-0">
+                  Buy Airtime
+                </h1>
+              </div>
+              {/*here is close button */}
+              <div className="absolute right-0 padding-r-20">
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <i className="tio-clear" />
+                </button>
+              </div>
             </div>
-        </>
-    );
+            <div className="modal-body">
+              <div className="padding-t-20">
+                <form action="#">
+                  {selectWallet}
+                  <div className="form-group input-lined relative">
+                    <input
+                      type="tel"
+                      className="form-control"
+                      placeholder="080********"
+                      value={mobileNumber}
+                      onChange={(e) => setMobileNumber(e.target.value)}
+                      required=""
+                    />
+                    <label>Enter Mobile Number</label>
+                  </div>
+
+                  <div className="form-group input-lined relative">
+                    <input
+                      type="text"
+                      className="form-control"
+                      min="0"
+                      placeholder="000"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      required=""
+                    />
+                    <label>Enter Amount</label>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <OpsSubmitButton
+                disable={!canSubmit}
+                onClick={buyAirtime}
+                isProcessing={isProcessingTransaction}
+                text="Submit"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }

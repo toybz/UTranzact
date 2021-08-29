@@ -227,7 +227,7 @@ export function ConfirmTransaction() {
                   <p className="color-text size-13 text-center mb-0">
                     You are buying{" "}
                     <span className="color-secondary">
-                      {benefactor?.purchaseItem?.name}{" "}
+                      {benefactor.purchaseItem.name}{" "}
                     </span>{" "}
                     Data to
                     <span className="color-secondary">

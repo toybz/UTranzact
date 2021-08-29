@@ -14,11 +14,11 @@ import SavedTransactionItem from "../components/SavedTransactionItem";
 
 import { BeatLoader } from "react-spinners";
 import LoadingCard from "../components/LoadingCard";
-import { useFetchSavedTransactions } from "../hooks/useRequests";
 import HistoryItem from "../components/HistoryItem";
 
 import { useTransactions } from "../hooks/useTransactions";
 import useWallet from "../hooks/useWallet";
+import useSavedTransaction from "../hooks/useSavedTransaction";
 
 function Dashboard() {
   useCarousel(".owl-carousel ");
@@ -27,7 +27,7 @@ function Dashboard() {
 
   const { totalBalance } = useWallet();
 
-  const { data: savedTransactions } = useFetchSavedTransactions();
+  const { savedTransactions } = useSavedTransaction();
 
   let { recentTransactions } = useTransactions();
 

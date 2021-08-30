@@ -21,7 +21,8 @@ export const useTransactions = () => {
     fetchRecentTransactions();
   }, []);
 
-  const newTransaction = async (transaction) => {
+  const newTransaction = async (transactionData) => {
+    const transaction = { ...transactionData, dateTime: Date.now() };
     const operation = await database.ref(nodeName).push();
 
     //todo: Decrease the wallet balance here

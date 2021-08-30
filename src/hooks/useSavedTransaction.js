@@ -6,11 +6,11 @@ export default function useSavedTransaction() {
   useEffect(() => {
     const fetchSavedTransactions = () => {
       let ref = database.ref(DB_NODES.SAVED_TRANSACTIONS);
-      ref.limitToLast(2).on("value", (snapshot) => {
+      ref.limitToLast(3).on("value", (snapshot) => {
         const data = Object.values(snapshot?.val() || {});
 
         // Reversed the data so the last item added comes first
-        setSavedTransactions(data.reverse());
+        setSavedTransactions(data);
       });
     };
     fetchSavedTransactions();

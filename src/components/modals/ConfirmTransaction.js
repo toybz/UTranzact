@@ -6,6 +6,10 @@ import {
   PAY_TV,
   TRANSFER,
 } from "../../helpers/transactionCategories";
+import { useTransactions } from "../../hooks/useTransactions";
+import { closeModal, showToast } from "../../helpers/Utils";
+import { useState } from "react";
+import OpsSubmitButton from "../OpsSubmitButton";
 
 const MODAL_ID = "confirm_saved_payment_transaction_modal";
 
@@ -14,8 +18,24 @@ export const openConfirmTransactionModal = () => {
 };
 
 export function ConfirmTransaction() {
+  const transactionData = useSelector((store) => store.transactionDetails);
+
   const { category, subCategory, amount, benefactor, debitWallet } =
-    useSelector((store) => store.transactionDetails);
+    transactionData;
+
+  const { newTransaction } = useTransactions();
+
+  const [isProcessingTransaction, setIsProcessingTransaction] = useState(false);
+
+  const performTransaction = () => {
+    setIsProcessingTransaction(true);
+
+    newTransaction(transactionData).then((e) => {
+      showToast("Transaction is completed successfully", "success");
+      setIsProcessingTransaction(false);
+      closeModal(MODAL_ID);
+    });
+  };
 
   return (
     <>
@@ -273,13 +293,12 @@ export function ConfirmTransaction() {
             </div>
 
             <div className="modal-footer">
-              <button
-                type="button"
-                data-dismiss="modal"
-                className="btn w-100 bg-primary m-0 color-white h-52 d-flex align-items-center rounded-8 justify-content-center"
-              >
-                Confirm
-              </button>
+              <OpsSubmitButton
+                isProcessing={isProcessingTransaction}
+                text={"Confirm"}
+                onClick={performTransaction}
+                processingText={"Processing..."}
+              />
             </div>
           </div>
         </div>

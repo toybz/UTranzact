@@ -217,17 +217,11 @@ export default function BuyData() {
     packages: [],
   });
 
-  const [selectedDataPackage, setSelectedDataPackage] = useState({
-    id: "",
-    name: "",
-  });
-
   const updateSelectedNetwork = (e) => {
     const selectedNetworkId = e.target.value;
     const network = networksAndDataPackages.find(
       (item) => parseInt(item.id) === parseInt(selectedNetworkId)
     );
-
     setSelectedMobileNetwork({
       id: network.id,
       name: network.name,
@@ -235,6 +229,10 @@ export default function BuyData() {
     });
   };
 
+  const [selectedDataPackage, setSelectedDataPackage] = useState({
+    id: "",
+    name: "",
+  });
   const updateSelectedPackages = (e) => {
     const selectedPackageId = e.target.value;
 
@@ -246,7 +244,10 @@ export default function BuyData() {
   };
 
   const canSubmit =
-    selectedDebitWallet && selectedMobileNetwork && selectedDataPackage;
+    selectedDebitWallet &&
+    selectedMobileNetwork?.id !== "" &&
+    selectedDataPackage?.id !== "" &&
+    mobileNumber;
 
   const buyData = () => {
     setIsProcessingTransaction(true);

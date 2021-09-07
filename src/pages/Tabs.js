@@ -21,6 +21,7 @@ import QrPay from "../components/Ops_QrPay";
 import BuyAirtime from "../components/Ops_BuyAirtime";
 import TransactionDetail from "../components/TransactionDetails";
 import BuyData from "../components/Ops_BuyData";
+import BuyPower from "../components/Ops_BuyPower";
 
 const Dashboard = React.lazy(() => import("./Dashboard"));
 const VirtualCards = React.lazy(() => import("./VirtualCards"));
@@ -130,6 +131,7 @@ export default function Tabs() {
       <BuyAirtime />
       <BuyData />
       <TransactionDetail />
+      <BuyPower />
     </>
   );
 }

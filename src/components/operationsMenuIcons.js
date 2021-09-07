@@ -44,8 +44,8 @@ export const DataMenuItem = ({ iconStyle, containerClass }) => (
 export const FundCardMenuItem = ({ iconStyle, containerClass }) => (
   <OperationItem
     icon={"ri-bank-card-fill"}
-    iconStyle={{ color: "#f44041", ...iconStyle }}
-    bgColor={"#fdecec"}
+    iconStyle={{ color: "#0e132d", ...iconStyle }}
+    bgColor={"#e6e7ea"}
     title={"Fund Card"}
     onClick={openFundCardModal}
     containerClass={containerClass}
@@ -77,8 +77,8 @@ export const CableMenuItem = ({ iconStyle, containerClass }) => (
 export const PowerMenuItem = ({ iconStyle, containerClass }) => (
   <OperationItem
     icon={"ri-qr-code-fill"}
-    iconStyle={{ color: "#0e132d", ...iconStyle }}
-    bgColor={"#e6e7ea"}
+    iconStyle={{ color: "#f44041", ...iconStyle }}
+    bgColor={"#fdecec"}
     title={"Power"}
     onClick={openBuyPowerModal}
     containerClass={containerClass}

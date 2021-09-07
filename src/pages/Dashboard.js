@@ -7,7 +7,7 @@ import { HISTORY_LINK, SAVED_TRANSACTIONS } from "../helpers/links";
 import {
   AirtimeMenuItem,
   DataMenuItem,
-  FundCardMenuItem,
+  PowerMenuItem,
   TransferMenuItem,
 } from "../components/operationsMenuIcons";
 import SavedTransactionItem from "../components/SavedTransactionItem";
@@ -35,7 +35,7 @@ function Dashboard() {
     TransferMenuItem,
     AirtimeMenuItem,
     DataMenuItem,
-    FundCardMenuItem,
+    PowerMenuItem,
   ];
   return (
     <>

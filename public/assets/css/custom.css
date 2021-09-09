@@ -1,3 +1,9 @@
 .horizontal-padding-20 {
     padding: 20px 0px 20px 0px;
 }
+
+.card-name {
+    color: white;
+    font-size: medium;
+    font-weight: bold;
+}

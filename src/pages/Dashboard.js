@@ -36,6 +36,11 @@ function Dashboard() {
     AirtimeMenuItem,
     DataMenuItem,
     PowerMenuItem,
+
+    /*CableMenuItem,
+        RequestMenuItem,
+        QrPayMenuItem,
+        CoPayMenuItem,*/
   ];
   return (
     <>

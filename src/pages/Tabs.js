@@ -10,7 +10,6 @@ import FullPageLoader from "../components/FullPageLoader";
 import {
   DASHBOARD_LINK,
   HISTORY_LINK,
-  OPERATIONS_LINK,
   VIRTUAL_CARDS_LINK,
 } from "../helpers/links";
 import { ConfirmTransaction } from "../components/modals/ConfirmTransaction";
@@ -91,7 +90,7 @@ export default function Tabs() {
               <div className="txt__tile">Cards</div>
             </NavLink>
           </div>
-          <div className="item_link">
+          {/*  <div className="item_link">
             <NavLink
               to={OPERATIONS_LINK}
               className="btn btn_navLink without_active"
@@ -103,7 +102,7 @@ export default function Tabs() {
                 <i className="ri-dashboard-line" />
               </button>
             </NavLink>
-          </div>
+          </div>*/}
           <div className="item_link">
             <NavLink to={HISTORY_LINK} className="btn btn_navLink">
               <div className="icon_current">

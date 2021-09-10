@@ -1,7 +1,6 @@
 import { database, DB_NODES } from "../firebase";
 import { useEffect, useState } from "react";
 import useWallet from "./useWallet";
-import { useFetchUserWallets } from "./useRequests";
 
 const nodeName = "recent-transactions";
 
@@ -39,7 +38,7 @@ export const useTransactions = () => {
       });
   };
 
-  const { data: userWallets } = useFetchUserWallets();
+  const { wallets: userWallets } = useWallet();
   const [selectedDebitWallet, setSelectedDebitWallet] = useState({
     id: "",
     name: "",
@@ -49,6 +48,7 @@ export const useTransactions = () => {
       setSelectedDebitWallet(userWallets[0]);
     }
   }, [userWallets]);
+
   const changeSelectedWallet = (walletId) => {
     const wallet = userWallets.find((item) => item.id === walletId);
     setSelectedDebitWallet(wallet);

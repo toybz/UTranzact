@@ -1,10 +1,11 @@
 import Header from "../components/Header";
-import { Link } from "react-router-dom";
-import { ADD_VIRTUAL_CARDS_LINK } from "../helpers/links";
 import Page from "./Page";
 import useWallet from "../hooks/useWallet";
 import LoadingCard from "../components/LoadingCard";
 import CreditCard from "../components/CreditCard";
+import AddNewVirtualCard, {
+  openAddNewVirtualCardModal,
+} from "../components/AddNewVirtualCard";
 
 export default function VirtualCards() {
   const { wallets } = useWallet();
@@ -16,12 +17,12 @@ export default function VirtualCards() {
           pageTitle={"Virtual Cards"}
           rightItem={() => (
             <div className="em_side_right">
-              <Link
-                to={ADD_VIRTUAL_CARDS_LINK}
+              <span
+                onClick={openAddNewVirtualCardModal}
                 className="size-14 white-onScroll color-primary hover:color-blue"
               >
                 + Add
-              </Link>
+              </span>
             </div>
           )}
         />
@@ -52,6 +53,8 @@ export default function VirtualCards() {
           </div>
         </section>
       </Page>
+
+      <AddNewVirtualCard />
     </>
   );
 }

@@ -18,6 +18,27 @@ export default function useWallet() {
     fetchWallets();
   }, []);
 
+  const addNewWallet = async ({ amount, walletName }) => {
+    const walletData = {
+      balance: amount,
+      cardDetails: {
+        cvv: "992",
+        expirationDate: "09/20",
+        name: "Toyeeb Abdulrahmon",
+        number: "2345156754321789",
+      },
+      name: walletName,
+      user: "1",
+    };
+
+    const operation = await database.ref(DB_NODES.WALLETS).push();
+
+    return operation.set({
+      ...walletData,
+      id: operation.key,
+    });
+  };
+
   const { amount, selectedWalletId } = useSelector((store) => store.fundCard);
 
   const fundWallet = async () => {
@@ -61,6 +82,7 @@ export default function useWallet() {
   };
 
   return {
+    addNewWallet,
     fundWallet,
     subtractFromWallet,
     wallets,

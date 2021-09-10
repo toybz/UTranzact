@@ -2,10 +2,64 @@ import { database, DB_NODES } from "../firebase";
 import { useEffect, useState } from "react";
 import useWallet from "./useWallet";
 
+const arrangeHistoryByDate = (historyItems) => {
+  let arrangedHistory = {};
+
+  const currentDate = new Date();
+  const currentDayOfMonth = currentDate.getDate();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+
+  const currentDateString =
+    currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
+
+  historyItems.forEach((element) => {
+    let dateTime = new Date(element.dateTime);
+    const transactionDayOfMonth = dateTime.getDate();
+    const transactionMonth = dateTime.getMonth();
+    const transactionYear = dateTime.getFullYear();
+
+    let transactionDateString =
+      transactionDayOfMonth +
+      "-" +
+      (transactionMonth + 1) +
+      "-" +
+      transactionYear;
+
+    let transactionDate = transactionDateString;
+
+    if (transactionDateString === currentDateString) {
+      transactionDate = "Today";
+    }
+
+    if (
+      currentYear === transactionYear &&
+      currentMonth === transactionMonth &&
+      currentDayOfMonth - transactionDayOfMonth === 1
+    ) {
+      transactionDate = "Yesterday";
+    }
+
+    if (!arrangedHistory[transactionDate]) {
+      arrangedHistory[transactionDate] = [];
+    }
+
+    arrangedHistory[transactionDate].push({
+      ...element,
+    });
+  });
+  //  console.log(arrangedHistory);
+
+  return arrangedHistory;
+};
+
 const nodeName = "recent-transactions";
 
 export const useTransactions = () => {
   let [recentTransactions, setRecentTransactions] = useState([]);
+
+  let [transactionsHistory, setTransactionsHistory] = useState({});
+
   const { subtractFromWallet } = useWallet();
   useEffect(() => {
     const fetchRecentTransactions = () => {
@@ -18,6 +72,19 @@ export const useTransactions = () => {
       });
     };
     fetchRecentTransactions();
+  }, []);
+
+  useEffect(() => {
+    const fetchTransactionHistory = () => {
+      let ref = database.ref(DB_NODES.RECENT_TRANSACTIONS);
+      ref.on("value", (snapshot) => {
+        const data = Object.values(snapshot?.val() || {});
+
+        setTransactionsHistory(arrangeHistoryByDate(data));
+      });
+    };
+
+    fetchTransactionHistory();
   }, []);
 
   const newTransaction = async (transactionData) => {
@@ -76,6 +143,7 @@ export const useTransactions = () => {
 
   return {
     recentTransactions,
+    transactionsHistory,
     newTransaction,
     userWallets,
     selectWallet,

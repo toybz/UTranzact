@@ -109,7 +109,7 @@ export default function Tabs() {
               <div className="icon_current">
                 <i className="ri-history-line" />
               </div>
-              <div className="items_basket_circle">2</div>
+
               <div className="txt__tile">History</div>
             </NavLink>
           </div>

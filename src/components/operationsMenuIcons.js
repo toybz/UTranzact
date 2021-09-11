@@ -7,6 +7,7 @@ import { openBuyDataModal } from "./Ops_BuyData";
 import { openBuyPayTvModal } from "./Ops_BuyCable";
 import { openBuyPowerModal } from "./Ops_BuyPower";
 import { openRequestFundModal } from "./Ops_Request";
+import { showToast } from "../helpers/Utils";
 
 export const TransferMenuItem = ({ iconStyle, containerClass }) => (
   <OperationItem
@@ -97,6 +98,7 @@ export const CoPayMenuItem = ({ iconStyle, containerClass }) => (
     bgColor={"rgba(222, 74, 253, 0.1)"}
     title={"Co-Pay"}
     modalId={"copay-modal"}
+    onClick={() => showToast("Coming Soon", "info")}
     containerClass={containerClass}
   />
 );

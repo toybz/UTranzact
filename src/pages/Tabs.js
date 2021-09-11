@@ -10,6 +10,7 @@ import FullPageLoader from "../components/FullPageLoader";
 import {
   DASHBOARD_LINK,
   HISTORY_LINK,
+  OPERATIONS_LINK,
   VIRTUAL_CARDS_LINK,
 } from "../helpers/links";
 import { ConfirmTransaction } from "../components/modals/ConfirmTransaction";
@@ -21,6 +22,8 @@ import BuyAirtime from "../components/Ops_BuyAirtime";
 import TransactionDetail from "../components/TransactionDetails";
 import BuyData from "../components/Ops_BuyData";
 import BuyPower from "../components/Ops_BuyPower";
+import BuyCable from "../components/Ops_BuyCable";
+import RequestFunds from "../components/Ops_Request";
 
 const Dashboard = React.lazy(() => import("./Dashboard"));
 const VirtualCards = React.lazy(() => import("./VirtualCards"));
@@ -90,7 +93,7 @@ export default function Tabs() {
               <div className="txt__tile">Cards</div>
             </NavLink>
           </div>
-          {/*  <div className="item_link">
+          <div className="item_link">
             <NavLink
               to={OPERATIONS_LINK}
               className="btn btn_navLink without_active"
@@ -102,7 +105,7 @@ export default function Tabs() {
                 <i className="ri-dashboard-line" />
               </button>
             </NavLink>
-          </div>*/}
+          </div>
           <div className="item_link">
             <NavLink to={HISTORY_LINK} className="btn btn_navLink">
               <div className="icon_current">
@@ -132,6 +135,8 @@ export default function Tabs() {
       <BuyData />
       <TransactionDetail />
       <BuyPower />
+      <BuyCable />
+      <RequestFunds />
     </>
   );
 }

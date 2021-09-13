@@ -1,5 +1,4 @@
 import Header from "../components/Header";
-import useCarousel from "../hooks/useCarousel";
 import Page from "./Page";
 import {
   AirtimeMenuItem,
@@ -14,7 +13,6 @@ import {
 } from "../components/operationsMenuIcons";
 
 export default function Operations() {
-  useCarousel(".owl-carousel ");
   const operationsList = [
     {
       title: "Transfer",
@@ -78,108 +76,20 @@ export default function Operations() {
       <Page className="bg-snow">
         <Header pageTitle="Operations" />
 
-        <section className="padding-t-80 padding-l-20 swiperCards__wallet padding-b-30">
-          <div className="emBK__cards">
-            <div className="owl-carousel owl-theme owlCards">
-              <div className="item">
-                {/* ele__card */}
-                <div className="ele__card">
-                  <div className="bg_imgCard">
-                    <img
-                      className="cover_img"
-                      src="/assets/img/card0032.png"
-                      alt=""
-                    />
-                    <div className="enContent_card">
-                      <div className="head">
-                        <div className="d-flex justify-content-between align-items-center">
-                          <div className="icon">
-                            <img src="/assets/img/icon/visa_light.svg" alt="" />
-                          </div>
-                          <p className="ex_date">04/23</p>
-                        </div>
-                      </div>
-                      <div className="footer">
-                        <div className="sideLeft d-flex justify-content-between align-items-center">
-                          <div className="txt">
-                            <span className="name">Credit Card</span>
-                            <p className="no_card">…. 3951</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* .ele__card */}
+        <section className="padding-t-80 swiperCards__wallet padding-b-30">
+          <div className="emPage__blog">
+            <div className="item__card layer-lg">
+              <div className="cover_img">
+                <img
+                  src="/assets/img/0654dsf.jpg"
+                  alt=""
+                  style={{ width: "100vw" }}
+                />
               </div>
-              <div className="item">
-                {/* ele__card */}
-                <div className="ele__card">
-                  <div className="bg_imgCard">
-                    <img
-                      className="cover_img"
-                      src="/assets/img/card000.png"
-                      alt=""
-                    />
-                    <div className="enContent_card">
-                      <div className="head">
-                        <div className="d-flex justify-content-between align-items-center">
-                          <div className="icon">
-                            <img
-                              src="/assets/img/icon/mastercard-light.svg"
-                              alt=""
-                            />
-                          </div>
-                          <p className="ex_date">02/30</p>
-                        </div>
-                      </div>
-                      <div className="footer">
-                        <div className="sideLeft d-flex justify-content-between align-items-center">
-                          <div className="txt">
-                            <span className="name">Credit Card</span>
-                            <p className="no_card">…. 0261</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* .ele__card */}
-              </div>
-              <div className="item">
-                {/* ele__card */}
-                <div className="ele__card">
-                  <div className="bg_imgCard">
-                    <img
-                      className="cover_img"
-                      src="/assets/img/card001.png"
-                      alt=""
-                    />
-                    <div className="enContent_card">
-                      <div className="head">
-                        <div className="d-flex justify-content-between align-items-center">
-                          <div className="icon">
-                            <img
-                              src="/assets/img/icon/amircan-light.svg"
-                              alt=""
-                            />
-                          </div>
-                          <p className="ex_date">01/26</p>
-                        </div>
-                      </div>
-                      <div className="footer">
-                        <div className="sideLeft d-flex justify-content-between align-items-center">
-                          <div className="txt">
-                            <span className="name">Credit Card</span>
-                            <p className="no_card">…. 1743</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* .ele__card */}
-              </div>
+              {/*  <div className="card__body">
+                 <h2 className="card_title">Card Title</h2>
+                <p></p>
+              </div>*/}
             </div>
           </div>
         </section>

@@ -130,7 +130,7 @@ export default function SelectPaymentMethod() {
                       >
                         <div className="media align-items-center">
                           <div className="icon">
-                            <img src="assets/img/icon/visa.svg" alt="" />
+                            <img src="/assets/img/icon/visa.svg" alt="" />
                           </div>
                           <div className="media-body">
                             <div className="txt">
@@ -158,16 +158,15 @@ export default function SelectPaymentMethod() {
                   >
                     <span>Credit Card</span>
                     <div className="icon__payment">
-                      <img src="assets/img/icon/visa.svg" alt="" />
-                      <img src="assets/img/icon/american-express.svg" alt="" />
-                      <img src="assets/img/icon/shopify.svg" alt="" />
-                      <img src="assets/img/icon/master-card.svg" alt="" />
+                      <img src="/assets/img/icon/visa.svg" alt="" />
+
+                      <img src="/assets/img/icon/master-card.svg" alt="" />
                     </div>
                   </Link>
                   <button className="btn itemPay" onClick={payWithFlutterwave}>
                     <span>Flutterwave</span>
                     <div className="icon__payment">
-                      <img src="assets/img/icon/paypal.svg" alt="" />
+                      <img src="/assets/img/flutterwave.png" alt="" />
                     </div>
                   </button>
                 </section>

@@ -15,7 +15,6 @@ const providers = [
     name: "DSTV",
     packages: [
       { id: 1, name: "Dstv Yanga", amount: 2000 },
-
       { id: 2, name: "Dstv Confam", amount: 6000 },
       { id: 3, name: "Dstv Compact", amount: 8000 },
       { id: 4, name: "Dstv Premium", amount: 18000 },
@@ -26,7 +25,6 @@ const providers = [
     name: "GoTv",
     packages: [
       { id: 1, name: "Gotv Yanga", amount: 2000 },
-
       { id: 2, name: "Gotv Confam", amount: 4000 },
     ],
   },
@@ -40,6 +38,7 @@ const providers = [
     ],
   },
 ];
+
 export default function BuyCable() {
   const {
     selectWallet,

@@ -1,6 +1,7 @@
 import { database, DB_NODES } from "../firebase";
 import { useEffect, useState } from "react";
 import useWallet from "./useWallet";
+import { showToast } from "../helpers/Utils";
 
 const arrangeHistoryByDate = (historyItems) => {
   let arrangedHistory = {};
@@ -60,7 +61,7 @@ export const useTransactions = () => {
 
   let [transactionsHistory, setTransactionsHistory] = useState({});
 
-  const { subtractFromWallet } = useWallet();
+  const { subtractFromWallet, getWalletBalance } = useWallet();
   useEffect(() => {
     const fetchRecentTransactions = () => {
       let ref = database.ref(DB_NODES.RECENT_TRANSACTIONS);
@@ -87,7 +88,24 @@ export const useTransactions = () => {
     fetchTransactionHistory();
   }, []);
 
+  const isSufficientFundsForTransaction = (walletId, newTransactionAmount) => {
+    return getWalletBalance(walletId) > newTransactionAmount;
+  };
+
   const newTransaction = async (transactionData) => {
+    if (
+      !isSufficientFundsForTransaction(
+        transactionData.debitWallet.id,
+        transactionData.amount
+      )
+    ) {
+      showToast("Error: Insufficient Funds in Selected Wallet", "error");
+      setIsProcessingTransaction(false);
+      return new Promise((resolve, reject) => {
+        reject("Error: Insufficient Funds in Selected Wallet");
+      });
+    }
+
     const transaction = { ...transactionData, dateTime: Date.now() };
     const operation = await database.ref(nodeName).push();
 

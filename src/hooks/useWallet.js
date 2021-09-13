@@ -53,9 +53,8 @@ export default function useWallet() {
   };
 
   const subtractFromWallet = async (walletId, amount) => {
-    walletId = parseInt(walletId);
     const selectedWalletIndex = wallets.findIndex(
-      (wallet) => parseInt(wallet.id) === parseInt(walletId)
+      (wallet) => wallet.id === walletId
     );
     const newBalance =
       (parseInt(wallets[selectedWalletIndex]?.balance) || 0) - parseInt(amount);
@@ -81,10 +80,16 @@ export default function useWallet() {
     setTotalBalance(balance);
   };
 
+  const getWalletBalance = (walletId) => {
+    const selectedWallet = wallets.find((wallet) => wallet.id === walletId);
+    return selectedWallet.balance;
+  };
+
   return {
     addNewWallet,
     fundWallet,
     subtractFromWallet,
+    getWalletBalance,
     wallets,
     totalBalance,
   };

@@ -7,9 +7,9 @@ import useAuth from "../hooks/useAuth";
 import OpsSubmitButton from "../components/OpsSubmitButton";
 
 export default function Register() {
-  const [fullName, setFullName] = useState("User 2");
-  const [email, setEmail] = useState("user2@mail.com");
-  const [password, setPassword] = useState("123456");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);

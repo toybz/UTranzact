@@ -1,7 +1,7 @@
 import { useTransactions } from "../hooks/useTransactions";
 import { useState } from "react";
 import OpsSubmitButton from "./OpsSubmitButton";
-import { AIRTIME, PAYMENT } from "../helpers/transactionCategories";
+import { AIRTIME, PAYMENT } from "../constant/transactionCategories";
 import { closeModal, showToast } from "../helpers/Utils";
 
 const MODAL_ID = "airtime_modal";

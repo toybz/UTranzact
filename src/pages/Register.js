@@ -1,7 +1,7 @@
-import { DASHBOARD_LINK, LOGIN, ONBOARDING } from "../helpers/links";
+import { DASHBOARD_LINK, LOGIN, ONBOARDING } from "../constant/pageRoutes";
 import { Link, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { auth } from "../firebase";
+import { auth, database, DB_NODES } from "../firebase";
 import { showToast } from "../helpers/Utils";
 import useAuth from "../hooks/useAuth";
 import OpsSubmitButton from "../components/OpsSubmitButton";
@@ -26,6 +26,27 @@ export default function Register() {
         let { isAnonymous, uid } = userCredential.user;
 
         await createNewUser({ email, displayName: fullName, isAnonymous, uid });
+
+        console.log("Create new wallet");
+        const walletData = {
+          balance: 0,
+          cardDetails: {
+            cvv: "992",
+            expirationDate: "09/23",
+            name: fullName,
+            number: "2345156754321789",
+          },
+          name: "Default",
+          uid: uid,
+        };
+
+        const operation = await database.ref(DB_NODES.WALLETS).push();
+
+        operation.set({
+          ...walletData,
+          id: operation.key,
+        });
+
         setIsSubmitting(false);
 
         showToast("Sign Up is Successful", "success");
@@ -41,7 +62,7 @@ export default function Register() {
   return (
     <>
       <div id="wrapper" className="bg-white">
-        <div id="content ">
+        <div id="content " className="full-height">
           <header className="main_haeder header-sticky multi_item">
             <div className="em_side_right">
               <Link

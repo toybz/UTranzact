@@ -1,4 +1,4 @@
-import { DASHBOARD_LINK, ONBOARDING, REGISTER } from "../helpers/links";
+import { DASHBOARD_LINK, ONBOARDING, REGISTER } from "../constant/pageRoutes";
 import { Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { auth } from "../firebase";
@@ -35,7 +35,7 @@ export default function Login() {
   return (
     <>
       <div id="wrapper" className="bg-white">
-        <div id="content ">
+        <div id="content" className="full-height">
           <header className="main_haeder header-sticky multi_item">
             <div className="em_side_right">
               <Link

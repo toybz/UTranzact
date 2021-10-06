@@ -1,7 +1,7 @@
 import { useTransactions } from "../hooks/useTransactions";
 import { useState } from "react";
 import OpsSubmitButton from "./OpsSubmitButton";
-import { PAY_TV, PAYMENT } from "../helpers/transactionCategories";
+import { PAY_TV, PAYMENT } from "../constant/transactionCategories";
 import { closeModal, showToast } from "../helpers/Utils";
 
 const MODAL_ID = "cable_modal";

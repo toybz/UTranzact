@@ -1,6 +1,6 @@
 import { useTransactions } from "../hooks/useTransactions";
 import { useState } from "react";
-import { DATA, PAYMENT } from "../helpers/transactionCategories";
+import { DATA, PAYMENT } from "../constant/transactionCategories";
 import { closeModal, showToast } from "../helpers/Utils";
 import OpsSubmitButton from "./OpsSubmitButton";
 

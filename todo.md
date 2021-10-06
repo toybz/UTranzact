@@ -1,13 +1,10 @@
-**Dashboard Page:**
+Data to first
 
-** Decrease Wallet amount after a new transaction
+Recent transactions
 
-Show skeleton(loading) div when loading Data for Balance and other dashboard data.
+Saved Transactions
 
-General:
-Conclude the transaction Details modal
+User wallets
 
-Conclude the other OPs Modal Fix fonts
+User details
 
-Cards Page:
-History Page Settings Page

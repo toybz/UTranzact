@@ -5,7 +5,7 @@ import {
   ELECTRICITY,
   PAY_TV,
   TRANSFER,
-} from "../../helpers/transactionCategories";
+} from "../../constant/transactionCategories";
 import { useTransactions } from "../../hooks/useTransactions";
 import { closeModal, showToast } from "../../helpers/Utils";
 import { useState } from "react";

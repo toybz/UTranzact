@@ -1,6 +1,6 @@
 import { updateTransactionDetails } from "../store/modals/transactionDetails";
 import { openTransactionDetailModal } from "./TransactionDetails";
-import { FUNDING, PAYMENT, TRANSFER } from "../helpers/transactionCategories";
+import { FUNDING, PAYMENT, TRANSFER } from "../constant/transactionCategories";
 
 import { useDispatch } from "react-redux";
 

@@ -1,34 +1,26 @@
 import { useSelector } from "react-redux";
 import { database, DB_NODES } from "../firebase";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useAuth from "./useAuth";
 
 export default function useWallet() {
-  const [wallets, setWallets] = useState([]);
-  const [totalBalance, setTotalBalance] = useState("");
+  const [totalBalance] = useState("");
 
-  useEffect(() => {
-    const fetchWallets = () => {
-      let ref = database.ref(DB_NODES.WALLETS);
-      ref.on("value", (snapshot) => {
-        const data = Object.values(snapshot?.val() || {});
-        setWallets(data);
-        calculateTotalBalance(data);
-      });
-    };
-    fetchWallets();
-  }, []);
+  const wallets = useSelector((store) => store.userWallet);
+
+  const { userDetails } = useAuth();
 
   const addNewWallet = async ({ amount, walletName }) => {
     const walletData = {
       balance: amount,
       cardDetails: {
         cvv: "992",
-        expirationDate: "09/20",
-        name: "Toyeeb Abdulrahmon",
+        expirationDate: "09/23",
+        name: userDetails.fullName || userDetails.displayName,
         number: "2345156754321789",
       },
       name: walletName,
-      user: "1",
+      uid: userDetails.uid,
     };
 
     const operation = await database.ref(DB_NODES.WALLETS).push();
@@ -67,17 +59,6 @@ export default function useWallet() {
       .ref(DB_NODES.WALLETS)
       .child(walletId)
       .update({ balance: amount });
-  };
-
-  const calculateTotalBalance = (wallets) => {
-    let balance = 0;
-    if (wallets && wallets[0].balance) {
-      wallets.map((item) => {
-        balance += parseInt(item.balance);
-        return balance;
-      });
-    }
-    setTotalBalance(balance);
   };
 
   const getWalletBalance = (walletId) => {

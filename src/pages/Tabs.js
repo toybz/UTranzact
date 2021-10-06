@@ -12,7 +12,7 @@ import {
   HISTORY_LINK,
   OPERATIONS_LINK,
   VIRTUAL_CARDS_LINK,
-} from "../helpers/links";
+} from "../constant/pageRoutes";
 import { ConfirmTransaction } from "../components/modals/ConfirmTransaction";
 import FundCard from "../components/Ops_FundCard";
 
@@ -32,111 +32,103 @@ const TransactionsHistory = React.lazy(() => import("./TransactionsHistory"));
 const Operations = React.lazy(() => import("./Operations"));
 
 export default function Tabs() {
-  let { path } = useRouteMatch();
+  let {path} = useRouteMatch();
 
   return (
-    <>
-      <Suspense
-        fallback={
-          <>
-            <FullPageLoader />
-          </>
-        }
-      >
-        <Switch>
-          <Route path={`${path}/dashboard`}>
-            <Dashboard />
-          </Route>
+      <>
+        <Suspense
+            fallback={
+              <>
+                <FullPageLoader/>
+              </>
+            }
+        >
+          <Switch>
+            <Route path={`${path}/dashboard`}>
+              <Dashboard/>
+            </Route>
 
-          <Route path={`${path}/operations`}>
-            <Operations />
-          </Route>
+            <Route path={`${path}/operations`}>
+              <Operations/>
+            </Route>
 
-          <Route path={`${path}/virtual-cards`} exact>
-            <VirtualCards />
-          </Route>
+            <Route path={`${path}/virtual-cards`} exact>
+              <VirtualCards/>
+            </Route>
 
-          <Route path={`${path}/pay-with-new-credit-card`} exact>
-            <PayWithCreditCard />
-          </Route>
+            <Route path={`${path}/pay-with-new-credit-card`} exact>
+              <PayWithCreditCard/>
+            </Route>
 
-          <Route path={`${path}/transaction-history`}>
-            <TransactionsHistory />
-          </Route>
+            <Route path={`${path}/transaction-history`}>
+              <TransactionsHistory/>
+            </Route>
 
-          <Route path={path} exact>
-            <Redirect to={`${path}/dashboard`} />
-          </Route>
-        </Switch>
-      </Suspense>
+            <Route path={path} exact>
+              <Redirect to={`${path}/dashboard`}/>
+            </Route>
+          </Switch>
+        </Suspense>
 
-      <footer
-        className="em_main_footer ouline_footer with__text"
-        style={{ zIndex: "9999" }}
-      >
-        <div className="em_body_navigation -active-links">
-          <div className="item_link">
-            <NavLink to={DASHBOARD_LINK} className="btn btn_navLink">
-              <div className="icon_current icon">
-                <i className="ri-home-2-line " />
-              </div>
+        <footer
+            className="em_main_footer ouline_footer with__text"
+            style={{zIndex: "9999"}}
+        >
+          <div className="em_body_navigation -active-links">
+            <div className="item_link">
+              <NavLink to={DASHBOARD_LINK} className="btn btn_navLink">
+                <div className="icon_current icon">
+                  <i className="ri-home-2-line "/>
+                </div>
 
-              <div className="txt__tile">Dashboard</div>
-            </NavLink>
+                <div className="txt__tile">Dashboard</div>
+              </NavLink>
+            </div>
+            <div className="item_link">
+              <NavLink to={VIRTUAL_CARDS_LINK} className="btn btn_navLink">
+                <div className="icon_current">
+                  <i className="ri-bank-card-line"/>
+                </div>
+
+                <div className="txt__tile">Cards</div>
+              </NavLink>
+            </div>
+
+
+            <div className="item_link">
+              <NavLink to={OPERATIONS_LINK} className="btn btn_navLink">
+                <div className="icon_current">
+                  <i className="ri-dashboard-line"/>
+                </div>
+
+                <div className="txt__tile">Tranzact</div>
+              </NavLink>
+            </div>
+
+
+            <div className="item_link">
+              <NavLink to={HISTORY_LINK} className="btn btn_navLink">
+                <div className="icon_current">
+                  <i className="ri-history-line"/>
+                </div>
+
+                <div className="txt__tile">History</div>
+              </NavLink>
+            </div>
+
           </div>
-          <div className="item_link">
-            <NavLink to={VIRTUAL_CARDS_LINK} className="btn btn_navLink">
-              <div className="icon_current">
-                <i className="ri-bank-card-line" />
-              </div>
+        </footer>
 
-              <div className="txt__tile">Cards</div>
-            </NavLink>
-          </div>
-          <div className="item_link">
-            <NavLink
-              to={OPERATIONS_LINK}
-              className="btn btn_navLink without_active"
-            >
-              <button
-                type="button"
-                className="btn btnCircle_default rounded-10"
-              >
-                <i className="ri-dashboard-line" />
-              </button>
-            </NavLink>
-          </div>
-          <div className="item_link">
-            <NavLink to={HISTORY_LINK} className="btn btn_navLink">
-              <div className="icon_current">
-                <i className="ri-history-line" />
-              </div>
-
-              <div className="txt__tile">History</div>
-            </NavLink>
-          </div>
-          <div className="item_link">
-            <a href="/" className="btn btn_navLink">
-              <div className="icon_current">
-                <i className="ri-settings-line" />
-              </div>
-
-              <div className="txt__tile">Settings</div>
-            </a>
-          </div>
-        </div>
-      </footer>
-
-      <FundCard />
-      <Transfer />
-      <QrPay />
-      <ConfirmTransaction />
-      <BuyAirtime />
-      <BuyData />
-      <TransactionDetail />
-      <BuyPower />
-      <BuyCable />
-      <RequestFunds />
-    </>
+        <FundCard/>
+        <Transfer/>
+        <QrPay/>
+        <ConfirmTransaction/>
+        <BuyAirtime/>
+        <BuyData/>
+        <TransactionDetail/>
+        <BuyPower/>
+        <BuyCable/>
+        <RequestFunds/>
+      </>
   );
 }

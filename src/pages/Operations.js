@@ -77,13 +77,23 @@ export default function Operations() {
         <Header pageTitle="Operations" />
 
         <section className="padding-t-80 swiperCards__wallet padding-b-30">
-          <div className="emPage__blog">
-            <div className="item__card layer-lg">
+          <div
+            className="emPage__blog"
+            style={{ paddingLeft: 0, paddingRight: 0 }}
+          >
+            <div
+              className="item__card layer-lg"
+              style={{
+                /* marginTop: "0",
+                                                                 marginBottom: "0",*/
+                backgroundColor: "transparent",
+              }}
+            >
               <div className="cover_img">
                 <img
-                  src="/assets/img/0654dsf.jpg"
+                  src="/assets/img/transact.png"
                   alt=""
-                  style={{ width: "100vw" }}
+                  style={{ width: "100vw", height: "auto" }}
                 />
               </div>
               {/*  <div className="card__body">
@@ -94,7 +104,7 @@ export default function Operations() {
           </div>
         </section>
 
-        <section className=" em__bkOperationsWallet __page pt-0">
+        <section className=" em__bkOperationsWallet __page pt-0 pb-0">
           <div className="em__actions">
             <div className="group">
               {operationsList.map((item, index) => (

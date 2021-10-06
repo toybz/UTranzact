@@ -2,91 +2,19 @@ import { database, DB_NODES } from "../firebase";
 import { useEffect, useState } from "react";
 import useWallet from "./useWallet";
 import { showToast } from "../helpers/Utils";
-
-const arrangeHistoryByDate = (historyItems) => {
-  let arrangedHistory = {};
-
-  const currentDate = new Date();
-  const currentDayOfMonth = currentDate.getDate();
-  const currentMonth = currentDate.getMonth();
-  const currentYear = currentDate.getFullYear();
-
-  const currentDateString =
-    currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
-
-  historyItems.forEach((element) => {
-    let dateTime = new Date(element.dateTime);
-    const transactionDayOfMonth = dateTime.getDate();
-    const transactionMonth = dateTime.getMonth();
-    const transactionYear = dateTime.getFullYear();
-
-    let transactionDateString =
-      transactionDayOfMonth +
-      "-" +
-      (transactionMonth + 1) +
-      "-" +
-      transactionYear;
-
-    let transactionDate = transactionDateString;
-
-    if (transactionDateString === currentDateString) {
-      transactionDate = "Today";
-    }
-
-    if (
-      currentYear === transactionYear &&
-      currentMonth === transactionMonth &&
-      currentDayOfMonth - transactionDayOfMonth === 1
-    ) {
-      transactionDate = "Yesterday";
-    }
-
-    if (!arrangedHistory[transactionDate]) {
-      arrangedHistory[transactionDate] = [];
-    }
-
-    arrangedHistory[transactionDate].push({
-      ...element,
-    });
-  });
-  //  console.log(arrangedHistory);
-
-  return arrangedHistory;
-};
-
-const nodeName = "recent-transactions";
+import useAuth from "./useAuth";
+import { useSelector } from "react-redux";
 
 export const useTransactions = () => {
-  let [recentTransactions, setRecentTransactions] = useState([]);
+  const transactionsHistory = useSelector((store) => store.recentTransactions);
 
-  let [transactionsHistory, setTransactionsHistory] = useState({});
+  const recentTransactions = transactionsHistory
+    ? transactionsHistory.slice(0, 5)
+    : null;
+
+  const { userDetails } = useAuth();
 
   const { subtractFromWallet, getWalletBalance } = useWallet();
-  useEffect(() => {
-    const fetchRecentTransactions = () => {
-      let ref = database.ref(DB_NODES.RECENT_TRANSACTIONS);
-      ref.limitToLast(5).on("value", (snapshot) => {
-        const data = Object.values(snapshot?.val() || {});
-
-        // Reversed the data so the last item added comes first
-        setRecentTransactions(data.reverse());
-      });
-    };
-    fetchRecentTransactions();
-  }, []);
-
-  useEffect(() => {
-    const fetchTransactionHistory = () => {
-      let ref = database.ref(DB_NODES.RECENT_TRANSACTIONS);
-      ref.on("value", (snapshot) => {
-        const data = Object.values(snapshot?.val() || {});
-
-        setTransactionsHistory(arrangeHistoryByDate(data));
-      });
-    };
-
-    fetchTransactionHistory();
-  }, []);
 
   const isSufficientFundsForTransaction = (walletId, newTransactionAmount) => {
     return getWalletBalance(walletId) > newTransactionAmount;
@@ -106,10 +34,13 @@ export const useTransactions = () => {
       });
     }
 
-    const transaction = { ...transactionData, dateTime: Date.now() };
-    const operation = await database.ref(nodeName).push();
+    const transaction = {
+      ...transactionData,
+      dateTime: Date.now(),
+      uid: userDetails.uid,
+    };
+    const operation = await database.ref(DB_NODES.RECENT_TRANSACTIONS).push();
 
-    //todo: Decrease the wallet balance here
     return operation
       .set({
         ...transaction,

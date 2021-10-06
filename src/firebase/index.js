@@ -16,23 +16,12 @@ const firebaseConfig = {
 let app = firebase.initializeApp(firebaseConfig);
 export const database = app.database();
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-
 export const auth = app.auth();
 
 export const DB_NODES = {
   RECENT_TRANSACTIONS: "recent-transactions",
   SAVED_TRANSACTIONS: "saved-transactions",
   WALLETS: "users-wallet",
-};
-
-export const DbFetch = (node, callback) => {
-  let res = database.ref(node);
-  return res.on("value", (snapshot) => {
-    const data = snapshot.val();
-    callback(data);
-  });
-};
-
-export const insertData = (node, data, callback) => {
-  database.ref().child(node).push(data, callback);
+  USERS: "users",
+  BANKS: "banks",
 };

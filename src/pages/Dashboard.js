@@ -1,9 +1,8 @@
 import Header from "../components/Header";
-import useCarousel from "../hooks/useCarousel";
 import Page from "./Page";
 import { openFundCardModal } from "../components/Ops_FundCard";
 import { Link } from "react-router-dom";
-import { HISTORY_LINK, SAVED_TRANSACTIONS } from "../helpers/links";
+import { HISTORY_LINK, SAVED_TRANSACTIONS } from "../constant/pageRoutes";
 import {
   AirtimeMenuItem,
   DataMenuItem,
@@ -17,15 +16,13 @@ import LoadingCard from "../components/LoadingCard";
 import HistoryItem from "../components/HistoryItem";
 
 import { useTransactions } from "../hooks/useTransactions";
-import useWallet from "../hooks/useWallet";
 import useSavedTransaction from "../hooks/useSavedTransaction";
+import useWallet from "../hooks/useWallet";
 
 function Dashboard() {
-  useCarousel(".owl-carousel ");
-
   const pageTitle = "Dashboard";
 
-  const { totalBalance } = useWallet();
+  const { wallets } = useWallet();
 
   const { savedTransactions } = useSavedTransaction();
 
@@ -36,12 +33,15 @@ function Dashboard() {
     AirtimeMenuItem,
     DataMenuItem,
     PowerMenuItem,
-
-    /*CableMenuItem,
-        RequestMenuItem,
-        QrPayMenuItem,
-        CoPayMenuItem,*/
   ];
+
+  const calculateTotalBalance = (prevItem, currentItem) =>
+    prevItem + parseInt(currentItem.balance);
+
+  const totalBalance = wallets
+    ? wallets.reduce(calculateTotalBalance, 0)
+    : null;
+
   return (
     <>
       <Page className={"bg-snow"}>
@@ -51,7 +51,7 @@ function Dashboard() {
           <div className="emhead d-flex align-items-center justify-content-between">
             <div className="item__total">
               <span>Total Balance</span>
-              {totalBalance !== "" ? (
+              {totalBalance !== null ? (
                 <h2>
                   {totalBalance}
                   <span> NGN</span>
@@ -91,34 +91,7 @@ function Dashboard() {
           {/* End. dividar */}
 
           {/* Start emWallet__stats */}
-          <section className="emWallet__stats padding-l-20 padding-r-20 padding-t-30">
-            <div className="title d-flex justify-content-between align-items-center padding-b-30 horizontal-padding-20">
-              <h2 className="size-16 weight-500 color-secondary mb-1">
-                Saved Transactions
-              </h2>
-              <Link
-                to={SAVED_TRANSACTIONS}
-                className="d-block color-blue size-14 m-0 hover:color-blue"
-              >
-                View all
-              </Link>
-            </div>
 
-            <div className="emPage__billsWallet horizontal-padding-20 py-0">
-              <div className="emBk__bills">
-                {savedTransactions ? (
-                  savedTransactions.map((transaction) => (
-                    <SavedTransactionItem
-                      {...transaction}
-                      key={transaction.id}
-                    />
-                  ))
-                ) : (
-                  <LoadingCard />
-                )}
-              </div>
-            </div>
-          </section>
           {/* End. emWallet__stats */}
 
           {/* Start emTransactions__page */}
@@ -136,15 +109,56 @@ function Dashboard() {
             </div>
 
             <div className="emBK__transactions">
-              {recentTransactions ? (
-                recentTransactions.map((transaction) => (
-                  <HistoryItem transaction={transaction} key={transaction.id} />
-                ))
+              {recentTransactions !== null ? (
+                recentTransactions.length > 0 ? (
+                  recentTransactions.map((transaction) => (
+                    <HistoryItem
+                      transaction={transaction}
+                      key={transaction.id}
+                    />
+                  ))
+                ) : (
+                  <p>No Transaction</p>
+                )
               ) : (
                 <LoadingCard />
               )}
             </div>
           </section>
+
+          <section className="emWallet__stats padding-l-20 padding-r-20 padding-t-30">
+            <div className="title d-flex justify-content-between align-items-center padding-b-30 horizontal-padding-20">
+              <h2 className="size-16 weight-500 color-secondary mb-1">
+                Saved Transactions
+              </h2>
+              <Link
+                to={SAVED_TRANSACTIONS}
+                className="d-block color-blue size-14 m-0 hover:color-blue"
+              >
+                View all
+              </Link>
+            </div>
+
+            <div className="emPage__billsWallet horizontal-padding-20 py-0">
+              <div className="emBk__bills">
+                {savedTransactions !== null ? (
+                  savedTransactions.length ? (
+                    savedTransactions.map((transaction) => (
+                      <SavedTransactionItem
+                        {...transaction}
+                        key={transaction.id}
+                      />
+                    ))
+                  ) : (
+                    <p>No Saved Transaction</p>
+                  )
+                ) : (
+                  <LoadingCard />
+                )}
+              </div>
+            </div>
+          </section>
+
           {/* End. emTransactions__page */}
         </main>
       </Page>

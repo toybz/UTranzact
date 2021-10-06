@@ -1,7 +1,7 @@
 import { useTransactions } from "../hooks/useTransactions";
 import { useState } from "react";
 import OpsSubmitButton from "./OpsSubmitButton";
-import { ELECTRICITY, PAYMENT } from "../helpers/transactionCategories";
+import { ELECTRICITY, PAYMENT } from "../constant/transactionCategories";
 import { closeModal, showToast } from "../helpers/Utils";
 
 const MODAL_ID = "power_modal";

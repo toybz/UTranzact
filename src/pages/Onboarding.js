@@ -1,6 +1,6 @@
-import { auth, googleAuthProvider } from "../firebase";
+import { auth, database, DB_NODES, googleAuthProvider } from "../firebase";
 import { Link, useHistory } from "react-router-dom";
-import { DASHBOARD_LINK, LOGIN, REGISTER } from "../helpers/links";
+import { DASHBOARD_LINK, LOGIN, REGISTER } from "../constant/pageRoutes";
 import { showToast } from "../helpers/Utils";
 import useAuth from "../hooks/useAuth";
 
@@ -37,7 +37,28 @@ export default function OnBoarding() {
     const isExist = await isUserExists(uid);
     if (!isExist) {
       await createNewUser({ displayName, email, isAnonymous, uid });
+
+      console.log("Create new wallet");
+      const walletData = {
+        balance: 0,
+        cardDetails: {
+          cvv: "992",
+          expirationDate: "09/23",
+          name: displayName,
+          number: "2345156754321789",
+        },
+        name: "Default",
+        uid: uid,
+      };
+
+      const operation = await database.ref(DB_NODES.WALLETS).push();
+
+      operation.set({
+        ...walletData,
+        id: operation.key,
+      });
     }
+
     history.push(DASHBOARD_LINK);
   };
 
@@ -49,7 +70,7 @@ export default function OnBoarding() {
   return (
     <>
       <div id="wrapper">
-        <div id="content" className="bg-white">
+        <div id="content" className="bg-white full-height">
           <header className="main_haeder header-sticky multi_item d-lfex justify-content-end">
             <div className="em_side_right">
               <button
@@ -62,18 +83,30 @@ export default function OnBoarding() {
           </header>
           <section className="npPage_introDefault padding-t-70 bg-white">
             <div className="cover">
-              <img src="/assets/img/0sd6f8.jpg" alt="" />
+              {/* <img src="/assets/img/icons/onboarding.png" alt="" />*/}
+
+              <lottie-player
+                src="https://assets9.lottiefiles.com/packages/lf20_klpqubkx.json"
+                background="transparent"
+                speed="1"
+                style={{ height: "300px" }}
+                hover
+                loop
+                controls
+                autoplay
+              ></lottie-player>
             </div>
 
             <div className="swiper-container swiper-intro-default swiper__text bg-white ">
               <div className="swiper-wrapper">
                 <div className="swiper-slide">
                   <div className="content_text">
-                    <h2 className="txt_gradient">React FinTech</h2>
-                    <p>
-                      Create Multi Wallets, Transfer To Bank Accounts, Buy
-                      Airtime, Internet Data, Electricity and Cable Tv
-                      Subscription.
+                    <h2 className="txt_gradient">UTranzact </h2>
+                    <p style={{ color: "#000000" }}>
+                      A Demo ReactJS and Firebase Fintech App. Create Multi
+                      Wallets, Transfer To Bank Accounts, Airtime Purchase,
+                      Internet Data Purchase, Electricity and Cable Tv
+                      Subscription and more.
                     </p>
                   </div>
                 </div>

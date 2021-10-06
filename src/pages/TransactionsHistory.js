@@ -55,7 +55,7 @@ const arrangeHistoryByDate = (historyItems) => {
   return arrangedHistory;
 };
 export default function TransactionsHistory() {
-  const { transactionsHistory } = useTransactions();
+  const {transactionsHistory} = useTransactions();
 
   const [displayedHistory, setDisplayedHistory] = useState({});
 
@@ -64,45 +64,45 @@ export default function TransactionsHistory() {
   }, [transactionsHistory]);
 
   return (
-    <Page>
-      <>
-        <Header pageTitle={"History"} />
+      <Page>
+        <>
+          <Header pageTitle={"History"}/>
 
-        {/* Start emTransactions__page */}
-        <section className="padding-t-80 padding-l-20 padding-r-20 emTransactions__page padding-b-30">
-          {transactionsHistory !== null && displayedHistory.length > 0 ? (
-            Object.entries(displayedHistory).map(
-              ([day, transaction]) =>
-                transaction.length && (
-                  <div key={day}>
-                    <div className="border-text margin-b-30 margin-t-30">
-                      <div className="lined">
-                        <span className="text">{day}</span>
-                      </div>
-                    </div>
-                    <div className="emBK__transactions">
-                      {transaction.map((item) => (
-                        <HistoryItem transaction={item} key={item.id} />
-                      ))}
-                    </div>
-                  </div>
+
+          <section className="padding-t-80 padding-l-20 padding-r-20 emTransactions__page padding-b-30">
+            {transactionsHistory !== null && Object.values(displayedHistory).length > 0 ? (
+                Object.entries(displayedHistory).map(
+                    ([day, transaction]) =>
+                        transaction.length && (
+                            <div key={day}>
+                              <div className="border-text margin-b-30 margin-t-30">
+                                <div className="lined">
+                                  <span className="text">{day}</span>
+                                </div>
+                              </div>
+                              <div className="emBK__transactions">
+                                {transaction.map((item) => (
+                                    <HistoryItem transaction={item} key={item.id}/>
+                                ))}
+                              </div>
+                            </div>
+                        )
                 )
-            )
-          ) : (
-            <p>No Transaction</p>
-          )}
-        </section>
+            ) : (
+                <p>No Transaction</p>
+            )}
+          </section>
 
-        {transactionsHistory === null && (
-          <div className="padding-b-20">
-            <div className="spinner_loading">
-              <div className="bounce1"></div>
-              <div className="bounce2"></div>
-              <div className="bounce3"></div>
-            </div>
-          </div>
-        )}
-      </>
-    </Page>
+          {transactionsHistory === null && (
+              <div className="padding-b-20">
+                <div className="spinner_loading">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              </div>
+          )}
+        </>
+      </Page>
   );
 }

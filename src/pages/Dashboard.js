@@ -2,21 +2,19 @@ import Header from "../components/Header";
 import Page from "./Page";
 import { openFundCardModal } from "../components/Ops_FundCard";
 import { Link } from "react-router-dom";
-import { HISTORY_LINK, SAVED_TRANSACTIONS } from "../constant/pageRoutes";
+import { HISTORY_LINK } from "../constant/pageRoutes";
 import {
   AirtimeMenuItem,
   DataMenuItem,
   PowerMenuItem,
   TransferMenuItem,
 } from "../components/operationsMenuIcons";
-import SavedTransactionItem from "../components/SavedTransactionItem";
 
 import { BeatLoader } from "react-spinners";
 import LoadingCard from "../components/LoadingCard";
 import HistoryItem from "../components/HistoryItem";
 
 import { useTransactions } from "../hooks/useTransactions";
-import useSavedTransaction from "../hooks/useSavedTransaction";
 import useWallet from "../hooks/useWallet";
 
 function Dashboard() {
@@ -24,7 +22,7 @@ function Dashboard() {
 
   const { wallets } = useWallet();
 
-  const { savedTransactions } = useSavedTransaction();
+  // const { savedTransactions } = useSavedTransaction();
 
   let { recentTransactions } = useTransactions();
 
@@ -84,15 +82,9 @@ function Dashboard() {
             </div>
           </section>
 
-          {/* Start dividar */}
           <section className="padding-20 py-0">
             <div className="dividar" />
           </section>
-          {/* End. dividar */}
-
-          {/* Start emWallet__stats */}
-
-          {/* End. emWallet__stats */}
 
           {/* Start emTransactions__page */}
           <section className="padding-20 emTransactions__page">
@@ -126,7 +118,7 @@ function Dashboard() {
             </div>
           </section>
 
-          <section className="emWallet__stats padding-l-20 padding-r-20 padding-t-30">
+          {/* <section className="emWallet__stats padding-l-20 padding-r-20 padding-t-30">
             <div className="title d-flex justify-content-between align-items-center padding-b-30 horizontal-padding-20">
               <h2 className="size-16 weight-500 color-secondary mb-1">
                 Saved Transactions
@@ -157,7 +149,7 @@ function Dashboard() {
                 )}
               </div>
             </div>
-          </section>
+          </section>*/}
 
           {/* End. emTransactions__page */}
         </main>

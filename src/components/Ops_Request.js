@@ -1,3 +1,6 @@
+import { showToast } from "../helpers/Utils";
+import { useState } from "react";
+
 const MODAL_ID = "request_modal";
 
 export const openRequestFundModal = () => {
@@ -5,6 +8,15 @@ export const openRequestFundModal = () => {
 };
 
 export default function RequestFunds() {
+  const sendRequest = () => {
+    showToast("Request Sent Successfully", "success");
+  };
+
+  const [email, setEmail] = useState("");
+  const [amount, setAmount] = useState("");
+
+  const canSubmit = email && amount;
+
   return (
     <div
       className="modal transition-bottom screenFull defaultModal mdlladd__rate fade"
@@ -38,9 +50,11 @@ export default function RequestFunds() {
                   <input
                     type="text"
                     className="form-control"
-                    value={"100"}
-                    onChange={(e) => {}}
-                    placeholder="Enter username"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                    placeholder="user@mail.com"
                     required=""
                   />
                   <label>Receiver Email</label>
@@ -51,14 +65,16 @@ export default function RequestFunds() {
                     type="text"
                     className="form-control"
                     min="0"
-                    value={"100"}
-                    onChange={(e) => {}}
-                    placeholder="John Smith"
+                    value={amount}
+                    onChange={(e) => {
+                      setAmount(e.target.value);
+                    }}
+                    placeholder="1000"
                     required=""
                   />
                   <label>Enter Amount</label>
                   <span className="absolute right-0 top-0 mt-3 color-snow size-16">
-                    USD
+                    NGN
                   </span>
                 </div>
               </form>
@@ -69,6 +85,8 @@ export default function RequestFunds() {
               type="button"
               data-dismiss="modal"
               className="btn w-100 bg-primary m-0 color-white h-52 d-flex align-items-center rounded-8 justify-content-center"
+              onClick={sendRequest}
+              disabled={!canSubmit}
             >
               Request
             </button>

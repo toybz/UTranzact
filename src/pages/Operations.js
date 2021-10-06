@@ -79,27 +79,19 @@ export default function Operations() {
         <section className="padding-t-80 swiperCards__wallet padding-b-30">
           <div
             className="emPage__blog"
-            style={{ paddingLeft: 0, paddingRight: 0 }}
+            /*  style={{ paddingLeft: 0, paddingRight: 0 }}*/
           >
             <div
               className="item__card layer-lg"
-              style={{
-                /* marginTop: "0",
-                                                                 marginBottom: "0",*/
-                backgroundColor: "transparent",
-              }}
+              /*  style={{ background: "transparent" }}*/
             >
               <div className="cover_img">
                 <img
                   src="/assets/img/transact.png"
                   alt=""
-                  style={{ width: "100vw", height: "auto" }}
+                  style={{ width: "100%", height: "auto" }}
                 />
               </div>
-              {/*  <div className="card__body">
-                 <h2 className="card_title">Card Title</h2>
-                <p></p>
-              </div>*/}
             </div>
           </div>
         </section>

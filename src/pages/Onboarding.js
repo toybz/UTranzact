@@ -3,9 +3,12 @@ import { Link, useHistory } from "react-router-dom";
 import { DASHBOARD_LINK, LOGIN, REGISTER } from "../constant/pageRoutes";
 import { showToast } from "../helpers/Utils";
 import useAuth from "../hooks/useAuth";
+import { useState } from "react";
 
 export default function OnBoarding() {
   const history = useHistory();
+
+  const [processingSignIn, setProcessingSignIn] = useState(false);
 
   const signInWIthGoogle = () => {
     auth
@@ -19,13 +22,16 @@ export default function OnBoarding() {
   };
 
   const signInAsGuest = () => {
+    setProcessingSignIn(true);
     auth
       .signInAnonymously()
-      .then((result) => {
-        loginIsSuccessful(result);
+      .then(async (result) => {
+        await loginIsSuccessful(result);
+        setProcessingSignIn(false);
       })
       .catch((error) => {
         loginFailed();
+        setProcessingSignIn(false);
       });
   };
 
@@ -73,12 +79,18 @@ export default function OnBoarding() {
         <div id="content" className="bg-white full-height">
           <header className="main_haeder header-sticky multi_item d-lfex justify-content-end">
             <div className="em_side_right">
-              <button
-                onClick={signInAsGuest}
-                className="link__forgot border-0 bg-white d-block size-14 color-text text-decoration-none hover:color-secondary transition-all"
-              >
-                Anonymous Sign In
-              </button>
+              {processingSignIn ? (
+                <span className="link__forgot border-0 bg-white d-block size-14 color-text text-decoration-none hover:color-secondary transition-all">
+                  Processing....
+                </span>
+              ) : (
+                <button
+                  onClick={signInAsGuest}
+                  className="link__forgot border-0 bg-white d-block size-14 color-text text-decoration-none hover:color-secondary transition-all"
+                >
+                  Anonymous Sign In
+                </button>
+              )}
             </div>
           </header>
           <section className="npPage_introDefault padding-t-70 bg-white">

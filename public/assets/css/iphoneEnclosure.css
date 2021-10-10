@@ -1,0 +1,10 @@
+
+.iphone-x {
+    position: relative;
+    margin: 40px auto;
+    width: 360px;
+    height: 780px;
+    overflow: scroll;
+    border-radius: 40px;
+    box-shadow: 0px 0px 0px 11px #1f1f1f, 0px 0px 0px 13px #191919, 0px 0px 0px 20px #111;
+}

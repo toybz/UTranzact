@@ -7,20 +7,29 @@
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
 
-        if (isMobile()) {
-            location.href = 'index.html'
+        const isMob = isMobile()
+        if (isMob) {
+            location.replace('https://utransact.netlify.app/');
         }
-    </script>
-    <link rel="stylesheet" href="assets/css/iphoneEnclosure.css">
-    <title>UTranzact | React Fintech App</title>
 
+    </script>
+
+    <title>UTranzact | React Fintech App</title>
+    <style>
+        .phone {
+            position: relative;
+            margin: 40px auto;
+            width: 360px;
+            height: 780px;
+            overflow: scroll;
+            border-radius: 40px;
+            box-shadow: 0px 0px 0px 11px #1f1f1f, 0px 0px 0px 13px #191919, 0px 0px 0px 20px #111;
+        }
+    </style>
 </head>
 <body>
-<div class="iphone-x">
-
-
+<div class="phone">
     <iframe src="index.html" style="width:100%;height:100%"></iframe>
-
 
 </div>
 </body>

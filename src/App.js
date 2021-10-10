@@ -4,7 +4,6 @@ import { Route, Switch, useHistory } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import FullPageLoader from "./components/FullPageLoader";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import OnBoarding from "./pages/Onboarding";
@@ -26,14 +25,12 @@ import { setSavedTransactions } from "./store/savedTransactions";
 
 const Tabs = React.lazy(() => import("./pages/Tabs"));
 
-const queryClient = new QueryClient();
-
 function App() {
   const history = useHistory();
 
   const dispatch = useDispatch();
 
-  const [isAuthUser, setIsAuthUser] = useState(false)
+  const [isAuthUser, setIsAuthUser] = useState(false);
 
   useEffect(() => {
     const updateRecentTransactions = (data) => {
@@ -52,9 +49,9 @@ function App() {
     };
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const {displayName, email, isAnonymous, uid, refreshToken} = user;
+        const { displayName, email, isAnonymous, uid, refreshToken } = user;
 
-        setIsAuthUser(true)
+        setIsAuthUser(true);
         updateUserDetails({
           displayName,
           email,
@@ -74,53 +71,53 @@ function App() {
         history.push(DASHBOARD_LINK);
       } else {
         //  console.log("No user found");
-        setIsAuthUser(false)
+        setIsAuthUser(false);
         history.push(ONBOARDING);
       }
     });
   }, [history, dispatch]);
 
   return (
-      <>
-        <QueryClientProvider client={queryClient}>
-          <Suspense
-              fallback={
-                <>
-                  <FullPageLoader/>
-                </>
-              }
-          >
-            <Switch>
-              {isAuthUser && <Route path="/~">
-                <Tabs/>
-              </Route>}
+    <>
+      <Suspense
+        fallback={
+          <>
+            <FullPageLoader />
+          </>
+        }
+      >
+        <Switch>
+          {isAuthUser && (
+            <Route path="/~">
+              <Tabs />
+            </Route>
+          )}
 
+          <Route path={REGISTER}>
+            <Register />
+          </Route>
 
-              <Route path={REGISTER}>
-                <Register/>
-              </Route>
+          <Route path={LOGIN}>
+            <Login />
+          </Route>
 
-              <Route path={LOGIN}>
-                <Login/>
-              </Route>
+          <Route path={ONBOARDING}>
+            <OnBoarding />
+          </Route>
 
-              <Route path={ONBOARDING}>
-                <OnBoarding/>
-              </Route>
-
-              <Route path="/" exact>
-                <>
-                  <p>Loading...</p>
-                </>
-                {/*
+          <Route path="/" exact>
+            <>
+              <p>Loading...</p>
+            </>
+            {/*
               <Redirect to={ONBOARDING} />
 */}
-              </Route>
-            </Switch>
-          </Suspense>
-        </QueryClientProvider>
-        <ToastContainer/>
-      </>
+          </Route>
+        </Switch>
+      </Suspense>
+
+      <ToastContainer />
+    </>
   );
 }
 

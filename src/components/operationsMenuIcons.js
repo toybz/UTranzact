@@ -11,7 +11,7 @@ import { showToast } from "../helpers/Utils";
 
 export const TransferMenuItem = ({ iconStyle, containerClass }) => (
   <OperationItem
-    icon={"ri-send-plane-fill"}
+    icon={"ri-send-plane-fill menu_icon"}
     iconStyle={{ color: "#42bd83", ...iconStyle }}
     bgColor={"#ecf8f2"}
     onClick={openTransferModal}
@@ -22,7 +22,7 @@ export const TransferMenuItem = ({ iconStyle, containerClass }) => (
 
 export const AirtimeMenuItem = ({ iconStyle, containerClass }) => (
   <OperationItem
-    icon={"ri-cellphone-fill"}
+    icon={"ri-phone-line menu_icon"}
     iconStyle={{ color: "#f79908", ...iconStyle }}
     bgColor={"#fef5e6"}
     title={"Airtime"}
@@ -33,18 +33,18 @@ export const AirtimeMenuItem = ({ iconStyle, containerClass }) => (
 
 export const DataMenuItem = ({ iconStyle, containerClass }) => (
   <OperationItem
-    icon={"ri-qr-code-fill"}
+    icon={"ri-global-line menu_icon"}
     iconStyle={{ color: "#f79665", ...iconStyle }}
     bgColor={"#fef0e9"}
     onClick={openBuyDataModal}
-    title={"Buy Data"}
+    title={"Internet"}
     containerClass={containerClass}
   />
 );
 
 export const FundCardMenuItem = ({ iconStyle, containerClass }) => (
   <OperationItem
-    icon={"ri-bank-card-fill"}
+    icon={"ri-wallet-3-line menu_icon"}
     iconStyle={{ color: "#0e132d", ...iconStyle }}
     bgColor={"#e6e7ea"}
     title={"Fund Card"}
@@ -55,7 +55,7 @@ export const FundCardMenuItem = ({ iconStyle, containerClass }) => (
 
 export const QrPayMenuItem = ({ iconStyle, containerClass }) => (
   <OperationItem
-    icon={"ri-qr-code-fill"}
+    icon={"ri-qr-code-fill menu_icon"}
     iconStyle={{ color: "#629cfd", ...iconStyle }}
     bgColor={"#edf6fe"}
     onClick={openQrPayModal}
@@ -66,7 +66,7 @@ export const QrPayMenuItem = ({ iconStyle, containerClass }) => (
 
 export const CableMenuItem = ({ iconStyle, containerClass }) => (
   <OperationItem
-    icon={"ri-qr-code-fill"}
+    icon={"ri-tv-line menu_icon"}
     iconStyle={{ color: "#baacfe", ...iconStyle }}
     bgColor={"#f0edff"}
     onClick={openBuyPayTvModal}
@@ -77,7 +77,7 @@ export const CableMenuItem = ({ iconStyle, containerClass }) => (
 
 export const PowerMenuItem = ({ iconStyle, containerClass }) => (
   <OperationItem
-    icon={"ri-qr-code-fill"}
+    icon={"ri-lightbulb-flash-line menu_icon"}
     iconStyle={{ color: "#f44041", ...iconStyle }}
     bgColor={"#fdecec"}
     title={"Power"}
@@ -88,7 +88,7 @@ export const PowerMenuItem = ({ iconStyle, containerClass }) => (
 
 export const CoPayMenuItem = ({ iconStyle, containerClass }) => (
   <OperationItem
-    icon={"ri-qr-code-fill"}
+    icon={"ri-group-line menu_icon"}
     iconStyle={{
       color: "#de4afd",
       fontSize: "20px",
@@ -105,7 +105,7 @@ export const CoPayMenuItem = ({ iconStyle, containerClass }) => (
 
 export const RequestMenuItem = ({ iconStyle, containerClass }) => (
   <OperationItem
-    icon={"ri-qr-code-fill"}
+    icon={"ri-hand-coin-line menu_icon"}
     iconStyle={{ color: "#42c4d9", ...iconStyle }}
     bgColor={"rgba(32, 187, 211, 0.1)"}
     title={"Request"}

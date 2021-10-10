@@ -27,3 +27,9 @@ export const closeModal = (modalId) => {
 export const getFirstChar = (text) => {
   return text.charAt(0);
 };
+
+export const parseDate = (date) => {
+  let dateTime = new Date(date);
+
+  return ` ${dateTime.toLocaleDateString()} : ${dateTime.toLocaleTimeString()}  `;
+};

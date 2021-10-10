@@ -78,7 +78,7 @@ export default function Tabs() {
           <div className="item_link">
             <NavLink to={DASHBOARD_LINK} className="btn btn_navLink">
               <div className="icon_current icon">
-                <i className="ri-home-2-line " />
+                <i className="ri-home-2-line tab_icon" />
               </div>
 
               <div className="txt__tile">Dashboard</div>
@@ -87,7 +87,7 @@ export default function Tabs() {
           <div className="item_link">
             <NavLink to={VIRTUAL_CARDS_LINK} className="btn btn_navLink">
               <div className="icon_current">
-                <i className="ri-bank-card-line" />
+                <i className="ri-bank-card-line tab_icon" />
               </div>
 
               <div className="txt__tile">Cards</div>
@@ -97,7 +97,7 @@ export default function Tabs() {
           <div className="item_link">
             <NavLink to={OPERATIONS_LINK} className="btn btn_navLink">
               <div className="icon_current">
-                <i className="ri-dashboard-line" />
+                <i className="ri-swap-box-line tab_icon " />
               </div>
 
               <div className="txt__tile">Tranzact</div>
@@ -107,7 +107,7 @@ export default function Tabs() {
           <div className="item_link">
             <NavLink to={HISTORY_LINK} className="btn btn_navLink">
               <div className="icon_current">
-                <i className="ri-history-line" />
+                <i className="ri-history-line tab_icon" />
               </div>
 
               <div className="txt__tile">History</div>

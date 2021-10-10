@@ -87,7 +87,7 @@ export default function Operations() {
             >
               <div className="cover_img">
                 <img
-                  src="/assets/img/transact.png"
+                  src="/assets/img/transfer.png"
                   alt=""
                   style={{ width: "100%", height: "auto" }}
                 />

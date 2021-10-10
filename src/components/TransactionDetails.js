@@ -8,6 +8,7 @@ import {
   STATUS_SUCCESSFUL,
   TRANSFER,
 } from "../constant/transactionCategories";
+import { parseDate } from "../helpers/Utils";
 
 const MODAL_ID = "transaction_detail_modal";
 
@@ -103,9 +104,9 @@ export default function TransactionDetail() {
                 </button>
               </div>
               <div className="icon absolute left-0 padding-l-20">
-                <button type="button" className="btn p-0">
+                {/*  <button type="button" className="btn p-0">
                   Share
-                </button>
+                </button>*/}
               </div>
             </div>
             <div className="modal-body px-0">
@@ -228,7 +229,7 @@ export default function TransactionDetail() {
                       <span>Date</span>
                     </td>
                     <td>
-                      <span>{dateTime}</span>
+                      <span>{parseDate(dateTime)}</span>
                     </td>
                   </tr>
                 </tbody>

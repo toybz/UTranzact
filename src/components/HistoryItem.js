@@ -1,8 +1,16 @@
 import { updateTransactionDetails } from "../store/modals/transactionDetails";
 import { openTransactionDetailModal } from "./TransactionDetails";
-import { FUNDING, PAYMENT, TRANSFER } from "../constant/transactionCategories";
 
 import { useDispatch } from "react-redux";
+import {
+  AIRTIME,
+  DATA,
+  ELECTRICITY,
+  FUNDING,
+  PAY_TV,
+  PAYMENT,
+  TRANSFER,
+} from "../constant/transactionCategories";
 
 export default function HistoryItem({ transaction }) {
   const dispatch = useDispatch();
@@ -10,7 +18,6 @@ export default function HistoryItem({ transaction }) {
   return (
     <>
       <div
-        key={transaction.id}
         className="item_trans"
         onClick={() => {
           dispatch(updateTransactionDetails(transaction));
@@ -18,18 +25,65 @@ export default function HistoryItem({ transaction }) {
         }}
       >
         <div className="media sideLeft">
-          <div className="icon_img bg-pink">
-            {transaction.benefactor.accountProvider.image ? (
-              <img
-                src={transaction.benefactor.accountProvider.image}
-                alt="Provider icon"
+          {transaction.subCategory === AIRTIME && (
+            <div
+              className="icon_img icon bg-opacity-10"
+              style={{ background: "#fef5e6" }}
+            >
+              <i
+                className={"ri-phone-line menu_icon"}
+                style={{ color: "#f79908" }}
               />
-            ) : (
-              <p className="color-white">
-                {transaction.benefactor.name.slice(0, 2)}
-              </p>
-            )}
-          </div>
+            </div>
+          )}
+
+          {transaction.subCategory === DATA && (
+            <div
+              className="icon_img icon bg-opacity-10"
+              style={{ background: "#fef0e9" }}
+            >
+              <i
+                className={"ri-global-line menu_icon"}
+                style={{ color: "#f79665" }}
+              />
+            </div>
+          )}
+
+          {transaction.category === TRANSFER && (
+            <div
+              className="icon_img icon bg-opacity-10"
+              style={{ background: "#ecf8f2" }}
+            >
+              <i
+                className={"ri-send-plane-fill menu_icon"}
+                style={{ color: "#42bd83" }}
+              />
+            </div>
+          )}
+
+          {transaction.subCategory === PAY_TV && (
+            <div
+              className="icon_img icon bg-opacity-10"
+              style={{ background: "#f0edff" }}
+            >
+              <i
+                className={"ri-tv-line menu_icon"}
+                style={{ color: "#baacfe" }}
+              />
+            </div>
+          )}
+
+          {transaction.subCategory === ELECTRICITY && (
+            <div
+              className="icon_img icon bg-opacity-10"
+              style={{ background: "#fdecec" }}
+            >
+              <i
+                className={"ri-lightbulb-flash-line menu_icon"}
+                style={{ color: "#f44041" }}
+              />
+            </div>
+          )}
 
           <div className="media-body my-auto">
             <h4>
@@ -37,7 +91,6 @@ export default function HistoryItem({ transaction }) {
                 transaction.benefactor.destinationId}
             </h4>
             <p>
-              {" "}
               {transaction.category === TRANSFER &&
                 `Transfer to ${transaction.benefactor.accountProvider.name}`}
               {transaction.category === PAYMENT &&

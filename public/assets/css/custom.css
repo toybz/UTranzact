@@ -24,3 +24,10 @@ html, body {
     height: 100%;
     overflow: scroll;
 }*/
+.menu_icon {
+    font-size: x-large;
+}
+
+.tab_icon {
+    font-size: large !important;
+}

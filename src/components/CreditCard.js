@@ -1,5 +1,16 @@
 import { useState } from "react";
 
+const formatInput = (value, _index, insertData) => {
+  const strArray = value.split("");
+  return strArray.map((char, index) => {
+    if (index % _index === 0) {
+      return `${insertData}${char}`;
+    } else {
+      return char;
+    }
+  });
+};
+
 export default function CreditCard({
   cardNumber,
   cardHolderName,
@@ -8,17 +19,6 @@ export default function CreditCard({
   walletName,
   balance,
 }) {
-  const formatInput = (value, _index, insertData) => {
-    const strArray = value.split("");
-    return strArray.map((char, index) => {
-      if (index % _index === 0) {
-        return `${insertData}${char}`;
-      } else {
-        return char;
-      }
-    });
-  };
-
   const [flipCreditCard, setFlipCreditCard] = useState(false);
 
   const toggleCard = () => {

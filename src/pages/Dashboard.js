@@ -89,7 +89,7 @@ function Dashboard() {
           {/* Start emTransactions__page */}
           <section className="padding-20 emTransactions__page">
             <div className="title d-flex justify-content-between align-items-center padding-b-30">
-              <h3 className="size-16 weight-500 color-secondary mb-1">
+              <h3 className="size-16 weight-600 color-secondary mb-1">
                 Recent Transactions
               </h3>
               <Link

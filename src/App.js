@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import "./App.css";
 import { Route, Switch, useHistory } from "react-router-dom";
 import Register from "./pages/Register";
@@ -33,6 +33,8 @@ function App() {
 
   const dispatch = useDispatch();
 
+  const [isAuthUser, setIsAuthUser] = useState(false)
+
   useEffect(() => {
     const updateRecentTransactions = (data) => {
       dispatch(setRecentTransactions(data));
@@ -50,8 +52,9 @@ function App() {
     };
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const { displayName, email, isAnonymous, uid, refreshToken } = user;
+        const {displayName, email, isAnonymous, uid, refreshToken} = user;
 
+        setIsAuthUser(true)
         updateUserDetails({
           displayName,
           email,
@@ -71,51 +74,53 @@ function App() {
         history.push(DASHBOARD_LINK);
       } else {
         //  console.log("No user found");
+        setIsAuthUser(false)
         history.push(ONBOARDING);
       }
     });
   }, [history, dispatch]);
 
   return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <Suspense
-          fallback={
-            <>
-              <FullPageLoader />
-            </>
-          }
-        >
-          <Switch>
-            <Route path="/~">
-              <Tabs />
-            </Route>
+      <>
+        <QueryClientProvider client={queryClient}>
+          <Suspense
+              fallback={
+                <>
+                  <FullPageLoader/>
+                </>
+              }
+          >
+            <Switch>
+              {isAuthUser && <Route path="/~">
+                <Tabs/>
+              </Route>}
 
-            <Route path={REGISTER}>
-              <Register />
-            </Route>
 
-            <Route path={LOGIN}>
-              <Login />
-            </Route>
+              <Route path={REGISTER}>
+                <Register/>
+              </Route>
 
-            <Route path={ONBOARDING}>
-              <OnBoarding />
-            </Route>
+              <Route path={LOGIN}>
+                <Login/>
+              </Route>
 
-            <Route path="/" exact>
-              <>
-                <p>Loading...</p>
-              </>
-              {/*
+              <Route path={ONBOARDING}>
+                <OnBoarding/>
+              </Route>
+
+              <Route path="/" exact>
+                <>
+                  <p>Loading...</p>
+                </>
+                {/*
               <Redirect to={ONBOARDING} />
 */}
-            </Route>
-          </Switch>
-        </Suspense>
-      </QueryClientProvider>
-      <ToastContainer />
-    </>
+              </Route>
+            </Switch>
+          </Suspense>
+        </QueryClientProvider>
+        <ToastContainer/>
+      </>
   );
 }
 

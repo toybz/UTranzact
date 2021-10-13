@@ -17,7 +17,7 @@ export const useTransactions = () => {
   const { subtractFromWallet, getWalletBalance } = useWallet();
 
   const isSufficientFundsForTransaction = (walletId, newTransactionAmount) => {
-    return getWalletBalance(walletId) > newTransactionAmount;
+    return getWalletBalance(walletId) >= newTransactionAmount;
   };
 
   const newTransaction = async (transactionData) => {
